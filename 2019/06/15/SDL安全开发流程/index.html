@@ -1,0 +1,3069 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Ywc">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Ywc">
+    <meta name="keywords" content="Hexo | Ywc">
+    <meta name="description" content="">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>SDL安全开发流程 · Ywc&#39;s blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=201807017_1502 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /css/mobile.css?v=20180709 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/ywc.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Ywc</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">SDL安全开发流程</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Ywc</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/blog.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            SDL安全开发流程
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "安全开发">安全开发</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">4.1k</span> / Reading time: <span class="post-count">14 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/06/15</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <ul>
+<li><a href="#sdl%e7%ae%80%e4%bb%8b">SDL简介</a><ul>
+<li><a href="#sdl%e6%98%af%e4%bb%80%e4%b9%88">SDL是什么</a></li>
+<li><a href="#sdl%e8%83%bd%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98">SDL能解决什么问题</a></li>
+</ul>
+</li>
+<li><a href="#%e9%a1%b9%e7%9b%ae%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f%e4%b8%ad%e5%ad%98%e5%9c%a8%e7%9a%84%e9%97%ae%e9%a2%98">项目生命周期中存在的问题</a></li>
+<li><a href="#sdl%e7%9a%84%e4%b8%83%e4%b8%aa%e6%ad%a5%e9%aa%a4">SDL的七个步骤</a><ul>
+<li><a href="#1%e5%9f%b9%e8%ae%ad">1、培训</a></li>
+<li><a href="#2%e5%ae%89%e5%85%a8%e8%a6%81%e6%b1%82">2、安全要求</a></li>
+<li><a href="#3%e8%ae%be%e8%ae%a1%e9%98%b6%e6%ae%b5">3、设计阶段</a></li>
+<li><a href="#4%e5%ae%9e%e6%96%bd%e9%98%b6%e6%ae%b5">4.实施阶段</a></li>
+<li><a href="#5%e9%aa%8c%e8%af%81%e9%98%b6%e6%ae%b5">5.验证阶段</a></li>
+<li><a href="#6%e5%8f%91%e5%b8%83%e9%98%b6%e6%ae%b5">6.发布阶段</a></li>
+<li><a href="#7%e5%93%8d%e5%ba%94">7．响应</a></li>
+</ul>
+</li>
+<li><a href="#sdl%e7%9a%84%e6%ad%a5%e9%aa%a4">SDL的步骤</a><ul>
+<li><a href="#%e5%ae%89%e5%85%a8%e5%9f%b9%e8%ae%ad">安全培训</a></li>
+<li><a href="#%e5%ae%89%e5%85%a8%e8%a6%81%e6%b1%82">安全要求</a></li>
+<li><a href="#%e8%b4%a8%e9%87%8f%e9%97%a8bug%e6%a0%8f">质量门/bug栏</a></li>
+<li><a href="#%e5%ae%89%e5%85%a8%e5%92%8c%e9%9a%90%e7%a7%81%e9%a3%8e%e9%99%a9%e8%af%84%e4%bc%b0">安全和隐私风险评估</a></li>
+<li><a href="#%e8%ae%be%e8%ae%a1%e8%a6%81%e6%b1%82">设计要求</a></li>
+<li><a href="#%e5%87%8f%e5%b0%8f%e6%94%bb%e5%87%bb%e9%9d%a2">减小攻击面</a></li>
+<li><a href="#%e5%a8%81%e8%83%81%e5%bb%ba%e6%a8%a1">威胁建模</a></li>
+<li><a href="#%e4%bd%bf%e7%94%a8%e6%8c%87%e5%ae%9a%e7%9a%84%e5%b7%a5%e5%85%b7">使用指定的工具</a></li>
+<li><a href="#%e5%bc%83%e7%94%a8%e4%b8%8d%e5%ae%89%e5%85%a8%e5%87%bd%e6%95%b0">弃用不安全函数</a></li>
+<li><a href="#%e9%9d%99%e6%80%81%e5%88%86%e6%9e%90">静态分析</a></li>
+<li><a href="#%e5%8a%a8%e6%80%81%e7%a8%8b%e5%ba%8f%e5%88%86%e6%9e%90">动态程序分析</a></li>
+<li><a href="#%e6%a8%a1%e7%b3%8a%e6%b5%8b%e8%af%95fuzzing-test">模糊测试（Fuzzing Test）</a></li>
+<li><a href="#%e5%a8%81%e8%83%81%e6%a8%a1%e5%9e%8b%e5%92%8c%e6%94%bb%e5%87%bb%e9%9d%a2%e8%af%84%e6%9e%90">威胁模型和攻击面评析</a></li>
+<li><a href="#%e4%ba%8b%e4%bb%b6%e5%93%8d%e5%ba%94%e8%ae%a1%e5%88%92">事件响应计划</a></li>
+<li><a href="#%e6%9c%80%e7%bb%88%e5%ae%89%e5%85%a8%e8%af%84%e6%9e%90">最终安全评析</a></li>
+<li><a href="#%e5%8f%91%e5%b8%83%e5%ad%98%e6%a1%a3">发布/存档</a></li>
+</ul>
+</li>
+<li><a href="#sdl%e5%ae%9e%e6%88%98%e7%bb%8f%e9%aa%8c%e5%87%86%e5%88%99">SDL实战经验准则</a></li>
+<li><a href="#%e5%ad%a6%e4%b9%a0%e6%96%87%e7%ab%a0">学习文章</a></li>
+</ul>
+<h2 id="SDL简介"><a href="#SDL简介" class="headerlink" title="SDL简介"></a>SDL简介</h2><h3 id="SDL是什么"><a href="#SDL是什么" class="headerlink" title="SDL是什么"></a>SDL是什么</h3><p>安全开发生命周期（SDL）即Security Development Lifecycle，是一个帮助开发人员构建更安全的软件和解决安全合规要求的同时降低开发成本的软件开发过程。自2004年起，微软将SDL作为全公司的计划和强制政策，<u>SDL的<strong>核心理念</strong>就是将安全考虑集成在软件开发的每一个阶段:需求分析、设计、编码、测试和维护。从需求、设计到发布产品的每一个阶段每都增加了相应的安全活动，以减少软件中漏洞的数量并将安全缺陷降低到最小程度</u>。安全开发生命周期 (SDL)是侧重于软件开发的安全保证过程，旨在开发出安全的软件应用。</p>
+<h3 id="SDL能解决什么问题"><a href="#SDL能解决什么问题" class="headerlink" title="SDL能解决什么问题"></a>SDL能解决什么问题</h3><p>SDL将设计、代码和文档等与安全相关漏洞减到最少，在软件开发的生命周期中尽可能的早地发现解决相关漏洞建立的流程框架;为了实现保证最终的用户安全，在软件开发各阶段中引入针对项目安全和用户隐私问题的解决方案。</p>
+<h2 id="项目生命周期中存在的问题"><a href="#项目生命周期中存在的问题" class="headerlink" title="项目生命周期中存在的问题"></a>项目生命周期中存在的问题</h2><p>项目研发生命周期：需求分析-&gt;设计-&gt;研发-&gt;测试-&gt;部署<br>项目研发生命周期中安全危险暴露模型：<br><img src="/2019/06/15/SDL%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/1.png" alt="SDL安全开发流程"></p>
+<p>SDL中的方法，试图从安全漏洞产生的根源上解决问题，通过对软件工程的控制，保证产品的安全性。<br>美国国家标准与技术研究所（NIST）估计，如果是在项目发布后在执行漏洞修复计划，其修复成本相当于在设计阶段执行修复的30倍</p>
+<h2 id="SDL的七个步骤"><a href="#SDL的七个步骤" class="headerlink" title="SDL的七个步骤"></a>SDL的七个步骤</h2><h3 id="1、培训"><a href="#1、培训" class="headerlink" title="1、培训"></a>1、培训</h3><p>开发团队的所有成员都必须接受适当的安全培训，了解相关的安全知识。培训对象：开发人员、测试人员、项目经理、产品经理；培训内容：安全设计、威胁建模、安全编码、安全测试、隐私等。</p>
+<h3 id="2、安全要求"><a href="#2、安全要求" class="headerlink" title="2、安全要求"></a>2、安全要求</h3><p><strong>2.1确定安全计划</strong></p>
+<p>在项目确立之前，需要提前与项目经理进行沟通，确定安全的要求和需要做的事情。确认项目计划和里程碑，尽量避免因为安全问题而导致项目延期发布。</p>
+<p><strong>2.2 设立安全基线和安全分级</strong></p>
+<p>安全基线用于确定安全风险的最低可接受级别，安全分级用于定义安全漏洞的严重性阈值。例如，应用程序在发布时不得包含具有“关键”或“重要”评级的已知漏洞。安全基线和安全分级一经设定，便绝不能放松。</p>
+<p><strong>2.3安全和隐私风险评估</strong></p>
+<p>对系统可能面临的威胁、存在的弱点、造成的影响，以及三者综合作用所带来风险的可能性的评估，量化系统遭受攻击带来的影响或损失的可能程度。</p>
+<p>安全风险评估（SRA）和隐私风险评估(PRA)是一个必需的过程，用于确定软件中需要深入评析的功能环节。包括：</p>
+<p>① 项目的哪些部分在发布前需要建立威胁模型？</p>
+<p>② 哪些部分在发布前需要进行安全设计评析？</p>
+<p>③ 哪些部分需要由不属于项目团队且双方认可的小组进行渗透测试？</p>
+<p>④ 是否存在安全顾问认为有必要增加的测试或分析？</p>
+<p>⑤ 模糊测试的具体范围？</p>
+<p>⑥ 隐私对评级的影响。</p>
+<h3 id="3、设计阶段"><a href="#3、设计阶段" class="headerlink" title="3、设计阶段"></a>3、设计阶段</h3><p><strong>3.1设计要求</strong></p>
+<p>在设计阶段应仔细考虑安全和隐私问题，在项目初期确定好安全需求，尽可能避免安全引起的需求变更。</p>
+<p><strong>3.2减小攻击面</strong></p>
+<p>减小攻击面与威胁建模紧密相关，不过它解决安全问题的角度稍有不同。减小攻击面通过减小攻击者利用潜在弱点或漏洞的机会来降低风险，减小攻击面包括：关闭或限制对系统服务的访问，应用“最小权限原则”，以及尽可能进行分层防御。</p>
+<p>减小攻击面与威胁建模紧密相关。它通过减少攻击者利用潜在弱点或漏洞的机会来降低风险，包括关闭或限制对系统服务的访问，应用“最小权限原则”，尽可能分层防御。</p>
+<p><strong>3.3威胁建模</strong></p>
+<p>微软的 STRIDE 模型。所谓STRIDE为Spoofing（假冒），Tampering（篡改），Repudiation（否认），Information Disclosure（信息泄漏），Denial of Service（拒绝服务），Elevation of Privilege（提升权限）。此乃微软的安全建模的模型，微软的产品就是基于它考虑安全问题的哦。STRIDE模型几乎是可以涵盖现在世界上绝大部分的安全问题。下面给上STRIDE模型对于安全属性的图</p>
+<h3 id="4-实施阶段"><a href="#4-实施阶段" class="headerlink" title="4.实施阶段"></a>4.实施阶段</h3><p><strong>4.1使用指定的工具</strong></p>
+<p>开发团队使用的编辑器、链接器等相关工具，可能会涉及一些安全相关的环节，因此在使用工具的版本上，需要提前与安全团队进行沟通。</p>
+<p><strong>4.2弃用不安全的函数</strong></p>
+<p>许多常用函数可能存在安全隐患，应当禁用不安全的函数和API，使用安全团队推荐的函数。</p>
+<p><strong>4.3静态分析</strong></p>
+<p>静态分析可以帮助软件开发人员、质量保证人员查找代码中存在的结构性错误、安全漏洞等问题，从而保证软件的整体质量。</p>
+<h3 id="5-验证阶段"><a href="#5-验证阶段" class="headerlink" title="5.验证阶段"></a>5.验证阶段</h3><p><strong>5.1动态分析</strong></p>
+<p>动态分析是静态分析的补充，用在程序运行时，测试验证程序的安全性，也称作“黑箱测试”。通过模拟黑客行为对系统进行动态攻击，分析系统的反应，从而确定该系统是否易受攻击。</p>
+<p><strong>5.2 模糊测试</strong></p>
+<p>模糊测试是一种特定的动态分析方法，通过故意向应用程序引入不良格式或随机数据诱发程序故障。测试策略的制定以应用程序的预期用途、功能、设计规范为基础。</p>
+<p><strong>5.3 威胁模型和攻击面评析</strong></p>
+<p>项目因需求变更等因素导致最终产出偏离原定目标，为此项目后期有必要对威胁模型和攻击面进行重新评析。</p>
+<h3 id="6-发布阶段"><a href="#6-发布阶段" class="headerlink" title="6.发布阶段"></a>6.发布阶段</h3><p><strong>6.1事件响应计划</strong></p>
+<p>SDL要求约束的每个软件在发布时都必须包含事件响应计划。即使在发布时不包含任何已知漏洞的产品，也可能在日后面临新出现的威胁。需要注意的是，如果产品中包含第三方的代码，也需要留下第三方的联系方式并加入事件响应计划，以便在发生问题时能够找到对应的人。</p>
+<p><strong>6.2最终安全评析(FSR)</strong></p>
+<p>最终安全评析指在产品发布之前对软件执行的安全活动，对比安全基准确定产品不符合安全基准、缺少功能和其他要求的区域，然后进行以下三种决策：</p>
+<p>1) 通过FSR。在FSR过程中确定所有安全和隐私问题都已得到修复或缓解；</p>
+<p>2) 通过FSR但有异常。在FSR过程中确定所有安全和隐私问题都已得到修复或缓解，并且/或者所有异常都已得到圆满解决。无法解决的问题将记录下来，在下次发布时更正。</p>
+<p>3) 需上报问题的FSR。如果团队未满足所有SDL要求，并且安全顾问和产品团队无法达成可接受的折中，则安全顾问不能批准项目，项目不能发布。团队必须在发布之前解决所有可解决的问题，或者上报高级管理层进行抉择。</p>
+<p><strong>6.3 发布/存档</strong></p>
+<p>在通过FSR或者虽有问题但达成一致后，可以完成产品的发布。但发布的同时仍需对各种问题和文档进行存档，为紧急响应和产品升级提供帮助。</p>
+<h3 id="7．响应"><a href="#7．响应" class="headerlink" title="7．响应"></a>7．响应</h3><p>当软件发布后遭受攻击时，根据制定的应急响应计划快速采取措施，把事件造成的损失降到最小。这里还可以加入应急响应演练，以加强公司对抗信息安全攻击的能力。</p>
+<h2 id="SDL的步骤"><a href="#SDL的步骤" class="headerlink" title="SDL的步骤"></a>SDL的步骤</h2><h3 id="安全培训"><a href="#安全培训" class="headerlink" title="安全培训"></a>安全培训</h3><p>开发团队的所有成员都必须接受适当的安全培训，了解相关的安全知识，培训对象包括开发人员、测试人员、项目经理、产品经理等。</p>
+<h3 id="安全要求"><a href="#安全要求" class="headerlink" title="安全要求"></a>安全要求</h3><p>在项目确立之前，需要提前与项目经理或者产品owner进行沟通，确定安全的要求和需要做的事情。确认项目计划和里程碑，尽量避免因为安全问题而导致项目延期发布。</p>
+<h3 id="质量门-bug栏"><a href="#质量门-bug栏" class="headerlink" title="质量门/bug栏"></a>质量门/bug栏</h3><p>质量门和bug栏用于确定安全和隐私质量的最低可接受级别。<br>Bug栏是应用于整个开发项目的质量门，用于定义安全漏洞的严重性阈值。例如，应用程序在发布时不得包含具有“关键”或“重要”评级的已知漏洞。Bug栏一经设定，便绝不能放松。</p>
+<h3 id="安全和隐私风险评估"><a href="#安全和隐私风险评估" class="headerlink" title="安全和隐私风险评估"></a>安全和隐私风险评估</h3><p>安全风险评估（SRA）和隐私风险评估(PRA)是一个必需的过程，必须包括以下信息：<br>1、（安全）项目的哪些部分在发布前需要威胁模型？<br>2、（安全）项目的哪些部分在发布前需要进行安全设计评析？<br>3、（安全）项目的哪些部分需要并不食欲项目团队且双方认可的小组进行渗透测试？<br>4、（安全）是否存在安全顾问认为有必要增加的测试或分析要求已缓解安全风险？<br>5、（安全）模糊测试要求的具体范围是什么？<br>6、（安全）隐私影响评级如何？</p>
+<h3 id="设计要求"><a href="#设计要求" class="headerlink" title="设计要求"></a>设计要求</h3><p>在设计阶段应仔细考虑安全和隐私问题，在项目初期确定好安全需求，尽可能避免安全引起的需求变更。</p>
+<h3 id="减小攻击面"><a href="#减小攻击面" class="headerlink" title="减小攻击面"></a>减小攻击面</h3><p>减小攻击面与威胁建模紧密相关，不过它解决安全问题的角度稍有不同。减小攻击面通过减小攻击者利用潜在弱点或漏洞的机会来降低风险，减小攻击面包括：关闭或限制对系统服务的访问，应用“最小权限原则”，以及尽可<br>能进行分层防御。</p>
+<h3 id="威胁建模"><a href="#威胁建模" class="headerlink" title="威胁建模"></a>威胁建模</h3><p>为项目或产品面临的威胁建立模型，明确可能来自的攻击有哪些方面。</p>
+<h3 id="使用指定的工具"><a href="#使用指定的工具" class="headerlink" title="使用指定的工具"></a>使用指定的工具</h3><p>开发团队使用的编辑器、链接器等相关工具，可能会涉及一些安全相关的环节，因此在使用工具的版本上，需要提前与安全团队进行沟通。</p>
+<h3 id="弃用不安全函数"><a href="#弃用不安全函数" class="headerlink" title="弃用不安全函数"></a>弃用不安全函数</h3><p>许多常用函数可能存在安全隐患，应当禁用不安全的函数和API，使用安全团队推荐的函数。</p>
+<h3 id="静态分析"><a href="#静态分析" class="headerlink" title="静态分析"></a>静态分析</h3><p>代码静态分析可以由相关工具辅助完成，其结果与人工分析相结合。</p>
+<h3 id="动态程序分析"><a href="#动态程序分析" class="headerlink" title="动态程序分析"></a>动态程序分析</h3><p>动态分析是静态分析的补充，用于测试环节验证程序的安全性。</p>
+<h3 id="模糊测试（Fuzzing-Test）"><a href="#模糊测试（Fuzzing-Test）" class="headerlink" title="模糊测试（Fuzzing Test）"></a>模糊测试（Fuzzing Test）</h3><p>模糊测试是一种专门形式的动态分析，它通过故意向应用程序引入不良格式或随机数据诱发程序故障。模糊测试策略的制定，以应用程序的预期用途，以及应用程序的功能和设计规范为基础。安全顾问可能要求进行额外的模糊测试，或者扩大模糊测试的范围和增加持续时间。</p>
+<h3 id="威胁模型和攻击面评析"><a href="#威胁模型和攻击面评析" class="headerlink" title="威胁模型和攻击面评析"></a>威胁模型和攻击面评析</h3><p>项目经常会因为需求等因素导致最终的产出偏离原本设定的目标，因此在项目后期对威胁模型和攻击面进行评析是有必要的，能够及时发现问题并修正。</p>
+<h3 id="事件响应计划"><a href="#事件响应计划" class="headerlink" title="事件响应计划"></a>事件响应计划</h3><p>受SDL要求约束的每个软件在发布时都必须包含事件响应计划。即使在发布时不包含任何已知漏洞的产品，也可能在日后面临新出现的威胁。需要注意的是，如果产品中包含第三方的代码，也需要留下第三方的联系方式并加入事件响应计划，以便在发生问题时能够找到对应的人。</p>
+<h3 id="最终安全评析"><a href="#最终安全评析" class="headerlink" title="最终安全评析"></a>最终安全评析</h3><p>最终安全评析（FSR）是在发布之前仔细检查对软件执行的所有安全活动。通过FSR将得出以下三种不同不同结果。<br>1、通过FSR。在FSR过程中确定所有安全和隐私问题都已得到修复或缓解。<br>2、通过FSR但有异常。在FSR过程中确定所有安全和隐私问题都已得到修复或缓解，并且/或者所有异常都已得到圆满解决。无法解决的问题将记录下来，在下次发布时更正。<br>3、需上报问题的FSR。如果团队未满足所有SDL要求，并且安全顾问和产品团队无法达成可接受的折中，则安全顾问不能批准项目，项目不能发布。团队必须在发布之前解决所有可解决的问题，或者上报高级管理层进行抉择。</p>
+<h3 id="发布-存档"><a href="#发布-存档" class="headerlink" title="发布/存档"></a>发布/存档</h3><p>在通过FSR或者虽有问题但达成一致后，可以完成产品的发布。但发布的同时仍需对各种问题和文档进行存档，为紧急响应和产品升级提供帮助。<br>从以上的过程可以看出，微软的SDL的过程实施非常细致。微软这些年来也一直帮助公司的所有产品团队，以及合作伙伴实施SDL，效果相当显著。</p>
+<p>相对于微软的SDL，OWASP推出了SAMM（Software Assurance Maturity Model），帮助开发者在软件工程的过程中实施安全。<br>SAMM与SDL的主要区别在于，SDL适用于软件开发商，他们以贩售软件为主要业务；而SAMM更适用于自主开发软件的使用者，如银行或在线服务提供商。软件开发商的软件工程往往较为成熟，有着严格的质量控制；而自主开发软件的企业组织，则更强调高效，因此在软件工程的做法上也存在差异。</p>
+<h2 id="SDL实战经验准则"><a href="#SDL实战经验准则" class="headerlink" title="SDL实战经验准则"></a>SDL实战经验准则</h2><p>准则一：与项目经理进行充分沟通，排除足够的时间</p>
+<p>准则二：规范公司的立项流程，确保所有项目都能通知到安全团队，避免遗漏</p>
+<p>准则三：树立安全部门的权威，项目必须由安全部门审核完成后才能发布</p>
+<p>准则四：将技术方案写入开发、测试的工作手册中</p>
+<p>准则五：给工程师培训安全方案</p>
+<p>准则六：记录所有的安全bug，激励程序员编写安全的代码</p>
+<h2 id="学习文章"><a href="#学习文章" class="headerlink" title="学习文章"></a>学习文章</h2><p><a href="https://www.jianshu.com/p/dd147e84931b" target="_blank" rel="noopener">SDL的各个阶段</a><br><a href="https://pek3a.qingstor.com/community/resource/QCon2016-Beijing/SDL%E7%9A%84%E6%B7%B1%E5%85%A5%E6%8E%A2%E7%A9%B6%E5%8F%8A%E5%AE%9E%E8%B7%B5.pdf" target="_blank" rel="noopener">SDL的深入探究及实践</a><br><a href="https://xz.aliyun.com/t/6625#toc-7" target="_blank" rel="noopener">SDL探索之路</a><br><a href="https://xz.aliyun.com/t/5656" target="_blank" rel="noopener">精简版SDL落地实践</a><br><a href="https://www.securitypaper.org/1.sdl%E4%BB%8B%E7%BB%8D/1-%E4%BB%80%E4%B9%88%E6%98%AFsdl/" target="_blank" rel="noopener">值得读的书籍securitypaper关于SDL</a><br><a href="https://www.secpulse.com/archives/73373.html" target="_blank" rel="noopener">SDL建设-三方依赖库扫描系统</a></p>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者: <a href="https://yinwc.github.io">Ywc</a>
+            <p>原文链接: <a href="https://yinwc.github.io/2019/06/15/SDL%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/">https://yinwc.github.io/2019/06/15/SDL%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/</a>
+            <p>发表日期: <a href="https://yinwc.github.io/2019/06/15/SDL%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/">June 15th 2019, 6:21:18 pm</a>
+            <p>版权声明: </p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/06/18/App%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" title= App渗透测试 >
+                    <div class="nextTitle">App渗透测试</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/06/02/2019%E5%9B%BD%E8%B5%9B%E5%8D%8E%E4%B8%9C%E5%8C%97%E8%B5%9B%E5%8C%BA%E7%BA%BF%E4%B8%8B/" title= 2019国赛华东北赛区线下 >
+                    <div class="prevTitle">2019国赛华东北赛区线下</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC和WAP自适应版-->
+
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:V1ZkRA@126.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/YinWC" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SDL简介"><span class="toc-number">1.</span> <span class="toc-text">SDL简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SDL是什么"><span class="toc-number">1.1.</span> <span class="toc-text">SDL是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SDL能解决什么问题"><span class="toc-number">1.2.</span> <span class="toc-text">SDL能解决什么问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目生命周期中存在的问题"><span class="toc-number">2.</span> <span class="toc-text">项目生命周期中存在的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SDL的七个步骤"><span class="toc-number">3.</span> <span class="toc-text">SDL的七个步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、培训"><span class="toc-number">3.1.</span> <span class="toc-text">1、培训</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、安全要求"><span class="toc-number">3.2.</span> <span class="toc-text">2、安全要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、设计阶段"><span class="toc-number">3.3.</span> <span class="toc-text">3、设计阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-实施阶段"><span class="toc-number">3.4.</span> <span class="toc-text">4.实施阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-验证阶段"><span class="toc-number">3.5.</span> <span class="toc-text">5.验证阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-发布阶段"><span class="toc-number">3.6.</span> <span class="toc-text">6.发布阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7．响应"><span class="toc-number">3.7.</span> <span class="toc-text">7．响应</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SDL的步骤"><span class="toc-number">4.</span> <span class="toc-text">SDL的步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安全培训"><span class="toc-number">4.1.</span> <span class="toc-text">安全培训</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全要求"><span class="toc-number">4.2.</span> <span class="toc-text">安全要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#质量门-bug栏"><span class="toc-number">4.3.</span> <span class="toc-text">质量门&#x2F;bug栏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全和隐私风险评估"><span class="toc-number">4.4.</span> <span class="toc-text">安全和隐私风险评估</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设计要求"><span class="toc-number">4.5.</span> <span class="toc-text">设计要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减小攻击面"><span class="toc-number">4.6.</span> <span class="toc-text">减小攻击面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁建模"><span class="toc-number">4.7.</span> <span class="toc-text">威胁建模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用指定的工具"><span class="toc-number">4.8.</span> <span class="toc-text">使用指定的工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#弃用不安全函数"><span class="toc-number">4.9.</span> <span class="toc-text">弃用不安全函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#静态分析"><span class="toc-number">4.10.</span> <span class="toc-text">静态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态程序分析"><span class="toc-number">4.11.</span> <span class="toc-text">动态程序分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模糊测试（Fuzzing-Test）"><span class="toc-number">4.12.</span> <span class="toc-text">模糊测试（Fuzzing Test）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁模型和攻击面评析"><span class="toc-number">4.13.</span> <span class="toc-text">威胁模型和攻击面评析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件响应计划"><span class="toc-number">4.14.</span> <span class="toc-text">事件响应计划</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最终安全评析"><span class="toc-number">4.15.</span> <span class="toc-text">最终安全评析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发布-存档"><span class="toc-number">4.16.</span> <span class="toc-text">发布&#x2F;存档</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SDL实战经验准则"><span class="toc-number">5.</span> <span class="toc-text">SDL实战经验准则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#学习文章"><span class="toc-number">6.</span> <span class="toc-text">学习文章</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 108
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >CSRF漏洞挖掘</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/2020/07/13/Hawkeye%E7%9B%91%E6%8E%A7/" >Hawkeye监控</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/2020/06/28/XSS%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >XSS漏洞挖掘</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2020/06/16/MQTT%E5%AE%89%E5%85%A8%E5%88%9D%E6%8E%A2/" >MQTT安全初探</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2020/06/06/%E7%BA%A2%E5%8C%85%E4%BA%8B%E4%BB%B6/" >假红包事件——一次应急响应</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span><a class="archive-post-title" href= "/2020/05/12/%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/" >逻辑漏洞之我见</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2020/04/25/Xray%E6%89%AB%E6%8F%8F%E5%99%A8/" >Xray扫描器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2020/04/21/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" >文件上传漏洞总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/21</span><a class="archive-post-title" href= "/2020/03/21/https%E5%AE%89%E5%85%A8%E6%9C%BA%E5%88%B6/" >https安全机制</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2020/03/01/CVE-2020-1938/" >CVE-2020-1938:Tomcat AJP文件包含漏洞分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/18</span><a class="archive-post-title" href= "/2020/02/18/%E4%B8%80%E6%AC%A1%E6%B8%97%E9%80%8F%E5%AE%9E%E6%88%98/" >从后台getshell到内网漫游</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/08</span><a class="archive-post-title" href= "/2020/02/08/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" >从0开始学Java反序列化漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/31</span><a class="archive-post-title" href= "/2020/01/31/Python%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" >Python数据处理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/21</span><a class="archive-post-title" href= "/2020/01/21/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E7%AC%94%E8%AE%B0%E4%B9%8BLinux%E7%AF%87/" >应急响应笔记之Linux篇</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/03</span><a class="archive-post-title" href= "/2020/01/03/Java%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" >Java代码审计</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/31</span><a class="archive-post-title" href= "/2019/12/31/WEB%E5%BA%94%E7%94%A8%E6%BC%8F%E6%B4%9E%E5%8F%8A%E4%BF%AE%E5%A4%8D%E6%B1%87%E6%80%BB/" >WEB应用漏洞及修复</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/15</span><a class="archive-post-title" href= "/2019/12/15/Python3%E7%88%AC%E8%99%AB%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/" >Python3爬虫知识梳理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2019/12/05/learnpython/" >Python高级特性</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/20</span><a class="archive-post-title" href= "/2019/11/20/%E6%8F%90%E6%9D%83%E7%AC%94%E8%AE%B0/" >提权笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2019/11/06/Apache-Solr-Velocity%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5RCE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" >Apache Solr Velocity模板注入RCE漏洞复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/24</span><a class="archive-post-title" href= "/2019/10/24/%E7%94%B2%E6%96%B9%E5%AE%89%E5%85%A8/" >甲方安全建设</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/08</span><a class="archive-post-title" href= "/2019/10/08/%E9%9D%A2%E8%AF%95%E7%AE%97%E6%B3%95/" >常见算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/29</span><a class="archive-post-title" href= "/2019/09/29/zabbix%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" >Zabbix漏洞总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2019/09/26/ByteCTF/" >ByteCTF2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/19</span><a class="archive-post-title" href= "/2019/09/19/IAST%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E6%8A%80%E6%9C%AF/" >应用安全测试技术</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/02</span><a class="archive-post-title" href= "/2019/09/02/WebminRCE%E5%A4%8D%E7%8E%B0/" >WebminRCE复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/17</span><a class="archive-post-title" href= "/2019/08/17/SUCTF2019/" >SUCTF2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/14</span><a class="archive-post-title" href= "/2019/08/14/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F%E4%B8%8E%E5%90%8E%E6%B8%97%E9%80%8F/" >内网渗透</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/03</span><a class="archive-post-title" href= "/2019/08/03/De1CTF/" >De1CTF_WriteUp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/25</span><a class="archive-post-title" href= "/2019/07/25/Anaconda%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >Anaconda学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/18</span><a class="archive-post-title" href= "/2019/07/18/Nmap%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" >Nmap使用指南</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/06</span><a class="archive-post-title" href= "/2019/07/06/Django%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" >Django学习笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2019/06/18/App%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" >App渗透测试</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2019/06/15/SDL%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" >SDL安全开发流程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/02</span><a class="archive-post-title" href= "/2019/06/02/2019%E5%9B%BD%E8%B5%9B%E5%8D%8E%E4%B8%9C%E5%8C%97%E8%B5%9B%E5%8C%BA%E7%BA%BF%E4%B8%8B/" >2019国赛华东北赛区线下</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/21</span><a class="archive-post-title" href= "/2019/05/21/AWS%E6%90%AD%E5%BB%BASS/" >AWS搭建SS</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/15</span><a class="archive-post-title" href= "/2019/05/15/nps%E7%9A%84%E5%AD%A6%E4%B9%A0/" >内网渗透--nps的学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2019/05/06/docker/" >Docker的学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2019/04/22/%E5%BC%82%E6%88%96/" >深入理解异或操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/16</span><a class="archive-post-title" href= "/2019/04/16/MySQL%E6%8F%90%E6%9D%83/" >MySQL提权</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2019/04/15/DDCTF2019/" >DDCTF2019</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/20</span><a class="archive-post-title" href= "/2019/03/20/ACM%E7%BB%83%E4%B9%A0/" >LintCode代码练习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/18</span><a class="archive-post-title" href= "/2019/03/18/msf%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/" >MSF常用操作</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/07</span><a class="archive-post-title" href= "/2019/03/07/%E5%8F%8D%E5%BC%B9shell/" >Linux下反弹shell的方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/2019/03/06/python%E7%88%AC%E8%99%AB%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96/" >python爬虫数据提取</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/27</span><a class="archive-post-title" href= "/2019/02/27/Ddos%E5%88%86%E5%B8%83%E5%BC%8F%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1%E6%94%BB%E5%87%BB/" >Ddos分布式拒绝服务攻击</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/18</span><a class="archive-post-title" href= "/2019/02/18/python%E7%88%AC%E8%99%AB/" >python爬虫</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/15</span><a class="archive-post-title" href= "/2019/02/15/python%E7%88%AC%E8%99%AB%E5%AE%9E%E6%88%98/" >python爬虫实战</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/02</span><a class="archive-post-title" href= "/2019/02/02/%E5%AE%89%E5%85%A8%E4%BB%8E%E4%B8%9A%E4%BA%BA%E5%91%98%E7%9A%84%E8%81%8C%E4%B8%9A%E8%A7%84%E5%88%92/" >安全从业人员的职业规划</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/28</span><a class="archive-post-title" href= "/2019/01/28/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" >渗透测试之信息收集</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/26</span><a class="archive-post-title" href= "/2019/01/26/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" >反向代理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/17</span><a class="archive-post-title" href= "/2019/01/17/lvyecms%E5%90%8E%E5%8F%B0getshell/" >某cms后台getshell</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/16</span><a class="archive-post-title" href= "/2019/01/16/%E9%87%8D%E8%A3%85%E7%B3%BB%E7%BB%9F/" >使用U盘重装系统</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/31</span><a class="archive-post-title" href= "/2018/12/31/Ubuntu16-04%E6%9C%AC%E5%9C%B0%E6%8F%90%E6%9D%83%E6%BC%8F%E6%B4%9E-CVE-2017-16995/" >Ubuntu16.04本地提权漏洞(CVE-2017-16995)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/25</span><a class="archive-post-title" href= "/2018/12/25/%E5%AE%89%E6%81%92%E6%9D%AF12%E6%9C%88%E6%9C%88%E8%B5%9B/" >安恒杯12月月赛</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/10</span><a class="archive-post-title" href= "/2018/12/10/CVE-2017-12617%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E/" >CVE-2017-12617远程代码执行漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/06</span><a class="archive-post-title" href= "/2018/12/06/CTF%E5%B8%B8%E7%94%A8%E8%84%9A%E6%9C%AC%E6%95%B4%E7%90%86/" >CTF常用脚本整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/03</span><a class="archive-post-title" href= "/2018/12/03/Git-learn/" >Git learn</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2018/11/24/%E5%AE%89%E6%81%9211%E6%9C%88%E6%9C%88%E8%B5%9B/" >安恒11月月赛Write-up</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/19</span><a class="archive-post-title" href= "/2018/11/19/XXE%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/" >XXE漏洞总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2018/11/16/SSRF/" >SSRF总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2018/11/15/vulhub%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" >vulhub漏洞复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span><a class="archive-post-title" href= "/2018/11/15/MISC%E6%80%BB%E7%BB%93/" >MISC总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/14</span><a class="archive-post-title" href= "/2018/11/14/CRC32%E7%A2%B0%E6%92%9E/" >CRC32碰撞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/10</span><a class="archive-post-title" href= "/2018/11/10/N1CTF2018%E9%A2%98%E7%9B%AE%E5%A4%8D%E7%8E%B0/" >N1CTF2018题目复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2018/11/08/%E4%B8%8D%E5%8C%85%E5%90%AB%E6%95%B0%E5%AD%97%E5%92%8C%E5%AD%97%E6%AF%8D%E7%9A%84webshell/" >不包含数字和字母的webshell</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2018/11/08/python%E6%B2%99%E7%9B%92%E9%80%83%E9%80%B8/" >python沙箱逃逸</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/03</span><a class="archive-post-title" href= "/2018/11/03/%E5%85%AC%E9%92%A5%E4%B8%8E%E7%A7%81%E9%92%A5%E5%8A%A0%E5%AF%86/" >理解公钥与私钥</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/29</span><a class="archive-post-title" href= "/2018/10/29/WEB%E5%AE%89%E5%85%A8%E6%94%BB%E9%98%B2%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97%E8%84%91%E5%9B%BE/" >WEB安全攻防渗透测试实战指南脑图</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/17</span><a class="archive-post-title" href= "/2018/10/17/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B/" >渗透测试流程总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span><a class="archive-post-title" href= "/2018/10/14/windows-%E5%BA%94%E6%80%A5%E6%B5%81%E7%A8%8B%E5%8F%8A%E5%AE%9E%E6%88%98%E6%BC%94%E7%BB%83/" >windows 应急流程及实战演练</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2018/10/01/%E9%9D%A2%E8%AF%95/" >Web安全知识整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/29</span><a class="archive-post-title" href= "/2018/09/29/msf/" >Metasploit 渗透练习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/28</span><a class="archive-post-title" href= "/2018/09/28/Dmsj/" >代码审计练习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/16</span><a class="archive-post-title" href= "/2018/09/16/yilinbo/" >易霖博杯 赛后总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2018/09/09/jiaoben/" >一些脚本整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2018/09/09/burpsuite/" >渗透测试神器BurpSuite pro v2.0beta 使用教程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/31</span><a class="archive-post-title" href= "/2018/08/31/wangdingbei/" >网鼎杯题目整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/27</span><a class="archive-post-title" href= "/2018/08/27/luyoubiao/" >配置路由表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2018/08/08/SJU-game/" >SJU集训结业&淘汰赛 Write Up</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2018/08/06/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AD%A6%E4%B9%A0/" >网络安全学习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/05</span><a class="archive-post-title" href= "/2018/08/05/RCTF-2018/" >RCTF-2018 cpushop</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/31</span><a class="archive-post-title" href= "/2018/07/31/Gopher/" >从一道CTF题看gopher协议的攻击面</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/30</span><a class="archive-post-title" href= "/2018/07/30/dedecms/" >dedecms后台getshell漏洞还原分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/30</span><a class="archive-post-title" href= "/2018/07/30/Padding-Oracle-Attack/" >Padding Oracle Attack</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/27</span><a class="archive-post-title" href= "/2018/07/27/ubuntumysql/" >Ubuntu 18.04 mysql的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/26</span><a class="archive-post-title" href= "/2018/07/26/daimashenji/" >PHP代码审计练习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/26</span><a class="archive-post-title" href= "/2018/07/26/hydra/" >Hydra 爆破神器的使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/25</span><a class="archive-post-title" href= "/2018/07/25/dianfengjike/" >巅峰极客第一场web复现</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/25</span><a class="archive-post-title" href= "/2018/07/25/onethinkcms/" >OneThink/Thinkphp 的缓存getshell漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/12</span><a class="archive-post-title" href= "/2018/07/12/%E6%B8%97%E9%80%8F%E5%9F%BA%E7%A1%80/" >渗透基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/11</span><a class="archive-post-title" href= "/2018/07/11/gameofctf/" >Game-of-Thrones-CTF-1.0靶机实战演练</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/05</span><a class="archive-post-title" href= "/2018/07/05/sqlmap/" >Sqlmap 使用总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/04</span><a class="archive-post-title" href= "/2018/07/04/java%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" >java环境配置及版本共存问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/04</span><a class="archive-post-title" href= "/2018/07/04/sql%E6%B3%A8%E5%85%A5%E6%80%BB%E7%BB%93/" >SQL注入总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/04</span><a class="archive-post-title" href= "/2018/07/04/mozhe/" >墨者学院平台修炼</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/02</span><a class="archive-post-title" href= "/2018/07/02/iis%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E/" >iis文件解析漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/14</span><a class="archive-post-title" href= "/2018/06/14/mimikatz/" >mimikatz内网渗透</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/06</span><a class="archive-post-title" href= "/2018/06/06/wireshark/" >Wireshark-流量分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/03</span><a class="archive-post-title" href= "/2018/06/03/phpmagic/" >反序列化漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2018/06/01/git/" >git learn</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2018/05/30/markdown%E8%AF%AD%E6%B3%95%E6%80%BB%E7%BB%93/" >Markdown语法总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/29</span><a class="archive-post-title" href= "/2018/05/29/yuanmaxielou/" >Web源码泄露总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/28</span><a class="archive-post-title" href= "/2018/05/28/python/" >学习python中遇到的问题及总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/18</span><a class="archive-post-title" href= "/2018/05/18/rsa/" >Crypto_RSA算法总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/16</span><a class="archive-post-title" href= "/2018/05/16/problem/" >日常学习中问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/24</span><a class="archive-post-title" href= "/2018/03/24/2018-QWB/" >2018 QWB 题目整理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/14</span><a class="archive-post-title" href= "/2018/02/14/blog/" >搭博客的经历</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="CTF"><span class="iconfont-archer">&#xe606;</span>CTF</span>
+    
+        <span class="sidebar-tag-name" data-tags="learn"><span class="iconfont-archer">&#xe606;</span>learn</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
+        <span class="sidebar-tag-name" data-tags="漏洞"><span class="iconfont-archer">&#xe606;</span>漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="渗透测试"><span class="iconfont-archer">&#xe606;</span>渗透测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="CTF、漏洞"><span class="iconfont-archer">&#xe606;</span>CTF、漏洞</span>
+    
+        <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
+    
+        <span class="sidebar-tag-name" data-tags="MQTT安全"><span class="iconfont-archer">&#xe606;</span>MQTT安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="安全开发"><span class="iconfont-archer">&#xe606;</span>安全开发</span>
+    
+        <span class="sidebar-tag-name" data-tags="Record,Problem"><span class="iconfont-archer">&#xe606;</span>Record,Problem</span>
+    
+        <span class="sidebar-tag-name" data-tags="problem"><span class="iconfont-archer">&#xe606;</span>problem</span>
+    
+        <span class="sidebar-tag-name" data-tags="应急响应"><span class="iconfont-archer">&#xe606;</span>应急响应</span>
+    
+        <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
+    
+        <span class="sidebar-tag-name" data-tags="安全建设"><span class="iconfont-archer">&#xe606;</span>安全建设</span>
+    
+        <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="blog"><span class="iconfont-archer">&#xe60a;</span>blog</span>
+    
+        <span class="sidebar-category-name" data-categories="漏洞总结"><span class="iconfont-archer">&#xe60a;</span>漏洞总结</span>
+    
+        <span class="sidebar-category-name" data-categories="learn"><span class="iconfont-archer">&#xe60a;</span>learn</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Ywc"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+
