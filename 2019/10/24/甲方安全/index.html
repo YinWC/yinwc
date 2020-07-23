@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">471</span> / Reading time: <span class="post-count">1 min</span></span>
+                        <span>Word count: <span class="post-count">3.6k</span> / Reading time: <span class="post-count">12 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -396,15 +396,71 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>目录</p>
+        <!-- TOC -->
+
 <ul>
-<li><a href="#%e7%94%b2%e6%96%b9%e5%ae%89%e5%85%a8%e5%bb%ba%e8%ae%be%e6%ad%a5%e9%aa%a4">甲方安全建设步骤</a></li>
-<li><a href="#%e7%ba%a2%e9%98%9f%e5%bb%ba%e8%ae%be">红队建设</a></li>
-<li><a href="#%e6%83%85%e6%8a%a5">情报</a></li>
-<li><a href="#%e6%bc%8f%e6%b4%9e%e9%a2%84%e8%ad%a6">漏洞预警</a></li>
-<li><a href="#%e5%bc%80%e6%ba%90%e9%a1%b9%e7%9b%ae">开源项目</a></li>
+<li><a href="#基本步骤">基本步骤</a></li>
+<li><a href="#网络系统安全建设">网络系统安全建设</a><ul>
+<li><a href="#安全域划分">安全域划分</a></li>
+<li><a href="#安全域风险等级">安全域风险等级</a></li>
+<li><a href="#安全域风险对象">安全域风险对象</a></li>
+<li><a href="#安全建设方案">安全建设方案</a><ul>
+<li><a href="#办公网-网络安全建设">办公网-网络安全建设</a><ul>
+<li><a href="#wifi安全">WIFI安全</a></li>
+<li><a href="#vpn安全">VPN安全</a></li>
+<li><a href="#日志流量采集检测">日志流量采集检测</a></li>
+<li><a href="#router统一管理">Router统一管理</a></li>
+<li><a href="#终端网络准入">终端网络准入</a></li>
+<li><a href="#安全域之间网络隔离">安全域之间网络隔离</a></li>
 </ul>
-<h2 id="甲方安全建设步骤"><a href="#甲方安全建设步骤" class="headerlink" title="甲方安全建设步骤"></a>甲方安全建设步骤</h2><p><strong>1. 资产梳理</strong></p>
+</li>
+<li><a href="#办公网-系统安全建设">办公网-系统安全建设</a><ul>
+<li><a href="#办公网服务器安全">办公网服务器安全</a></li>
+<li><a href="#办公网终端pc安全">办公网终端PC安全</a></li>
+</ul>
+</li>
+<li><a href="#办公网-应用安全建设">办公网-应用安全建设</a><ul>
+<li><a href="#sso统一登录入口">SSO统一登录入口</a></li>
+<li><a href="#网站水印技术">网站水印技术</a></li>
+<li><a href="#邮箱安全">邮箱安全</a></li>
+<li><a href="#waf">WAF</a></li>
+</ul>
+</li>
+<li><a href="#办公网-员工安全">办公网-员工安全</a><ul>
+<li><a href="#在职员工安全教育">在职员工安全教育</a></li>
+<li><a href="#离职员工安全审计">离职员工安全审计</a></li>
+</ul>
+</li>
+<li><a href="#办公网-安全合规">办公网-安全合规</a></li>
+<li><a href="#生产网-系统安全建设">生产网-系统安全建设</a></li>
+<li><a href="#外网边界安全建设">外网边界安全建设</a></li>
+<li><a href="#产品安全建设">产品安全建设</a></li>
+<li><a href="#企业红蓝对抗">企业红蓝对抗</a></li>
+<li><a href="#私有云安全">私有云安全</a></li>
+<li><a href="#私有云安全-1">私有云安全</a></li>
+<li><a href="#安全组织架构">安全组织架构</a><ul>
+<li><a href="#小规模">小规模</a></li>
+<li><a href="#大规模">大规模</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#其他">其他</a><ul>
+<li><a href="#开源项目待整理">开源项目（待整理）</a></li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+
+
+<blockquote>
+<p>大部分内容来自<a href="https://mp.weixin.qq.com/s/0Uu_os9MB5ZHnowlWkYbEA" target="_blank" rel="noopener">nmask大佬</a></p>
+</blockquote>
+<h1 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h1><p><strong>1. 资产梳理</strong></p>
 <ul>
 <li>IP列表、业务分组(负责人、联系方向)、业务属性</li>
 <li>业务端口</li>
@@ -465,17 +521,79 @@ height:50vh;
 <li>网络准入</li>
 <li>PC安全(病毒统一管理、通知处理)</li>
 </ul>
-<h2 id="红队建设"><a href="#红队建设" class="headerlink" title="红队建设"></a>红队建设</h2><ul>
+<h1 id="网络系统安全建设"><a href="#网络系统安全建设" class="headerlink" title="网络系统安全建设"></a>网络系统安全建设</h1><h2 id="安全域划分"><a href="#安全域划分" class="headerlink" title="安全域划分"></a>安全域划分</h2><p>内部网络系统：主要指OA办公网内部、生产网内部、测试开发网内部、以及其他内部网络系统<br>外部网络系统：主要指OA办公网互联网边界、生产网互联网边界、测试开发网互联网边界、互联网上相关所属的网络系统（不限于：公有云、Github、云存储等）</p>
+<h2 id="安全域风险等级"><a href="#安全域风险等级" class="headerlink" title="安全域风险等级"></a>安全域风险等级</h2><p>外部网络系统&gt;生产网内部网络系统&gt;测试开发网内部网络系统&gt;办公网内部网络系统&gt;其他网络系统</p>
+<h2 id="安全域风险对象"><a href="#安全域风险对象" class="headerlink" title="安全域风险对象"></a>安全域风险对象</h2><p>外部系统：外部攻击者（黑客、白帽子）<br>内部系统：内部违规操作员工、已渗透到内网系统的外部攻击者</p>
+<h2 id="安全建设方案"><a href="#安全建设方案" class="headerlink" title="安全建设方案"></a>安全建设方案</h2><p>由于不同安全域的风险等级、风险对象有所区别，因此我个人认为不同安全域的安全建设方案也该因地制宜。以下文章篇幅，我将根据不同安全域通过事前、事中、事后三个方面记录信息安全建设思路。</p>
+<h3 id="办公网-网络安全建设"><a href="#办公网-网络安全建设" class="headerlink" title="办公网-网络安全建设"></a>办公网-网络安全建设</h3><h4 id="WIFI安全"><a href="#WIFI安全" class="headerlink" title="WIFI安全"></a>WIFI安全</h4><p>事前安全措施：1、建立双因素认证（通过个人账户密码+短信、动态密码）；2、建立设备安全认证（限定特定的设备才能连接）<br>事中安全措施：1、建议WIFI账号爆破监控；2、WIFI账号爆破封禁策略运营</p>
+<h4 id="VPN安全"><a href="#VPN安全" class="headerlink" title="VPN安全"></a>VPN安全</h4><p>事前安全措施：1、远程接入公司内部网络进行双因素认证（个人账户密码+短信、动态密码）；2、硬件指纹获取识别<br>事中安全措施：1、VPN异地登录；2、异常登录监控；3、VPN爆破监控以及封禁策略<br>事后安全措施：1、联系VPN账号所属者确定攻击行为</p>
+<h4 id="日志流量采集检测"><a href="#日志流量采集检测" class="headerlink" title="日志流量采集检测"></a>日志流量采集检测</h4><p>事前安全措施：1、办公网网络流量（到边界、到IDC）；2、日志采集检测<br>事中安全措施：1、员工异常行为监控（比如上传内部数据到网盘等）；2、攻击监控<br>事后安全措施：1、对涉事员工进行相应处罚</p>
+<h4 id="Router统一管理"><a href="#Router统一管理" class="headerlink" title="Router统一管理"></a>Router统一管理</h4><p>事前安全措施：1、即统一管理内部网络映射到外网需求（可利用nginx反向代理），减少系统暴露风险<br>事中安全措施：1、外网端口扫描监控</p>
+<h4 id="终端网络准入"><a href="#终端网络准入" class="headerlink" title="终端网络准入"></a>终端网络准入</h4><p>事前安全措施：1、办公终端（PC）需要安装准入程序，才允许上内部网络<br>事中安全措施：1、终端异常行为监控<br>事后安全措施：1、对涉事员工进行相应处罚</p>
+<h4 id="安全域之间网络隔离"><a href="#安全域之间网络隔离" class="headerlink" title="安全域之间网络隔离"></a>安全域之间网络隔离</h4><p>例如：办公网与生产网之间只能通过堡垒机登录，且只有特定端口才能通信等策略（根据实际情况配置）</p>
+<h3 id="办公网-系统安全建设"><a href="#办公网-系统安全建设" class="headerlink" title="办公网-系统安全建设"></a>办公网-系统安全建设</h3><h4 id="办公网服务器安全"><a href="#办公网服务器安全" class="headerlink" title="办公网服务器安全"></a>办公网服务器安全</h4><p>事前安全措施：1、服务器基线检查；2、补丁检查；3、端口服务监控；4、服务器登录统一管理<br>事中安全措施：1、服务器进程监控；2、敏感账户登录监控；3、敏感命令执行监控；4、文件上传下载等（依赖主机安全产品，服务器上安装Agent）<br>事后安全措施：1、服务器木马；2、后门查杀；3、服务器安全加固（服务器应急响应）</p>
+<h4 id="办公网终端PC安全"><a href="#办公网终端PC安全" class="headerlink" title="办公网终端PC安全"></a>办公网终端PC安全</h4><p>事前安全措施：1、防病毒；2、DLP；3、水印；4、行为监控<br>事中安全措施：1、DLP数据监控；2、水印监控</p>
+<h3 id="办公网-应用安全建设"><a href="#办公网-应用安全建设" class="headerlink" title="办公网-应用安全建设"></a>办公网-应用安全建设</h3><h4 id="SSO统一登录入口"><a href="#SSO统一登录入口" class="headerlink" title="SSO统一登录入口"></a>SSO统一登录入口</h4><p>事前安全措施：1、内部所有的办公系统使用一套SSO认证系统，可有效管理员工账户密码，预防弱口令等风险<br>事中安全措施：1、异常登录监控；2、弱口令监控<br>事后安全措施：1、强制修改用户账号密码；2、加固SSO</p>
+<h4 id="网站水印技术"><a href="#网站水印技术" class="headerlink" title="网站水印技术"></a>网站水印技术</h4><p>事前安全措施：1、对有重要敏感数据的网站加上水印，防止数据被截图泄露等风险<br>事中安全措施：1、水印攻防监控<br>事后安全措施：1、对涉事员工进行相应处罚</p>
+<h4 id="邮箱安全"><a href="#邮箱安全" class="headerlink" title="邮箱安全"></a>邮箱安全</h4><p>事前安全措施：1、邮箱访问安全加固方案，用来解决邮箱接口被爆破风险；2、附件安全扫描；3、异地登录报警；4、弱口令扫描<br>事中安全措施：1、邮件爆破监控；2、账户或者IP封禁；3、异地登录监控<br>事后安全措施：1、若爆破成功，则强制修改相关员工密码，且排查安全风险</p>
+<h4 id="WAF"><a href="#WAF" class="headerlink" title="WAF"></a>WAF</h4><p>事前安全措施：1、应用服务器上部署WAF，拦截web攻击<br>事中安全措施：2、WAF上进行攻击监测<br>事后安全措施：3、更新优化WAF拦截策略</p>
+<h3 id="办公网-员工安全"><a href="#办公网-员工安全" class="headerlink" title="办公网-员工安全"></a>办公网-员工安全</h3><h4 id="在职员工安全教育"><a href="#在职员工安全教育" class="headerlink" title="在职员工安全教育"></a>在职员工安全教育</h4><p>事前安全措施：<br>1、定期对所有员工进行安全培训；<br>2、对新员工进行入职安全培训；<br>3、定期开展内部钓鱼测试；<br>4、针对RD可培训WEB安全开发；<br>5、针对OP可培训安全运维。<br>事中安全措施：1、对员工行为进行监控（可通过前面介绍的几种方案）；2、对钓鱼邮件进行告警<br>事后安全措施：1、对涉事员工进行相应处罚；2、钓鱼邮件影响评估</p>
+<h4 id="离职员工安全审计"><a href="#离职员工安全审计" class="headerlink" title="离职员工安全审计"></a>离职员工安全审计</h4><p>1、离职行为审计；2、办公电脑审计；3、人员离职账户注销</p>
+<h3 id="办公网-安全合规"><a href="#办公网-安全合规" class="headerlink" title="办公网-安全合规"></a>办公网-安全合规</h3><p>1、ISO27001；2、等保2.0</p>
+<h3 id="生产网-系统安全建设"><a href="#生产网-系统安全建设" class="headerlink" title="生产网-系统安全建设"></a>生产网-系统安全建设</h3><ul>
+<li>主机安全:1、内部资产发现；2、webshell监控；3、反弹shell监控等日常运营工作</li>
+<li>日志分析监控：1、可以偏业务一些，比如接口防刷监控运维；2、也可以偏系统一些，攻击行为的监控运维</li>
+<li>网络抗DDOS、应用抗CC：主要靠部署一些流量清洗产品</li>
+<li>入侵检测、防御：IDS、IPS（对于告警记录的运维工作）</li>
+<li>堡垒机：服务器统一登录管理，秘钥管理，访问控制策略运维工作</li>
+<li>Router层统一映射管理：互联网端口、IP映射管理，结合cmdb平台运维工作</li>
+<li>WAF：部署waf产品，拦截WEB攻击，告警记录运营工作</li>
+<li>端口开放策略（ACL）</li>
+<li>IPTABLES</li>
+<li>态势感知（SOC平台）：流量监控平台，通过监控不同方向的流量，发现攻击行为</li>
+<li>蜜罐（欺骗防御）：通过在内、外部部署蜜罐产品，发现攻击行为</li>
+<li>邮件沙箱、网关：针对邮件钓鱼、恶意附件的检测</li>
+<li>威胁情报：往往跟态势感知相结合</li>
+</ul>
+<p>除了系统层面的安全建设，生产网更多的是跟运维相关的一些安全内容（比如安全基线等），也包含项目上线的一些安全流程规范管理。</p>
+<h3 id="外网边界安全建设"><a href="#外网边界安全建设" class="headerlink" title="外网边界安全建设"></a>外网边界安全建设</h3><ul>
+<li>资产收集：IP、域名、URL、数据接口、端口服务监控，梳理统计内外网端口映射关系、业务线负责人等信息，盘点边界资产。</li>
+<li>黑盒漏洞扫描：WEB漏洞扫描、主机漏洞扫描（可采购也可自研，定期巡检）</li>
+<li>业务逻辑漏洞扫描：通过流量、日志被动式检测简单的业务逻辑漏洞</li>
+<li>GITHUB监控：自动化监控github泄露的公司相关代码、服务器个人相关信息等</li>
+<li>SRC上报漏洞响应：建设SRC平台，收集白帽子提交的安全漏洞</li>
+<li>最新漏洞、0day响应：0day、1day漏洞的研究、应急团队，推动漏洞修复</li>
+<li>威胁情报</li>
+<li>渗透测试：定期开展从互联网边界实施的渗透测试工作，寻找安全漏洞</li>
+</ul>
+<p>外网边界的安全建设工作，大致分为三个步骤：资产盘点、漏洞扫描、漏洞推修（定期重复），0day漏洞应急另算。</p>
+<h3 id="产品安全建设"><a href="#产品安全建设" class="headerlink" title="产品安全建设"></a>产品安全建设</h3><p>第一道防线：产品安全设计（早期可通过安全编码、意识培训使RD、PM具备信息安全意识）<br>第二道防线：需求评审、架构评审、代码审计、白盒扫描（通过建立需求安全评审等机制，严格控制新项目上线流程）<br>第三道防线：黑盒扫描、灰盒扫描（项目上线后可定期开展黑盒扫描）<br>第四道防线：SRC、企业蓝军（通过SRC、蓝军渗透发现的漏洞进行补充）<br>在整个产品安全建设过程中，企业可自研沉淀”产品安全开发库”、”SDL流程平台”以及制定”产品安全相关流程制度”。</p>
+<h3 id="企业红蓝对抗"><a href="#企业红蓝对抗" class="headerlink" title="企业红蓝对抗"></a>企业红蓝对抗</h3><p>企业红军：负责企业安全建设、安全监控、安全加固<br>企业蓝军：负责攻击安全堡垒、找出安全薄弱点</p>
+<p>网络安全红军的工作包含了以上所有的安全建设工作，而网络安全蓝军的工作是一个全新的视角，包含不限于：</p>
+<p>内部钓鱼攻击<br>外部漏洞攻击<br>APT攻击<br>内部爆破攻击<br>员工信息收集<br>……<br>企业在蓝军团队建设过程中，可自研沉淀：漏洞扫描器、社工库、漏洞库等</p>
+<h3 id="私有云安全"><a href="#私有云安全" class="headerlink" title="私有云安全"></a>私有云安全</h3><p>有些企业内部会建设私有云，关于私有云安全我接触不多，大致列一下所涉猎的内容：</p>
+<p>网络安全：租户间的虚拟网络隔离、虚拟机与宿主机间的访问策略、同租户不同虚机间的访问策略等<br>数据安全：数据的备份加密、数据接口防重放、数据分级分类等<br>主机安全：防逃逸、内存溢出、入侵检测等<br>安全合规：等保2.0云安全相关章节</p>
+<h3 id="私有云安全-1"><a href="#私有云安全-1" class="headerlink" title="私有云安全"></a>私有云安全</h3><p>有些企业内部会建设私有云，关于私有云安全我接触不多，大致列一下所涉猎的内容：</p>
+<p>网络安全：租户间的虚拟网络隔离、虚拟机与宿主机间的访问策略、同租户不同虚机间的访问策略等<br>数据安全：数据的备份加密、数据接口防重放、数据分级分类等<br>主机安全：防逃逸、内存溢出、入侵检测等<br>安全合规：等保2.0云安全相关章节</p>
+<h3 id="安全组织架构"><a href="#安全组织架构" class="headerlink" title="安全组织架构"></a>安全组织架构</h3><h4 id="小规模"><a href="#小规模" class="headerlink" title="小规模"></a>小规模</h4><p>若公司规模小，个人认为可按事前、事中、事后划分信息安全组织架构（仅供参考）</p>
+<p>系统安全<br>事前团队：负责内外网安全建设<br>事中团队：负责入侵监控、异常监控<br>事后团队：负责应急响应、事后处罚整改<br>产品安全：SDL<br>安全合规<br>业务安全</p>
+<h4 id="大规模"><a href="#大规模" class="headerlink" title="大规模"></a>大规模</h4><p>若公司规模大，可按安全区域划分组织架构（仅供参考）</p>
+<p>系统安全：<br>办公网团队：负责办公网安全建设、安全监控、应急响应（内部可再按照前、中、后细分，再细分，可分WEB、移动、硬件等）<br>生产网团队：负责生产网安全建设、安全监控、应急响应<br>外网边界团队：负责边界安全建设、安全监控、应急响应<br>产品安全：SDL<br>安全合规<br>蓝军团队：如果规模小可不用设置蓝军团队。蓝军团队是脱离安全区域之外的，但属于事前。<br>业务安全<br>云安全</p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>红队建设</p>
+<ul>
 <li><a href="https://github.com/aleenzz/Cobalt_Strike_wiki" target="_blank" rel="noopener">Cobalt_Strike_wiki</a></li>
 </ul>
-<h2 id="情报"><a href="#情报" class="headerlink" title="情报"></a>情报</h2><ul>
+<p>情报</p>
+<ul>
 <li><a href="http://wechat.doonsec.com/" target="_blank" rel="noopener">http://wechat.doonsec.com/</a></li>
 <li><a href="https://sec.thief.one/?type_id=a17165288561873d8fdf8e29586c891a" target="_blank" rel="noopener">https://sec.thief.one/?type_id=a17165288561873d8fdf8e29586c891a</a></li>
 </ul>
-<h2 id="漏洞预警"><a href="#漏洞预警" class="headerlink" title="漏洞预警"></a>漏洞预警</h2><ul>
+<p>漏洞预警</p>
+<ul>
 <li><a href="https://sec.thief.one/?type_id=dc31e48fe511b8ec10969ba13d282355" target="_blank" rel="noopener">https://sec.thief.one/?type_id=dc31e48fe511b8ec10969ba13d282355</a></li>
 </ul>
-<h2 id="开源项目"><a href="#开源项目" class="headerlink" title="开源项目"></a>开源项目</h2><p><a href="http://wiki.beysec.com/" target="_blank" rel="noopener">http://wiki.beysec.com/</a></p>
+<h2 id="开源项目（待整理）"><a href="#开源项目（待整理）" class="headerlink" title="开源项目（待整理）"></a>开源项目（待整理）</h2><p><a href="http://wiki.beysec.com/" target="_blank" rel="noopener">http://wiki.beysec.com/</a></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://mp.weixin.qq.com/s/0Uu_os9MB5ZHnowlWkYbEA" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/0Uu_os9MB5ZHnowlWkYbEA</a></p>
 
     </article>
     <!-- license  -->
@@ -613,7 +731,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#甲方安全建设步骤"><span class="toc-number">1.</span> <span class="toc-text">甲方安全建设步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#红队建设"><span class="toc-number">2.</span> <span class="toc-text">红队建设</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#情报"><span class="toc-number">3.</span> <span class="toc-text">情报</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞预警"><span class="toc-number">4.</span> <span class="toc-text">漏洞预警</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开源项目"><span class="toc-number">5.</span> <span class="toc-text">开源项目</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本步骤"><span class="toc-number">1.</span> <span class="toc-text">基本步骤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络系统安全建设"><span class="toc-number">2.</span> <span class="toc-text">网络系统安全建设</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安全域划分"><span class="toc-number">2.1.</span> <span class="toc-text">安全域划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全域风险等级"><span class="toc-number">2.2.</span> <span class="toc-text">安全域风险等级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全域风险对象"><span class="toc-number">2.3.</span> <span class="toc-text">安全域风险对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全建设方案"><span class="toc-number">2.4.</span> <span class="toc-text">安全建设方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#办公网-网络安全建设"><span class="toc-number">2.4.1.</span> <span class="toc-text">办公网-网络安全建设</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#WIFI安全"><span class="toc-number">2.4.1.1.</span> <span class="toc-text">WIFI安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VPN安全"><span class="toc-number">2.4.1.2.</span> <span class="toc-text">VPN安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#日志流量采集检测"><span class="toc-number">2.4.1.3.</span> <span class="toc-text">日志流量采集检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Router统一管理"><span class="toc-number">2.4.1.4.</span> <span class="toc-text">Router统一管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#终端网络准入"><span class="toc-number">2.4.1.5.</span> <span class="toc-text">终端网络准入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全域之间网络隔离"><span class="toc-number">2.4.1.6.</span> <span class="toc-text">安全域之间网络隔离</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#办公网-系统安全建设"><span class="toc-number">2.4.2.</span> <span class="toc-text">办公网-系统安全建设</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#办公网服务器安全"><span class="toc-number">2.4.2.1.</span> <span class="toc-text">办公网服务器安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#办公网终端PC安全"><span class="toc-number">2.4.2.2.</span> <span class="toc-text">办公网终端PC安全</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#办公网-应用安全建设"><span class="toc-number">2.4.3.</span> <span class="toc-text">办公网-应用安全建设</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SSO统一登录入口"><span class="toc-number">2.4.3.1.</span> <span class="toc-text">SSO统一登录入口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网站水印技术"><span class="toc-number">2.4.3.2.</span> <span class="toc-text">网站水印技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#邮箱安全"><span class="toc-number">2.4.3.3.</span> <span class="toc-text">邮箱安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WAF"><span class="toc-number">2.4.3.4.</span> <span class="toc-text">WAF</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#办公网-员工安全"><span class="toc-number">2.4.4.</span> <span class="toc-text">办公网-员工安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在职员工安全教育"><span class="toc-number">2.4.4.1.</span> <span class="toc-text">在职员工安全教育</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#离职员工安全审计"><span class="toc-number">2.4.4.2.</span> <span class="toc-text">离职员工安全审计</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#办公网-安全合规"><span class="toc-number">2.4.5.</span> <span class="toc-text">办公网-安全合规</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生产网-系统安全建设"><span class="toc-number">2.4.6.</span> <span class="toc-text">生产网-系统安全建设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#外网边界安全建设"><span class="toc-number">2.4.7.</span> <span class="toc-text">外网边界安全建设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#产品安全建设"><span class="toc-number">2.4.8.</span> <span class="toc-text">产品安全建设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#企业红蓝对抗"><span class="toc-number">2.4.9.</span> <span class="toc-text">企业红蓝对抗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#私有云安全"><span class="toc-number">2.4.10.</span> <span class="toc-text">私有云安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#私有云安全-1"><span class="toc-number">2.4.11.</span> <span class="toc-text">私有云安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全组织架构"><span class="toc-number">2.4.12.</span> <span class="toc-text">安全组织架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#小规模"><span class="toc-number">2.4.12.1.</span> <span class="toc-text">小规模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#大规模"><span class="toc-number">2.4.12.2.</span> <span class="toc-text">大规模</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-number">3.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开源项目（待整理）"><span class="toc-number">3.1.</span> <span class="toc-text">开源项目（待整理）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.2.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
