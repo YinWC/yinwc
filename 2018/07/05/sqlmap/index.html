@@ -261,13 +261,13 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "learn">learn</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透测试">渗透测试</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">820</span> / Reading time: <span class="post-count">3 min</span></span>
+                        <span>Word count: <span class="post-count">4k</span> / Reading time: <span class="post-count">15 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -396,15 +396,131 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p><code>--batch</code> 在运行过程中无需做出判断</p>
-<p>sqlmap 判断waf <code>sqlmap -u &quot;http://www.sch01ar.com/&quot; --identify-waf --batch</code> </p>
-<p>sqlmap使用大全：<a href="http://www.php.cn/php-weizijiaocheng-391039.html" target="_blank" rel="noopener">http://www.php.cn/php-weizijiaocheng-391039.html</a></p>
-<p><a href="http://www.vuln.cn/1992" target="_blank" rel="noopener">http://www.vuln.cn/1992</a><br>Sqlmap的命令介绍，<a href="https://blog.csdn.net/u011781521/article/details/53979998" target="_blank" rel="noopener">中英文对照</a></p>
-<p>参考：<a href="http://www.51xkx.cn/?p=228" target="_blank" rel="noopener">http://www.51xkx.cn/?p=228</a></p>
-<p><a href="https://blog.csdn.net/zgyulongfei/article/details/41017493" target="_blank" rel="noopener">https://blog.csdn.net/zgyulongfei/article/details/41017493</a></p>
-<p><a href="https://www.cnblogs.com/r00tuser/p/7252796.html" target="_blank" rel="noopener">https://www.cnblogs.com/r00tuser/p/7252796.html</a></p>
-<p><a href="https://www.cnblogs.com/handt/p/855fc3559d82e3f133a0bc314bfedc29.html" target="_blank" rel="noopener">https://www.cnblogs.com/handt/p/855fc3559d82e3f133a0bc314bfedc29.html</a></p>
-<h2 id="一般注入流程-mysql-："><a href="#一般注入流程-mysql-：" class="headerlink" title="一般注入流程(mysql)："></a>一般注入流程(mysql)：</h2><p>1.验证注入</p>
+        <p><img src="/2018/07/05/sqlmap/sqlmap.jpg" alt="sqlmap"></p>
+<h2 id="0x01-基本知识"><a href="#0x01-基本知识" class="headerlink" title="0x01 基本知识"></a>0x01 基本知识</h2><p>一、当给sqlmap这么一个url的时候，它会：</p>
+<ul>
+<li><p>1、判断可注入的参数</p>
+</li>
+<li><p>2、判断可以用那种SQL注入技术来注入</p>
+</li>
+<li><p>3、识别出哪种数据库</p>
+</li>
+<li><p>4、根据用户选择，读取哪些数据</p>
+</li>
+</ul>
+<p>二、sqlmap支持五种不同的注入模式：</p>
+<ul>
+<li><p>1、基于布尔的盲注，即可以根据返回页面判断条件真假的注入。</p>
+</li>
+<li><p>2、基于时间的盲注，即不能根据页面返回内容判断任何信息，用条件语句查看时间延迟语句是否执行（即页面返回时间是否增加）来判断。</p>
+</li>
+<li><p>3、基于报错注入，即页面会返回错误信息，或者把注入的语句的结果直接返回在页面中。</p>
+</li>
+<li><p>4、联合查询注入，可以使用union的情况下的注入。</p>
+</li>
+<li><p>5、堆查询注入，可以同时执行多条语句的执行时的注入。</p>
+</li>
+</ul>
+<p>sqlmap支持的数据库有：</p>
+<blockquote>
+<p>MySQL, Oracle, PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird, Sybase和SAP MaxDB</p>
+</blockquote>
+<h2 id="0x02-选项"><a href="#0x02-选项" class="headerlink" title="0x02 选项"></a>0x02 选项</h2><p><code>–version</code> 显示程序的版本号并退出<br><code>-h, –help</code> 显示此帮助消息并退出<br><code>-v VERBOSE</code> 详细级别：0-6（默认为1）</p>
+<p><strong>Target(目标)：</strong><br>以下至少需要设置其中一个选项，设置目标 URL。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-d DIRECT 直接连接到数据库。</span><br><span class="line">-u URL, –url&#x3D;URL 目标 URL。</span><br><span class="line">-l LIST 从 Burp 或 WebScarab 代理的日志中解析目标。</span><br><span class="line">-r REQUESTFILE 从一个文件中载入 HTTP 请求。</span><br><span class="line">-g GOOGLEDORK 处理 Google dork 的结果作为目标 URL。</span><br><span class="line">-c CONFIGFILE 从 INI 配置文件中加载选项。</span><br></pre></td></tr></table></figure>
+
+<p><strong>Request（请求）:</strong><br>这些选项可以用来指定如何连接到目标URL。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">–data&#x3D;DATA 通过 POST 发送的数据字符串</span><br><span class="line">–cookie&#x3D;COOKIE HTTP Cookie 头</span><br><span class="line">–cookie-urlencode URL 编码生成的 cookie 注入</span><br><span class="line">–drop-set-cookie 忽略响应的 Set –Cookie 头信息</span><br><span class="line">–user-agent&#x3D;AGENT 指定 HTTP User –Agent 头</span><br><span class="line">–random-agent 使用随机选定的 HTTP User-Agent 头</span><br><span class="line">–referer&#x3D;REFERER 指定 HTTP Referer 头</span><br><span class="line">–headers&#x3D;HEADERS 换行分开，加入其他的 HTTP 头</span><br><span class="line">–auth-type&#x3D;ATYPE HTTP 身份验证类型（基本，摘要或NTLM）(Basic, Digest or NTLM)</span><br><span class="line">–auth-cred&#x3D;ACRED HTTP 身份验证凭据（用户名:密码）</span><br><span class="line">–auth-cert&#x3D;ACERT HTTP 认证证书（key_file，cert_file）</span><br><span class="line">–proxy&#x3D;PROXY 使用 HTTP 代理连接到目标 URL</span><br><span class="line">–proxy-cred&#x3D;PCRED HTTP 代理身份验证凭据（用户名：密码）</span><br><span class="line">–ignore-proxy 忽略系统默认的 HTTP 代理</span><br><span class="line">–delay&#x3D;DELAY 在每个 HTTP 请求之间的延迟时间，单位为秒</span><br><span class="line">–timeout&#x3D;TIMEOUT 等待连接超时的时间（默认为30 秒）</span><br><span class="line">–retries&#x3D;RETRIES 连接超时后重新连接的时间（默认3）</span><br><span class="line">–scope&#x3D;SCOPE 从所提供的代理日志中过滤器目标的正则表达式</span><br><span class="line">–safe-url&#x3D;SAFURL 在测试过程中经常访问的 url 地址</span><br><span class="line">–safe-freq&#x3D;SAFREQ 两次访问之间测试请求，给出安全的 URL</span><br></pre></td></tr></table></figure>
+
+<p><strong>Optimization（优化）：</strong><br>这些选项可用于优化 sqlmap.py 的性能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-o 开启所有优化开关</span><br><span class="line">–predict-output 预测常见的查询输出</span><br><span class="line">–keep-alive 使用持久的 HTTP(S) 连接</span><br><span class="line">–null-connection 从没有实际的 HTTP 响应体中检索页面长度</span><br><span class="line">–threads&#x3D;THREADS 最大的 HTTP(S) 请求并发量（默认为1）</span><br></pre></td></tr></table></figure>
+
+<p><strong>Injection（注入）：</strong><br>这些选项可以用来指定测试哪些参数，提供自定义的注入 payloads 和可选篡改脚本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-p TESTPARAMETER 可测试的参数</span><br><span class="line">–dbms&#x3D;DBMS 强制后端的 DBMS 为此值</span><br><span class="line">–os&#x3D;OS 强制后端的 DBMS 操作系统为这个值</span><br><span class="line">–prefix&#x3D;PREFIX 注入 payload 字符串前缀</span><br><span class="line">–suffix&#x3D;SUFFIX 注入 payload 字符串后缀</span><br><span class="line">–tamper&#x3D;TAMPER 使用给定的脚本篡改注入数据</span><br><span class="line">–tamper 通过编码绕过 WEB 防火墙（WAF）sqlmap.py 默认用 char()</span><br><span class="line">–tamper 插件所在目录\sqlmap-dev\tamper</span><br></pre></td></tr></table></figure>
+<ol>
+<li>apostrophemask.py 用UTF-8全角字符替换单引号字符</li>
+<li>apostrophenullencode.py 用非法双字节unicode字符替换单引号字符</li>
+<li>appendnullbyte.py 在payload末尾添加空字符编码</li>
+<li>base64encode.py 对给定的payload全部字符使用Base64编码</li>
+<li>between.py 分别用“NOT BETWEEN 0 AND #”替换大于号“&gt;”，“BETWEEN # AND #”替换等于号“=”</li>
+<li>bluecoat.py 在SQL语句之后用有效的随机空白符替换空格符，随后用“LIKE”替换等于号“=”</li>
+<li>chardoubleencode.py 对给定的payload全部字符使用双重URL编码（不处理已经编码的字符）</li>
+<li>charencode.py 对给定的payload全部字符使用URL编码（不处理已经编码的字符）</li>
+<li>charunicodeencode.py 对给定的payload的非编码字符使用Unicode URL编码（不处理已经编码的字符）</li>
+<li>concat2concatws.py 用“CONCAT_WS(MID(CHAR(0), 0, 0), A, B)”替换像“CONCAT(A, B)”的实例</li>
+<li>equaltolike.py 用“LIKE”运算符替换全部等于号“=”</li>
+<li>greatest.py 用“GREATEST”函数替换大于号“&gt;”</li>
+<li>halfversionedmorekeywords.py 在每个关键字之前添加MySQL注释</li>
+<li>ifnull2ifisnull.py 用“IF(ISNULL(A), B, A)”替换像“IFNULL(A, B)”的实例</li>
+<li>lowercase.py 用小写值替换每个关键字字符</li>
+<li>modsecurityversioned.py 用注释包围完整的查询</li>
+<li>modsecurityzeroversioned.py 用当中带有数字零的注释包围完整的查询</li>
+<li>multiplespaces.py 在SQL关键字周围添加多个空格</li>
+<li>nonrecursivereplacement.py 用representations替换预定义SQL关键字，适用于过滤器</li>
+<li>overlongutf8.py 转换给定的payload当中的所有字符</li>
+<li>percentage.py 在每个字符之前添加一个百分号</li>
+<li>randomcase.py 随机转换每个关键字字符的大小写</li>
+<li>randomcomments.py 向SQL关键字中插入随机注释</li>
+<li>securesphere.py 添加经过特殊构造的字符串</li>
+<li>sp_password.py 向payload末尾添加“sp_password” for automatic obfuscation from DBMS logs</li>
+<li>space2comment.py 用“/**/”替换空格符</li>
+<li>space2dash.py 用破折号注释符“–”其次是一个随机字符串和一个换行符替换空格符</li>
+<li>space2hash.py 用磅注释符“#”其次是一个随机字符串和一个换行符替换空格符</li>
+<li>space2morehash.py 用磅注释符“#”其次是一个随机字符串和一个换行符替换空格符</li>
+<li>space2mssqlblank.py 用一组有效的备选字符集当中的随机空白符替换空格符</li>
+<li>space2mssqlhash.py 用磅注释符“#”其次是一个换行符替换空格符</li>
+<li>space2mysqlblank.py 用一组有效的备选字符集当中的随机空白符替换空格符</li>
+<li>space2mysqldash.py 用破折号注释符“–”其次是一个换行符替换空格符</li>
+<li>space2plus.py 用加号“+”替换空格符</li>
+<li>space2randomblank.py 用一组有效的备选字符集当中的随机空白符替换空格符</li>
+<li>unionalltounion.py 用“UNION SELECT”替换“UNION ALL SELECT”</li>
+<li>unmagicquotes.py 用一个多字节组合%bf%27和末尾通用注释一起替换空格符</li>
+<li>varnish.py 添加一个HTTP头“X-originating-IP”来绕过WAF</li>
+<li>versionedkeywords.py 用MySQL注释包围每个非函数关键字</li>
+<li>versionedmorekeywords.py 用MySQL注释包围每个关键字</li>
+<li>xforwardedfor.py 添加一个伪造的HTTP头“X-Forwarded-For”来绕过WAF</li>
+</ol>
+<p><strong>Detection（检测）：</strong><br>这些选项可以用来指定在 SQL 盲注时如何解析和比较 HTTP 响应页面的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">–level&#x3D;LEVEL 执行测试的等级（1-5，默认为 1）</span><br><span class="line">–risk&#x3D;RISK 执行测试的风险（0-3，默认为 1）</span><br><span class="line">–string&#x3D;STRING 查询有效时在页面匹配字符串</span><br><span class="line">–regexp&#x3D;REGEXP 查询有效时在页面匹配正则表达式</span><br><span class="line">–text-only 仅基于文本内容比较网页</span><br></pre></td></tr></table></figure>
+<p>这些选项可用于调整具体的 SQL 注入测试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">–technique&#x3D;TECH SQL 注入技术测试（默认 BEUST）</span><br><span class="line">Techniques（技巧）：</span><br><span class="line">–technique &#x2F;*测试指定注入类型\使用的技术</span><br></pre></td></tr></table></figure>
+<p>不加参数默认测试所有注入技术：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">B: 基于布尔的 SQL 盲注</span><br><span class="line">E: 基于显错 sql 注入</span><br><span class="line">U: 基于 UNION 注入</span><br><span class="line">S: 叠层 sql 注入</span><br><span class="line">T: 基于时间盲注</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">–time-sec&#x3D;TIMESEC DBMS 响应的延迟时间（默认为 5 秒）</span><br><span class="line">–union-cols&#x3D;UCOLS 定列范围用于测试 UNION 查询注入</span><br><span class="line">–union-char&#x3D;UCHAR 用于暴力猜解列数的字符</span><br></pre></td></tr></table></figure>
+
+<p><strong>Fingerprint（指纹）：</strong><br><code>-f, –fingerprint</code> 执行检查广泛的 DBMS 版本指纹</p>
+<p><strong>Enumeration（枚举）：</strong><br>这些选项可以用来列举后端数据库管理系统的信息、表中的结构和数据。此外，您还可以运行您自己的 SQL 语句。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">-b, –banner 检索数据库管理系统的标识</span><br><span class="line">–current-user 检索数据库管理系统当前用户</span><br><span class="line">–current-db 检索数据库管理系统当前数据库</span><br><span class="line">–is-dba 检测 DBMS 当前用户是否 DBA</span><br><span class="line">–users 枚举数据库管理系统用户</span><br><span class="line">–passwords 枚举数据库管理系统用户密码哈希</span><br><span class="line">–privileges 枚举数据库管理系统用户的权限</span><br><span class="line">–roles 枚举数据库管理系统用户的角色</span><br><span class="line">–dbs 枚举数据库管理系统数据库</span><br><span class="line">–tables 枚举 DBMS 数据库中的表</span><br><span class="line">–columns 枚举 DBMS 数据库表列</span><br><span class="line">–dump 转储数据库管理系统的数据库中的表项</span><br><span class="line">–dump-all 转储所有的 DBMS 数据库表中的条目</span><br><span class="line">–search 搜索列，表和&#x2F;或数据库名称</span><br><span class="line">-D DB 要进行枚举的数据库名</span><br><span class="line">-T TBL 要进行枚举的数据库表</span><br><span class="line">-C COL 要进行枚举的数据库列</span><br><span class="line">-U USER 用来进行枚举的数据库用户</span><br><span class="line">–exclude-sysdbs 枚举表时排除系统数据库</span><br><span class="line">–start&#x3D;LIMITSTART 第一个查询输出进入检索</span><br><span class="line">–stop&#x3D;LIMITSTOP 最后查询的输出进入检索</span><br><span class="line">–first&#x3D;FIRSTCHAR 第一个查询输出字的字符检索</span><br><span class="line">–last&#x3D;LASTCHAR 最后查询的输出字字符检索</span><br><span class="line">–sql-query&#x3D;QUERY 要执行的 SQL 语句</span><br><span class="line">–sql-shell 提示交互式 SQL 的 shell</span><br></pre></td></tr></table></figure>
+
+<p><strong>Brute force(蛮力):</strong><br>这些选项可以被用来运行蛮力检查。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">–common-tables 检查存在共同表</span><br><span class="line">–common-columns 检查存在共同列</span><br></pre></td></tr></table></figure>
+
+<p><strong>User-defined function injection（用户自定义函数注入）：</strong><br>这些选项可以用来创建用户自定义函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">–udf-inject 注入用户自定义函数</span><br><span class="line">–shared-lib&#x3D;SHLIB 共享库的本地路径</span><br></pre></td></tr></table></figure>
+
+<p><strong>File system access（访问文件系统）：</strong><br>这些选项可以被用来访问后端数据库管理系统的底层文件系统。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">–file-read&#x3D;RFILE 从后端的数据库管理系统文件系统读取文件</span><br><span class="line">–file-write&#x3D;WFILE 编辑后端的数据库管理系统文件系统上的本地文件</span><br><span class="line">–file-dest&#x3D;DFILE 后端的数据库管理系统写入文件的绝对路径</span><br></pre></td></tr></table></figure>
+
+<p><strong>Operating system access（操作系统访问）：</strong><br>这些选项可以用于访问后端数据库管理系统的底层操作系统。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">–os-cmd&#x3D;OSCMD 执行操作系统命令</span><br><span class="line">–os-shell 交互式的操作系统的 shell</span><br><span class="line">–os-pwn 获取一个 OOB shell，meterpreter 或 VNC</span><br><span class="line">–os-smbrelay 一键获取一个 OOB shell，meterpreter 或 VNC</span><br><span class="line">–os-bof 存储过程缓冲区溢出利用</span><br><span class="line">–priv-esc 数据库进程用户权限提升</span><br><span class="line">–msf-path&#x3D;MSFPATH Metasploit Framework 本地的安装路径</span><br><span class="line">–tmp-path&#x3D;TMPPATH 远程临时文件目录的绝对路径</span><br></pre></td></tr></table></figure>
+
+<p><strong>Windows 注册表访问：</strong><br>这些选项可以被用来访问后端数据库管理系统Windows 注册表。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">–reg-read 读一个Windows 注册表项值</span><br><span class="line">–reg-add 写一个Windows 注册表项值数据</span><br><span class="line">–reg-del 删除Windows 注册表键值</span><br><span class="line">–reg-key&#x3D;REGKEY Windows 注册表键</span><br><span class="line">–reg-value&#x3D;REGVAL Windows 注册表项值</span><br><span class="line">–reg-data&#x3D;REGDATA Windows 注册表键值数据</span><br><span class="line">–reg-type&#x3D;REGTYPE Windows 注册表项值类型</span><br></pre></td></tr></table></figure>
+
+<p><strong>General（一般）：</strong><br>这些选项可以用来设置一些一般的工作参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">-t TRAFFICFILE 记录所有 HTTP 流量到一个文本文件中</span><br><span class="line">-s SESSIONFILE 保存和恢复检索会话文件的所有数据</span><br><span class="line">–flush-session 刷新当前目标的会话文件</span><br><span class="line">–fresh-queries 忽略在会话文件中存储的查询结果</span><br><span class="line">–eta 显示每个输出的预计到达时间</span><br><span class="line">–update 更新 SqlMap</span><br><span class="line">–save file 保存选项到 INI 配置文件</span><br><span class="line">–batch 从不询问用户输入，使用所有默认配置。</span><br></pre></td></tr></table></figure>
+
+<p><strong>Miscellaneous（杂项）：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">–beep 发现 SQL 注入时提醒</span><br><span class="line">–check-payload IDS 对注入 payloads 的检测测试</span><br><span class="line">–cleanup sqlmap.py 具体的 UDF 和表清理 DBMS</span><br><span class="line">–forms 对目标 URL 的解析和测试形式</span><br><span class="line">–gpage&#x3D;GOOGLEPAGE 从指定的页码使用谷歌 dork 结果</span><br><span class="line">–page-rank Google dork 结果显示网页排名（PR）</span><br><span class="line">–parse-errors 从响应页面解析数据库管理系统的错误消息</span><br><span class="line">–replicate 复制转储的数据到一个 sqlite3 数据库</span><br><span class="line">–tor 使用默认的 Tor（Vidalia&#x2F; Privoxy&#x2F; Polipo）代理地址</span><br><span class="line">–wizard 给初级用户的简单向导界面</span><br></pre></td></tr></table></figure>
+
+<p><strong>制定测试的种类</strong></p>
+<p><code>–technique</code>=TECH  SQL注入技术测试（默认 BEUST）<br>Techniques（技巧）：<br><code>–technique</code> 测试指定注入类型使用的技术<br>不加参数默认测试所有注入技术:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">B: 基于布尔的 SQL 盲注</span><br><span class="line">E: 基于显错 sql 注入</span><br><span class="line">U: 基于 UNION 注入</span><br><span class="line">S: 叠层 sql 注入</span><br><span class="line">T: 基于时间盲注</span><br></pre></td></tr></table></figure>
+
+<p><strong>sqlmap 判断waf</strong></p>
+<p><code>sqlmap -u &quot;http://www.test.com/&quot; --identify-waf --batch</code> </p>
+<h2 id="一般注入流程"><a href="#一般注入流程" class="headerlink" title="一般注入流程"></a>一般注入流程</h2><p>以mysql为例</p>
+<p>1.验证注入</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u “注入点URL”</span><br></pre></td></tr></table></figure>
 <p>从中可以发现存在注入的类型，数据库类型和web应用程序PHP和Apache等版本信息。</p>
 <p>2.列举数据库名</p>
@@ -417,7 +533,7 @@ height:50vh;
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u <span class="string">"注入点"</span> -D 数据库名 -T 表名 -C <span class="string">"要爆的字段名"</span> --dump</span><br></pre></td></tr></table></figure>
 <p>爆一个字段的话可能会很慢或者出错，全部暴出最好。</p>
 <p>可以在后面加个 –batch 可以不用手动选择yes或no的选项。</p>
-<h2 id="其他："><a href="#其他：" class="headerlink" title="其他："></a>其他：</h2><h3 id="sqlmap-tamper-的使用"><a href="#sqlmap-tamper-的使用" class="headerlink" title="sqlmap tamper 的使用"></a>sqlmap tamper 的使用</h3><p>可以进行各种绕过防火墙和waf</p>
+<h3 id="sqlmap-tamper-的使用"><a href="#sqlmap-tamper-的使用" class="headerlink" title="sqlmap tamper 的使用"></a>sqlmap tamper 的使用</h3><p>可以进行各种绕过防火墙和waf</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--tamper xxx.py  (.py可以不加)</span><br></pre></td></tr></table></figure>
 <p>eg:python sqlmap.py -u “” – tamper base64encode.py<br>1.普通的tamper搭配方式:</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tamper=apostrophemask,apostrophenullencode,base64encode,between,chardoubleencode,</span><br><span class="line">charencode,charunicodeencode,equaltolike,greatest,ifnull2ifisnull,multiplespaces,</span><br><span class="line">nonrecursivereplacement,percentage,randomcase,securesphere,space2comment,space2plus,</span><br><span class="line">space2randomblank,unionalltounion,unmagicquotes</span><br></pre></td></tr></table></figure>
@@ -429,6 +545,8 @@ height:50vh;
 <blockquote>
 <p>apostrophemask.py UTF-8编码<br>apostrophenullencode.py unicode编码<br>appendnullbyte.py 添加%00<br>base64encode.py base64编码<br>between.py 以”not between”替换”&gt;“<br>bluecoat.py 以随机的空白字符替代空格，以”like”替代”=“<br>chardoubleencode.py 双重url编码<br>charencode.py url编码<br>charunicodeencode.py 对未进行url编码的字符进行unicode编码<br>equaltolike.py 以”like”替代”=“<br>halfversionedmorekeywords.py在每个关键字前添加条件注释<br>ifnull2ifisnull.py 以”IF(ISNULL(A), B, A)”替换”IFNULL(A, B)”<br>modsecurityversioned.py 条件注释<br>modsecurityzeroversioned.py 条件注释，0000<br>multiplespaces.py 添加多个空格<br>nonrecursivereplacement.py 可以绕过对关键字删除的防注入（这个我也不知道怎么说好，看例子。。。）<br>percentage.py 在每个字符前添加百分号（%）<br>randomcase.py 随即大小写<br>randomcomments.py 随机插入区块注释<br>sp_password.py 语句结尾添加”sp_password”迷惑数据库日志（很。。。）<br>space2comment.py 以区块注释替换空格<br>space2dash.py 以单行注释”–”和随机的新行替换空格<br>space2hash.py 以单行注释”#”和由随机字符组成的新行替换空格<br>space2morehash.py 没看出来和上面那个有什么区别。。<br>space2mssqlblank.py 以随机空白字符替换空格<br>space2mssqlhash.py 以单行注释”#”和新行替换空格<br>space2mysqlblank.py 以随机空白字符替换空格<br>space2mysqldash.py 以单行注释和新行替换空格<br>space2plus.py 以”+”替换空格<br>space2randomblank.py 随机空白字符替换空格<br>unionalltounion.py 以”union all”替换”union”<br>unmagicquotes.py 以”%bf%27”替换单引号，并在结尾添加注释”–”<br>versionedkeywords.py 对不是函数的关键字条件注释<br>versionedmorekeywords.py 对关键字条件注释 </p>
 </blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://zerokeeper.com/web-security/sqlmap-usage-summary.html" target="_blank" rel="noopener">sqlmap使用总结</a><br><a href="http://www.php.cn/php-weizijiaocheng-391039.html" target="_blank" rel="noopener">sqlmap使用大全</a></p>
+<p><a href="http://www.vuln.cn/1992" target="_blank" rel="noopener">http://www.vuln.cn/1992</a><br>Sqlmap的命令介绍 <a href="https://blog.csdn.net/u011781521/article/details/53979998" target="_blank" rel="noopener">中英文对照</a></p>
 
     </article>
     <!-- license  -->
@@ -566,7 +684,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一般注入流程-mysql-："><span class="toc-number">1.</span> <span class="toc-text">一般注入流程(mysql)：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他："><span class="toc-number">2.</span> <span class="toc-text">其他：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sqlmap-tamper-的使用"><span class="toc-number">2.1.</span> <span class="toc-text">sqlmap tamper 的使用</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0x01-基本知识"><span class="toc-number">1.</span> <span class="toc-text">0x01 基本知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#0x02-选项"><span class="toc-number">2.</span> <span class="toc-text">0x02 选项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一般注入流程"><span class="toc-number">3.</span> <span class="toc-text">一般注入流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sqlmap-tamper-的使用"><span class="toc-number">3.1.</span> <span class="toc-text">sqlmap tamper 的使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2303,9 +2421,51 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 108
+        Total : 110
         </div>
         <!-- search  -->
         
@@ -2321,12 +2481,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2020/07/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/" >安全测试</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >CSRF漏洞挖掘</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/2020/07/13/Hawkeye%E7%9B%91%E6%8E%A7/" >Hawkeye监控</a>
+            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/2020/07/13/Github%E7%9B%91%E6%8E%A7/" >Github-monitor监控</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2020/07/01/%E6%AF%95%E4%B8%9A%E6%84%9F%E8%A8%80/" >毕业感言</a>
         </li>
     
     
@@ -2336,7 +2506,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2020/06/16/MQTT%E5%AE%89%E5%85%A8%E5%88%9D%E6%8E%A2/" >MQTT安全初探</a>
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2020/06/16/MQTT%E5%AE%89%E5%85%A8%E5%88%9D%E6%8E%A2/" >物联网安全——MQTT安全初探</a>
         </li>
     
     
@@ -2896,8 +3066,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
-        <span class="sidebar-tag-name" data-tags="MQTT安全"><span class="iconfont-archer">&#xe606;</span>MQTT安全</span>
-    
         <span class="sidebar-tag-name" data-tags="安全开发"><span class="iconfont-archer">&#xe606;</span>安全开发</span>
     
         <span class="sidebar-tag-name" data-tags="Record,Problem"><span class="iconfont-archer">&#xe606;</span>Record,Problem</span>
@@ -2911,6 +3079,12 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="安全建设"><span class="iconfont-archer">&#xe606;</span>安全建设</span>
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
+    
+        <span class="sidebar-tag-name" data-tags="安全测试"><span class="iconfont-archer">&#xe606;</span>安全测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="物联网安全"><span class="iconfont-archer">&#xe606;</span>物联网安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="其他"><span class="iconfont-archer">&#xe606;</span>其他</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

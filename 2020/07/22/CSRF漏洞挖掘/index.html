@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">106</span> / Reading time: <span class="post-count">1 min</span></span>
+                        <span>Word count: <span class="post-count">794</span> / Reading time: <span class="post-count">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -396,8 +396,40 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>CSRF漏洞是因为web应用程序在用户进行敏感操作时，如修改账号密码、添加账号、转账等，没有校验表单token或者http请求头中的referer值，从而导致恶意攻击者利用普通用户的身份（cookie）完成攻击行为</p>
-<h2 id="漏洞测试"><a href="#漏洞测试" class="headerlink" title="漏洞测试"></a>漏洞测试</h2><h2 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h2><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://sobug.com/article/detail/10" target="_blank" rel="noopener">https://sobug.com/article/detail/10</a><br><a href="https://xz.aliyun.com/t/7450#toc-3" target="_blank" rel="noopener">https://xz.aliyun.com/t/7450#toc-3</a><br><a href="https://blog.csdn.net/weixin_45728976/article/details/104506544" target="_blank" rel="noopener">https://blog.csdn.net/weixin_45728976/article/details/104506544</a></p>
+        <h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>CSRF（Cross-site request forgery），中文名称：跨站请求伪造。</p>
+<p>CSRF漏洞是因为web应用程序在用户进行敏感操作时，如修改账号密码、添加账号、转账等，没有校验表单token或者http请求头中的referer值，从而导致恶意攻击者利用普通用户的身份（cookie）完成攻击行为</p>
+<p>由于目标网站无token或referer限制，攻击者可以利用用户的身份，执行请求</p>
+<p>例如:</p>
+<p>银行网站A，它以GET请求来完成银行转账的操作，如：</p>
+<p><code>http://www.mybank.com/Transfer.php?toBankId=11&amp;money=1000</code></p>
+<p>危险网站B，它里面有一段HTML的代码如下：</p>
+<p><code>&lt;img src=http://www.mybank.com/Transfer.php?toBankId=11&amp;money=1000&gt;</code></p>
+<p>登陆银行网站A后，在同一个浏览器去访问B网站的一个上面的请求，这个时候会发现你的账户会少了1000块。</p>
+<h2 id="漏洞测试"><a href="#漏洞测试" class="headerlink" title="漏洞测试"></a>漏洞测试</h2><h2 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h2><p><strong>添加验证码</strong>：在一些特殊请求页面增加验证码，有和用户进行互动。</p>
+<p><strong>检测refer</strong>：检测refer值，来判断请求来源是否合法。</p>
+<p><strong>Token</strong>：在每个请求中设置Token是一种流行的方式来防御CSRF。CSRF攻击的原理：攻击者可以猜测到用户请求，现在在每个请求中加一个随机的Toekn值。</p>
+<p>Token要足够随机————只有这样才算不可预测</p>
+<p>Token是一次性的，即每次请求成功后要更新Token————这样可以增加攻击难度，增加预测难度</p>
+<p>Token要注意保密性————敏感操作使用post，防止Token出现在URL中</p>
+<h3 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h3><p><strong>Token使用</strong></p>
+<p>说明：在重要操作的表单中增加会话生成的Token字段，一次一用，提交后在服务端校验该字段。</p>
+<p>Java示例：用户登录后生成token:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取用户的输入验证业务逻辑</span></span><br><span class="line">String user = request.getParameter(<span class="string">"user"</span>);</span><br><span class="line">String password = request.getParameter(<span class="string">"password"</span>);</span><br><span class="line">String capature = request.getParameter(<span class="string">"kaptcha"</span>);</span><br><span class="line"><span class="keyword">if</span>(validate_user(user, password, capature)) &#123;</span><br><span class="line">	sessLogin = request.getSession(<span class="keyword">true</span>);</span><br><span class="line">	sessLogin.setAttribute(<span class="string">"LOGIN"</span>, <span class="keyword">true</span>);</span><br><span class="line">	<span class="comment">//生成随机字符的 token 并存入到用户会话中</span></span><br><span class="line">	sessLogin.setAttribute(<span class="string">"csrf_token"</span>,getRandomString(<span class="number">20</span>));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>页面(模板）渲染时输出token</p>
+<p>输出到链接：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=logout.jsp?token=&lt;%sessLogin.getAttribute(<span class="string">"token"</span>)%&gt;<span class="string">"&gt;logout&lt;/a&gt;</span></span><br><span class="line"><span class="string">输出到form表单：</span></span><br><span class="line"><span class="string">&lt;form method="</span>POST<span class="string">"&gt;</span></span><br><span class="line"><span class="string">发信息:</span></span><br><span class="line"><span class="string">&lt;input name="</span>message<span class="string">" type="</span>text<span class="string">"&gt;</span></span><br><span class="line"><span class="string">&lt;input type="</span>hidden<span class="string">" name="</span>token<span class="string">" value=&lt;%=sessLogin.getAttribute("</span>token<span class="string">")%/&gt;</span></span><br><span class="line"><span class="string">&lt;input type=submit value="</span>post<span class="string">"&gt;</span></span><br><span class="line"><span class="string">&lt;/form&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>服务端逻辑检查中验证token是否正确：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (sessLogin.getAttribute(<span class="string">"token"</span>).equals(request.getParameter(<span class="string">"token"</span>))) &#123;</span><br><span class="line"><span class="comment">//处理应用逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>二次验证</strong></p>
+<p>说明：在关键表单提交时，要求用户进行二次身份验证，如密码、图片验证码、短信验证码等。</p>
+<p><strong>Referer 验证</strong></p>
+<p>说明：检验用户请求中Referer字段是否存在跨域提交的情况。</p>
+<p>Java示例：检查请求连接的referer是否合法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">String expectedRefererStartsWith = “https:<span class="comment">//xxx.test.com”</span></span><br><span class="line"><span class="comment">// 从 HTTP 头中取得 Referer 值</span></span><br><span class="line">String referer=request.getHeader(<span class="string">"referer"</span>);</span><br><span class="line"><span class="comment">// 判断 Referer 是否以 https://xxx.test.com 开头</span></span><br><span class="line"><span class="keyword">if</span>((referer!=<span class="keyword">null</span>) &amp;&amp;(referer.trim().startsWith(expectedRefererStartsWith)))&#123;</span><br><span class="line">chain.doFilter(request, response);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">request.getRequestDispatcher(“error.jsp”).forward(request,response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://sobug.com/article/detail/10" target="_blank" rel="noopener">https://sobug.com/article/detail/10</a><br><a href="https://xz.aliyun.com/t/7450#toc-3" target="_blank" rel="noopener">https://xz.aliyun.com/t/7450#toc-3</a><br><a href="https://blog.csdn.net/weixin_45728976/article/details/104506544" target="_blank" rel="noopener">https://blog.csdn.net/weixin_45728976/article/details/104506544</a></p>
 
     </article>
     <!-- license  -->
@@ -413,12 +445,17 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/07/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/" title= 安全测试 >
+                    <div class="nextTitle">安全测试</div>
+                </a>
+            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2020/07/13/Hawkeye%E7%9B%91%E6%8E%A7/" title= Hawkeye监控 >
-                    <div class="prevTitle">Hawkeye监控</div>
+                <a href= "/2020/07/13/Github%E7%9B%91%E6%8E%A7/" title= Github-monitor监控 >
+                    <div class="prevTitle">Github-monitor监控</div>
                 </a>
             
         </li>
@@ -530,7 +567,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞原理"><span class="toc-number">1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞测试"><span class="toc-number">2.</span> <span class="toc-text">漏洞测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞修复"><span class="toc-number">3.</span> <span class="toc-text">漏洞修复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞原理"><span class="toc-number">1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞测试"><span class="toc-number">2.</span> <span class="toc-text">漏洞测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞修复"><span class="toc-number">3.</span> <span class="toc-text">漏洞修复</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#代码示例"><span class="toc-number">3.1.</span> <span class="toc-text">代码示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2267,9 +2304,51 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 108
+        Total : 110
         </div>
         <!-- search  -->
         
@@ -2285,12 +2364,22 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2020/07/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/" >安全测试</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >CSRF漏洞挖掘</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/2020/07/13/Hawkeye%E7%9B%91%E6%8E%A7/" >Hawkeye监控</a>
+            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/2020/07/13/Github%E7%9B%91%E6%8E%A7/" >Github-monitor监控</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2020/07/01/%E6%AF%95%E4%B8%9A%E6%84%9F%E8%A8%80/" >毕业感言</a>
         </li>
     
     
@@ -2300,7 +2389,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2020/06/16/MQTT%E5%AE%89%E5%85%A8%E5%88%9D%E6%8E%A2/" >MQTT安全初探</a>
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2020/06/16/MQTT%E5%AE%89%E5%85%A8%E5%88%9D%E6%8E%A2/" >物联网安全——MQTT安全初探</a>
         </li>
     
     
@@ -2860,8 +2949,6 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="代码审计"><span class="iconfont-archer">&#xe606;</span>代码审计</span>
     
-        <span class="sidebar-tag-name" data-tags="MQTT安全"><span class="iconfont-archer">&#xe606;</span>MQTT安全</span>
-    
         <span class="sidebar-tag-name" data-tags="安全开发"><span class="iconfont-archer">&#xe606;</span>安全开发</span>
     
         <span class="sidebar-tag-name" data-tags="Record,Problem"><span class="iconfont-archer">&#xe606;</span>Record,Problem</span>
@@ -2875,6 +2962,12 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="安全建设"><span class="iconfont-archer">&#xe606;</span>安全建设</span>
     
         <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
+    
+        <span class="sidebar-tag-name" data-tags="安全测试"><span class="iconfont-archer">&#xe606;</span>安全测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="物联网安全"><span class="iconfont-archer">&#xe606;</span>物联网安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="其他"><span class="iconfont-archer">&#xe606;</span>其他</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
