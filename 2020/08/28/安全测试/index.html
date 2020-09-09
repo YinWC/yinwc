@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>安全测试 · Ywc&#39;s blog</title>
+    <title>安全测试之我见 · Ywc&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -210,7 +210,7 @@
                 <a href="/" >Ywc</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">安全测试</a>
+                <a href="#" class="post-name">安全测试之我见</a>
             </div>
     </div>
     
@@ -242,7 +242,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            安全测试
+            安全测试之我见
             <!-- 404 -->
             
         </h1>
@@ -267,12 +267,12 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1k</span> / Reading time: <span class="post-count">3 min</span></span>
+                        <span>Word count: <span class="post-count">1.8k</span> / Reading time: <span class="post-count">6 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/07/28</span>
+                    <span class="post-intro-time">2020/08/28</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -429,17 +429,25 @@ height:50vh;
 </ul>
 </li>
 <li><a href="#越权漏洞">越权漏洞</a><ul>
+<li><a href="#水平越权">水平越权</a><ul>
 <li><a href="#漏洞原理-2">漏洞原理</a></li>
 <li><a href="#测试方法-2">测试方法</a></li>
-<li><a href="#修复建议-2">修复建议</a></li>
+<li><a href="#修复方案">修复方案</a></li>
+</ul>
+</li>
+<li><a href="#垂直越权">垂直越权</a><ul>
+<li><a href="#漏洞原理-3">漏洞原理</a></li>
+<li><a href="#测试方法-3">测试方法</a></li>
+<li><a href="#修复方案-1">修复方案</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#问题记录">问题记录</a><ul>
 <li><a href="#token未及时失效问题记录">token未及时失效问题记录</a></li>
-<li><a href="#xss漏洞">XSS漏洞</a></li>
-<li><a href="#开发者中心越权漏洞">开发者中心越权漏洞</a></li>
+<li><a href="#xss漏洞的修复">XSS漏洞的修复</a></li>
 </ul>
 </li>
 <li><a href="#reference">Reference</a></li>
@@ -447,7 +455,7 @@ height:50vh;
 <!-- /TOC -->
 
 
-<h1 id="业务安全测试"><a href="#业务安全测试" class="headerlink" title="业务安全测试"></a>业务安全测试</h1><p><img src="/2020/07/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/%E4%B8%9A%E5%8A%A1%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E5%85%B3%E9%94%AE%E7%82%B9.jpg" alt="安全测试"></p>
+<h1 id="业务安全测试"><a href="#业务安全测试" class="headerlink" title="业务安全测试"></a>业务安全测试</h1><p><img src="/2020/08/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/%E4%B8%9A%E5%8A%A1%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E5%85%B3%E9%94%AE%E7%82%B9.jpg" alt="安全测试"></p>
 <h1 id="漏洞功能点"><a href="#漏洞功能点" class="headerlink" title="漏洞功能点"></a>漏洞功能点</h1><h2 id="登录认证处"><a href="#登录认证处" class="headerlink" title="登录认证处"></a>登录认证处</h2><h3 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h3><p>[测试方法]<br>常常使用 Bp 结合字典对账号密码进行暴力破解</p>
 <ul>
 <li>小技巧：<br><code>intercept is on</code>关闭的时候浏览器的请求依然会经过 Bp 只是不被拦截，所有的请求可以在 history 中查看</li>
@@ -469,25 +477,35 @@ height:50vh;
 <h3 id="测试方法"><a href="#测试方法" class="headerlink" title="测试方法"></a>测试方法</h3><p>手工&amp;自动化工具一把梭<br><a href="https://www.jianshu.com/p/50a48ac63cc5" target="_blank" rel="noopener">SQL注入漏洞测试的方式总结</a></p>
 <h3 id="修复建议"><a href="#修复建议" class="headerlink" title="修复建议"></a>修复建议</h3><p>使用标准化的数据库查询语句API接口，进行参数过滤，转义等方式防止用户输入恶意字符</p>
 <h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><h3 id="漏洞原理-1"><a href="#漏洞原理-1" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>XSS的漏洞主要成因是后端接收参数时未经过滤，导致参数改变了HTML的结构，从而被浏览器或后端代码执行</p>
-<h3 id="测试方法-1"><a href="#测试方法-1" class="headerlink" title="测试方法"></a>测试方法</h3><p>找到一个存在问题的地方，提交一下代码，如果出现弹窗或者打开开发者，发现报错，即为XSS漏洞</p>
+<h3 id="测试方法-1"><a href="#测试方法-1" class="headerlink" title="测试方法"></a>测试方法</h3><p>找到一个存在问题的地方，提交一下代码，如果出现弹窗或者打开开发者，发现报错，即为XSS漏洞<br>获取流量，对流量进行分析，比如<code>Xray</code></p>
 <h3 id="修复建议-1"><a href="#修复建议-1" class="headerlink" title="修复建议"></a>修复建议</h3><p>a、在服务器端检查敏感的HTML代码，对敏感字符进行转义<br>b、接入xss过滤平台</p>
-<h2 id="越权漏洞"><a href="#越权漏洞" class="headerlink" title="越权漏洞"></a>越权漏洞</h2><h3 id="漏洞原理-2"><a href="#漏洞原理-2" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>水平越权：普通用户之间操作可互相影响<br>垂直越权：低权限用户能操作高权限用户才能操作的东西</p>
-<h3 id="测试方法-2"><a href="#测试方法-2" class="headerlink" title="测试方法"></a>测试方法</h3><p>Bp 抓包查看并修改低权限用户的身份信息为同等权限的其他用户或者是高权限用户后进行重放<br>或用低权限的账户去访问高权限的账户的数据，一般是通过访问接口来进行测试<br>如果成功则说明漏洞存在</p>
-<h3 id="修复建议-2"><a href="#修复建议-2" class="headerlink" title="修复建议"></a>修复建议</h3><p>对需要权限的页面进行 SESSION 认证，对用户访问的每一个 URL 做身份鉴别</p>
+<h2 id="越权漏洞"><a href="#越权漏洞" class="headerlink" title="越权漏洞"></a>越权漏洞</h2><p>水平越权：普通用户之间操作可互相影响<br>垂直越权：低权限用户能操作高权限用户才能操作的东西</p>
+<p>Bp 抓包查看并修改低权限用户的身份信息为同等权限的其他用户或者是高权限用户后进行重放<br>或用低权限的账户去访问高权限的账户的数据，一般是通过访问接口来进行测试<br>如果成功则说明漏洞存在</p>
+<h3 id="水平越权"><a href="#水平越权" class="headerlink" title="水平越权"></a>水平越权</h3><h4 id="漏洞原理-2"><a href="#漏洞原理-2" class="headerlink" title="漏洞原理"></a>漏洞原理</h4><p>水平权限漏洞一般出现在一个用户对象关联多个其他对象（订单、地址等）、并且要实现对关联对象的CRUD的时候。开发容易习惯性的在生成CRUD表单（或AJAX请求）的时候根据认证过的用户身份来找出其有权限的被操作对象id，提供入口，然后让用户提交请求，并根据这个id来操作相关对象。在处理CRUD请求时，往往默认只有有权限的用户才能得到入口，进而才能操作相关对象，因此就不再校验权限了。可悲剧的是大多数对象的ID都被设置为自增整型，所以攻击者只要对相关id加1、减1、直至遍历，就可以操作其他用户所关联的对象了。</p>
+<h4 id="测试方法-2"><a href="#测试方法-2" class="headerlink" title="测试方法"></a>测试方法</h4><p>修改参数的值，若能看到其他账户的数据，即为水平越权</p>
+<p><strong>漏洞示例：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getAddress.do?addressId&#x3D;12345</span><br></pre></td></tr></table></figure>
+<p>攻击者修改addressId即可得到他人的address信息</p>
+<h4 id="修复方案"><a href="#修复方案" class="headerlink" title="修复方案"></a>修复方案</h4><ol>
+<li><strong>在web层的逻辑中做鉴权</strong><br>这个是最直接有效的修复方案：在web层的逻辑中做鉴权，检查提交CRUD请求的操作者（通过session信息得到）与目标对象的权限所有者（查数据库）是否一致，如果不一致则阻断。这个方案实现成本低、能确保漏洞的修复质量，缺点是增加了一次查库操作。我之前一直用这种方案来对已发生的水平权限漏洞做紧急修复。</li>
+<li><strong>把权限的控制转移到数据接口层中</strong><br>最正规的方案：把权限的控制转移到数据接口层中，避免出现select/update/delete … where addressID=#addressID#的SQL语句，使用selectt/update/delete… where addressID=#addressID# and ownerId=#userId#来代替，要求web层在调用数据接口层的接口时额外提供userid，而这个userid在web层看来只能通过seesion来取到。这样在面对水平权限攻击时，web层的开发者不用额外花精力去注意鉴权的事情，也不需要增加一个SQL来专门判断权限——如果权限不对的话，那个and条件就满足不了，SQL自然就找不到相关对象去操作。而且这个方案对于一个接口多个地方使用的情况也比较有利，不需要每个地方都鉴权了。<br>但这个方案的缺陷在于实现起来要改动底层的设计，所以不适合作为修复方案，更适合作为统一的控制方案在最开始设计时就注意这方面的问题。</li>
+<li><strong>在生成表单时，增加一个token参数</strong><br>在生成表单时，增加一个token参数，即token=md5(addressId+sessionId+key)；在处理请求时，用addressId、sessionId和key来验证token。</li>
+</ol>
+<h3 id="垂直越权"><a href="#垂直越权" class="headerlink" title="垂直越权"></a>垂直越权</h3><h4 id="漏洞原理-3"><a href="#漏洞原理-3" class="headerlink" title="漏洞原理"></a>漏洞原理</h4><h4 id="测试方法-3"><a href="#测试方法-3" class="headerlink" title="测试方法"></a>测试方法</h4><p>用低权限的账户去访问高权限的账户的数据<br>一般就是修改token，通过接口来进行测试</p>
+<h4 id="修复方案-1"><a href="#修复方案-1" class="headerlink" title="修复方案"></a>修复方案</h4><p>对需要权限的页面进行 SESSION 认证，对用户访问的每一个 URL 做身份鉴别</p>
 <p>正确校验用户的身份和 token</p>
-<p><a href="https://www.cnblogs.com/hnsongbiao/p/3752617.html" target="_blank" rel="noopener">https://www.cnblogs.com/hnsongbiao/p/3752617.html</a></p>
 <h1 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h1><h2 id="token未及时失效问题记录"><a href="#token未及时失效问题记录" class="headerlink" title="token未及时失效问题记录"></a>token未及时失效问题记录</h2><p>token在主页，无法进行刷新token并发处理</p>
 <p>设置autherization字段进行验证<br>登录一次刷新一次 定期10分钟刷新</p>
-<h2 id="XSS漏洞"><a href="#XSS漏洞" class="headerlink" title="XSS漏洞"></a>XSS漏洞</h2><p>接入工具XSS过滤器</p>
-<h2 id="开发者中心越权漏洞"><a href="#开发者中心越权漏洞" class="headerlink" title="开发者中心越权漏洞"></a>开发者中心越权漏洞</h2><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://www.k0rz3n.com/2019/02/07/%E4%B8%9A%E5%8A%A1%20Web%20%E6%BC%8F%E6%B4%9E%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1%E7%9A%84%E6%80%9D%E8%80%83/#1-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81%E6%A8%A1%E5%9D%97" target="_blank" rel="noopener">业务Web漏洞攻击与防御的思考</a></p>
+<h2 id="XSS漏洞的修复"><a href="#XSS漏洞的修复" class="headerlink" title="XSS漏洞的修复"></a>XSS漏洞的修复</h2><p>接入工具XSS过滤器</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://www.k0rz3n.com/2019/02/07/%E4%B8%9A%E5%8A%A1%20Web%20%E6%BC%8F%E6%B4%9E%E6%94%BB%E5%87%BB%E4%B8%8E%E9%98%B2%E5%BE%A1%E7%9A%84%E6%80%9D%E8%80%83/#1-%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81%E6%A8%A1%E5%9D%97" target="_blank" rel="noopener">业务Web漏洞攻击与防御的思考</a><br><a href="https://www.cnblogs.com/hnsongbiao/p/3752617.html" target="_blank" rel="noopener">水平越权的修复方案</a></p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者: <a href="https://yinwc.github.io">Ywc</a>
-            <p>原文链接: <a href="https://yinwc.github.io/2020/07/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/">https://yinwc.github.io/2020/07/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/</a>
-            <p>发表日期: <a href="https://yinwc.github.io/2020/07/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/">July 28th 2020, 10:02:34 am</a>
+            <p>原文链接: <a href="https://yinwc.github.io/2020/08/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/">https://yinwc.github.io/2020/08/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/</a>
+            <p>发表日期: <a href="https://yinwc.github.io/2020/08/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/">August 28th 2020, 10:02:34 am</a>
             <p>版权声明: </p>
         </div>
     
@@ -499,8 +517,8 @@ height:50vh;
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" title= CSRF漏洞挖掘 >
-                    <div class="prevTitle">CSRF漏洞挖掘</div>
+                <a href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" title= 安全测试——CSRF漏洞 >
+                    <div class="prevTitle">安全测试——CSRF漏洞</div>
                 </a>
             
         </li>
@@ -612,7 +630,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#业务安全测试"><span class="toc-number">1.</span> <span class="toc-text">业务安全测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞功能点"><span class="toc-number">2.</span> <span class="toc-text">漏洞功能点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#登录认证处"><span class="toc-number">2.1.</span> <span class="toc-text">登录认证处</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#暴力破解"><span class="toc-number">2.1.1.</span> <span class="toc-text">暴力破解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地加密传输测试"><span class="toc-number">2.1.2.</span> <span class="toc-text">本地加密传输测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索处"><span class="toc-number">2.2.</span> <span class="toc-text">搜索处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#留言处"><span class="toc-number">2.3.</span> <span class="toc-text">留言处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除处"><span class="toc-number">2.4.</span> <span class="toc-text">删除处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码处"><span class="toc-number">2.5.</span> <span class="toc-text">修改密码处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改信息处"><span class="toc-number">2.6.</span> <span class="toc-text">修改信息处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#订单处"><span class="toc-number">2.7.</span> <span class="toc-text">订单处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传处"><span class="toc-number">2.8.</span> <span class="toc-text">文件上传处</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞类型"><span class="toc-number">3.</span> <span class="toc-text">漏洞类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL注入"><span class="toc-number">3.1.</span> <span class="toc-text">SQL注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞原理"><span class="toc-number">3.1.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试方法"><span class="toc-number">3.1.2.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复建议"><span class="toc-number">3.1.3.</span> <span class="toc-text">修复建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS"><span class="toc-number">3.2.</span> <span class="toc-text">XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞原理-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试方法-1"><span class="toc-number">3.2.2.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复建议-1"><span class="toc-number">3.2.3.</span> <span class="toc-text">修复建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#越权漏洞"><span class="toc-number">3.3.</span> <span class="toc-text">越权漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞原理-2"><span class="toc-number">3.3.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试方法-2"><span class="toc-number">3.3.2.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复建议-2"><span class="toc-number">3.3.3.</span> <span class="toc-text">修复建议</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题记录"><span class="toc-number">4.</span> <span class="toc-text">问题记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#token未及时失效问题记录"><span class="toc-number">4.1.</span> <span class="toc-text">token未及时失效问题记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS漏洞"><span class="toc-number">4.2.</span> <span class="toc-text">XSS漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开发者中心越权漏洞"><span class="toc-number">4.3.</span> <span class="toc-text">开发者中心越权漏洞</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#业务安全测试"><span class="toc-number">1.</span> <span class="toc-text">业务安全测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞功能点"><span class="toc-number">2.</span> <span class="toc-text">漏洞功能点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#登录认证处"><span class="toc-number">2.1.</span> <span class="toc-text">登录认证处</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#暴力破解"><span class="toc-number">2.1.1.</span> <span class="toc-text">暴力破解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地加密传输测试"><span class="toc-number">2.1.2.</span> <span class="toc-text">本地加密传输测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索处"><span class="toc-number">2.2.</span> <span class="toc-text">搜索处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#留言处"><span class="toc-number">2.3.</span> <span class="toc-text">留言处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除处"><span class="toc-number">2.4.</span> <span class="toc-text">删除处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码处"><span class="toc-number">2.5.</span> <span class="toc-text">修改密码处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改信息处"><span class="toc-number">2.6.</span> <span class="toc-text">修改信息处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#订单处"><span class="toc-number">2.7.</span> <span class="toc-text">订单处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传处"><span class="toc-number">2.8.</span> <span class="toc-text">文件上传处</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞类型"><span class="toc-number">3.</span> <span class="toc-text">漏洞类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL注入"><span class="toc-number">3.1.</span> <span class="toc-text">SQL注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞原理"><span class="toc-number">3.1.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试方法"><span class="toc-number">3.1.2.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复建议"><span class="toc-number">3.1.3.</span> <span class="toc-text">修复建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS"><span class="toc-number">3.2.</span> <span class="toc-text">XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞原理-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试方法-1"><span class="toc-number">3.2.2.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复建议-1"><span class="toc-number">3.2.3.</span> <span class="toc-text">修复建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#越权漏洞"><span class="toc-number">3.3.</span> <span class="toc-text">越权漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#水平越权"><span class="toc-number">3.3.1.</span> <span class="toc-text">水平越权</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#漏洞原理-2"><span class="toc-number">3.3.1.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#测试方法-2"><span class="toc-number">3.3.1.2.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修复方案"><span class="toc-number">3.3.1.3.</span> <span class="toc-text">修复方案</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垂直越权"><span class="toc-number">3.3.2.</span> <span class="toc-text">垂直越权</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#漏洞原理-3"><span class="toc-number">3.3.2.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#测试方法-3"><span class="toc-number">3.3.2.2.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修复方案-1"><span class="toc-number">3.3.2.3.</span> <span class="toc-text">修复方案</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题记录"><span class="toc-number">4.</span> <span class="toc-text">问题记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#token未及时失效问题记录"><span class="toc-number">4.1.</span> <span class="toc-text">token未及时失效问题记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS漏洞的修复"><span class="toc-number">4.2.</span> <span class="toc-text">XSS漏洞的修复</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2409,12 +2427,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/28</span><a class="archive-post-title" href= "/2020/07/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/" >安全测试</a>
+            <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2020/08/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/" >安全测试之我见</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >CSRF漏洞挖掘</a>
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >安全测试——CSRF漏洞</a>
         </li>
     
     
@@ -2429,7 +2447,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/2020/06/28/XSS%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >XSS漏洞挖掘</a>
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/2020/06/28/XSS%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >安全测试——XSS漏洞</a>
         </li>
     
     
