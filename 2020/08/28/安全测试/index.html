@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1.8k</span> / Reading time: <span class="post-count">6 min</span></span>
+                        <span>Word count: <span class="post-count">2k</span> / Reading time: <span class="post-count">6 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -481,6 +481,7 @@ height:50vh;
 <h3 id="修复建议-1"><a href="#修复建议-1" class="headerlink" title="修复建议"></a>修复建议</h3><p>a、在服务器端检查敏感的HTML代码，对敏感字符进行转义<br>b、接入xss过滤平台</p>
 <h2 id="越权漏洞"><a href="#越权漏洞" class="headerlink" title="越权漏洞"></a>越权漏洞</h2><p>水平越权：普通用户之间操作可互相影响<br>垂直越权：低权限用户能操作高权限用户才能操作的东西</p>
 <p>Bp 抓包查看并修改低权限用户的身份信息为同等权限的其他用户或者是高权限用户后进行重放<br>或用低权限的账户去访问高权限的账户的数据，一般是通过访问接口来进行测试<br>如果成功则说明漏洞存在</p>
+<p>首先需要确认身份认证的字段，确认确认等字段进行认证，然后更换认证字段的数值，进行测试越权<br>如：测试通过Authorization字段进行认证，首先需要删除如cookie字段的认证，然后看是否有回显<br>  若有，则表示Authorization字段是唯一认证，可直接进行测试<br>  若无，则需要删除cookie字段的数值进行排查，确认cookie中是否有一些字段和Authorization一起认证，然后修改对应的字段进行测试</p>
 <h3 id="水平越权"><a href="#水平越权" class="headerlink" title="水平越权"></a>水平越权</h3><h4 id="漏洞原理-2"><a href="#漏洞原理-2" class="headerlink" title="漏洞原理"></a>漏洞原理</h4><p>水平权限漏洞一般出现在一个用户对象关联多个其他对象（订单、地址等）、并且要实现对关联对象的CRUD的时候。开发容易习惯性的在生成CRUD表单（或AJAX请求）的时候根据认证过的用户身份来找出其有权限的被操作对象id，提供入口，然后让用户提交请求，并根据这个id来操作相关对象。在处理CRUD请求时，往往默认只有有权限的用户才能得到入口，进而才能操作相关对象，因此就不再校验权限了。可悲剧的是大多数对象的ID都被设置为自增整型，所以攻击者只要对相关id加1、减1、直至遍历，就可以操作其他用户所关联的对象了。</p>
 <h4 id="测试方法-2"><a href="#测试方法-2" class="headerlink" title="测试方法"></a>测试方法</h4><p>修改参数的值，若能看到其他账户的数据，即为水平越权</p>
 <p><strong>漏洞示例：</strong></p>
@@ -513,12 +514,17 @@ height:50vh;
     <ul class="post-paginator">
         <li class="next">
             
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/09/09/app%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/" title= App安全测试 >
+                    <div class="nextTitle">App安全测试</div>
+                </a>
+            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" title= 安全测试——CSRF漏洞 >
-                    <div class="prevTitle">安全测试——CSRF漏洞</div>
+                <a href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" title= CSRF漏洞挖掘 >
+                    <div class="prevTitle">CSRF漏洞挖掘</div>
                 </a>
             
         </li>
@@ -2409,9 +2415,55 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 110
+        Total : 112
         </div>
         <!-- search  -->
         
@@ -2427,12 +2479,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/09</span><a class="archive-post-title" href= "/2020/09/09/app%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/" >App安全测试</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">08/28</span><a class="archive-post-title" href= "/2020/08/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/" >安全测试之我见</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >安全测试——CSRF漏洞</a>
+            <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >CSRF漏洞挖掘</a>
         </li>
     
     
@@ -2447,7 +2504,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/2020/06/28/XSS%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >安全测试——XSS漏洞</a>
+            <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/2020/06/28/XSS%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >XSS漏洞</a>
         </li>
     
     
@@ -2537,6 +2594,11 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">11/20</span><a class="archive-post-title" href= "/2019/11/20/%E6%8F%90%E6%9D%83%E7%AC%94%E8%AE%B0/" >提权笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/11</span><a class="archive-post-title" href= "/2019/11/11/Python%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86/" >Python虚拟环境管理</a>
         </li>
     
     
@@ -2755,7 +2817,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2018/11/16/SSRF/" >SSRF总结</a>
+            <span class="archive-post-date">11/16</span><a class="archive-post-title" href= "/2018/11/16/SSRF/" >SSRF漏洞挖掘</a>
         </li>
     
     
