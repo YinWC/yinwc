@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Github-monitor监控 · Ywc&#39;s blog</title>
+    <title>Python多线程 · Ywc&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -210,7 +210,7 @@
                 <a href="/" >Ywc</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Github-monitor监控</a>
+                <a href="#" class="post-name">Python多线程</a>
             </div>
     </div>
     
@@ -242,7 +242,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Github-monitor监控
+            Python多线程
             <!-- 404 -->
             
         </h1>
@@ -261,18 +261,18 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "learn">learn</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "python">python</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">180</span> / Reading time: <span class="post-count">1 min</span></span>
+                        <span>Word count: <span class="post-count">584</span> / Reading time: <span class="post-count">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2020/07/13</span>
+                    <span class="post-intro-time">2020/02/01</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -396,28 +396,43 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="报错解决"><a href="#报错解决" class="headerlink" title="报错解决"></a>报错解决</h3><h4 id="python3-manage-py-migrate-初始化数据库失败"><a href="#python3-manage-py-migrate-初始化数据库失败" class="headerlink" title="python3 manage.py migrate 初始化数据库失败"></a>python3 manage.py migrate 初始化数据库失败</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Django.db.utils.OperationalError: (1045, &quot;Access denied for user &#39;root&#39;@&#39;localhost&#39; (using passwo...</span><br></pre></td></tr></table></figure>
-<p>原因:mysql密码不对，修改<code>.env</code>配置文件中的数据库密码为当前本地使用的mysql数据库密码即可。<br><img src="/2020/07/13/Github%E7%9B%91%E6%8E%A7/1.png" alt="Github监控"></p>
-<h2 id="Hawkeye搭建"><a href="#Hawkeye搭建" class="headerlink" title="Hawkeye搭建"></a>Hawkeye搭建</h2><p>搭建之前需要安装Mongodb，<a href="https://howtoing.com/how-to-install-mongodb-on-ubuntu-18-04" target="_blank" rel="noopener">文章</a><br>创建数据库:</p>
-<p>Github地址: <a href="https://github.com/0xbug/Hawkeye" target="_blank" rel="noopener">https://github.com/0xbug/Hawkeye</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd Hawkeye</span><br><span class="line">docker build -t Hawkeye .   &#x2F;&#x2F;-t指定名称</span><br><span class="line">docker run -it -d -p 2020:80 Hawkeye &#x2F;&#x2F;在 ip:2020 即可看到运行界面</span><br></pre></td></tr></table></figure>
+        <!-- TOC -->
 
-<p><a href="https://yinwc.github.io/2019/05/06/docker/">docker的使用</a></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://www.dazhuanlan.com/2019/09/24/5d89545e3fcc7/" target="_blank" rel="noopener">https://www.dazhuanlan.com/2019/09/24/5d89545e3fcc7/</a></p>
-<p><a href="https://feei.cn/gsil/" target="_blank" rel="noopener">https://feei.cn/gsil/</a></p>
-<p><a href="https://blog.csdn.net/weixin_45358803/article/details/106716113" target="_blank" rel="noopener">https://blog.csdn.net/weixin_45358803/article/details/106716113</a></p>
-<p><a href="https://www.codenong.com/js8919efbb0458/" target="_blank" rel="noopener">https://www.codenong.com/js8919efbb0458/</a></p>
-<p><a href="http://www.jeepxie.net/article/953409.html" target="_blank" rel="noopener">http://www.jeepxie.net/article/953409.html</a></p>
-<p><a href="https://zhuanlan.zhihu.com/p/92963529" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/92963529</a></p>
-<p><a href="https://blog.csdn.net/caiqiiqi/article/details/95222745" target="_blank" rel="noopener">https://blog.csdn.net/caiqiiqi/article/details/95222745</a></p>
+<ul>
+<li><a href="#多线程的使用">多线程的使用</a><ul>
+<li><a href="#继承threadingthread">继承threading.Thread</a></li>
+<li><a href="#直接调用threadingthread">直接调用threading.Thread</a></li>
+<li><a href="#thread对象的相关方法">Thread对象的相关方法</a></li>
+</ul>
+</li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+<!-- /TOC -->
+
+<h2 id="多线程的使用"><a href="#多线程的使用" class="headerlink" title="多线程的使用"></a>多线程的使用</h2><h3 id="继承threading-Thread"><a href="#继承threading-Thread" class="headerlink" title="继承threading.Thread"></a>继承threading.Thread</h3><blockquote>
+<p>继承threading.Thread模块是一个很好的一个选择，就像java中也是可以继承类和实现接口一样，这都是很好的选择</p>
+</blockquote>
+<p>例子:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Mythread</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,threadID,name,counter)</span>:</span></span><br><span class="line">        threading.Thread.__init__(self)    <span class="comment">#首先需要先保留原来threading.Thread中的初始化函数</span></span><br><span class="line">        self.threadID=threadID      <span class="comment">#重命名线程的ID</span></span><br><span class="line">        self.name=name              <span class="comment">#线程的名字</span></span><br><span class="line">        self.counter=counter        <span class="comment">#线程的数量</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        lock.acquire()      <span class="comment">#获取线程锁Lock</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"线程"</span>+self.name+<span class="string">"开始运行"</span></span><br><span class="line">        lock.release()      <span class="comment">#释放线程锁Lock，这面也可以使用with lock: 来自动上锁和释放锁</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    lock=threading.Lock()     </span><br><span class="line">    t1=Mythread(<span class="number">0</span>,<span class="string">"thread-1"</span>,<span class="number">3</span>)</span><br><span class="line">    t2=Mythread(<span class="number">1</span>,<span class="string">"thread-2"</span>,<span class="number">3</span>)</span><br><span class="line">    t1.start()</span><br><span class="line">    t2.start()</span><br><span class="line">    threads=[]</span><br><span class="line">    threads.append(t1)</span><br><span class="line">    threads.append(t2)</span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> threads:</span><br><span class="line">        t.join()                <span class="comment">#阻塞主线程，直至线程运行完毕才运行main线程的语句</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"线程运行结束"</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这种继承的方式有一个缺点，这个和java中继承来实现多线程是一样的，就是一个对象只能是对应一个线程，并不能一个对象被多个线程共享</p>
+</blockquote>
+<h3 id="直接调用threading-Thread"><a href="#直接调用threading-Thread" class="headerlink" title="直接调用threading.Thread"></a>直接调用threading.Thread</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(name,age)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        <span class="keyword">print</span> name+<span class="string">"的年龄为："</span>+str(age)</span><br><span class="line">  </span><br><span class="line">t1=threading.Thread(target=func,args=[<span class="string">"THR"</span>,<span class="number">22</span>])</span><br><span class="line">t2=threading.Thread(target=func,args=[<span class="string">"YWC"</span>,<span class="number">21</span>])</span><br><span class="line">t1.start()</span><br><span class="line">t2.start()</span><br><span class="line">t1.join()</span><br><span class="line">t2.join()   <span class="comment"># join方法的用途是:等待前一个线程结束，再执行下一个</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_flag</span><span class="params">(flag)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        <span class="keyword">print</span> flag+<span class="string">"是真的"</span></span><br><span class="line"></span><br><span class="line">t1=threading.Thread(target=get_flag,args=(<span class="string">"Ywc"</span>,))  <span class="comment"># 只有一个参数时，args处要加个逗号</span></span><br><span class="line">t1.start()</span><br><span class="line">t1.join()</span><br></pre></td></tr></table></figure>
+<h3 id="Thread对象的相关方法"><a href="#Thread对象的相关方法" class="headerlink" title="Thread对象的相关方法"></a>Thread对象的相关方法</h3><blockquote>
+<p><code>start()</code> 启动线程<br><code>join([timeout])</code> 设置阻塞线程，timeout是可选的参数，表示阻塞的时间，如果没有就是当此线程运行结束才开始运行下一个线程<br><code>run()</code> 线程活动的方法<br><code>getName()</code> 获取线程名称<br><code>setName()</code> 设置线程的名称<br><code>isAlive()</code> 判断线程是否还活着<br><code>isDaemon()</code> 判断是否是守护线程<br><code>setDaemon()</code> 设置为守护线程，守护线程就是当主线程运行完后，这个线程也会随着主线程的结束而结束</p>
+</blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://chenjiabing666.github.io/2017/09/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_blank" rel="noopener">https://chenjiabing666.github.io/2017/09/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BD%BF%E7%94%A8/</a></p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者: <a href="https://yinwc.github.io">Ywc</a>
-            <p>原文链接: <a href="https://yinwc.github.io/2020/07/13/Github%E7%9B%91%E6%8E%A7/">https://yinwc.github.io/2020/07/13/Github%E7%9B%91%E6%8E%A7/</a>
-            <p>发表日期: <a href="https://yinwc.github.io/2020/07/13/Github%E7%9B%91%E6%8E%A7/">July 13th 2020, 2:29:32 pm</a>
+            <p>原文链接: <a href="https://yinwc.github.io/2020/02/01/Python%E5%A4%9A%E7%BA%BF%E7%A8%8B/">https://yinwc.github.io/2020/02/01/Python%E5%A4%9A%E7%BA%BF%E7%A8%8B/</a>
+            <p>发表日期: <a href="https://yinwc.github.io/2020/02/01/Python%E5%A4%9A%E7%BA%BF%E7%A8%8B/">February 1st 2020, 11:42:52 am</a>
             <p>版权声明: </p>
         </div>
     
@@ -426,16 +441,16 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" title= CSRF漏洞挖掘 >
-                    <div class="nextTitle">CSRF漏洞挖掘</div>
+                <a href= "/2020/02/08/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" title= 从0开始学Java反序列化漏洞 >
+                    <div class="nextTitle">从0开始学Java反序列化漏洞</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2020/07/01/%E6%AF%95%E4%B8%9A%E6%84%9F%E8%A8%80/" title= 毕业感言 >
-                    <div class="prevTitle">毕业感言</div>
+                <a href= "/2020/01/31/Python%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" title= Python数据处理 >
+                    <div class="prevTitle">Python数据处理</div>
                 </a>
             
         </li>
@@ -547,7 +562,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#报错解决"><span class="toc-number">1.1.</span> <span class="toc-text">报错解决</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#python3-manage-py-migrate-初始化数据库失败"><span class="toc-number">1.1.1.</span> <span class="toc-text">python3 manage.py migrate 初始化数据库失败</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hawkeye搭建"><span class="toc-number">2.</span> <span class="toc-text">Hawkeye搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多线程的使用"><span class="toc-number">1.</span> <span class="toc-text">多线程的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#继承threading-Thread"><span class="toc-number">1.1.</span> <span class="toc-text">继承threading.Thread</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直接调用threading-Thread"><span class="toc-number">1.2.</span> <span class="toc-text">直接调用threading.Thread</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread对象的相关方法"><span class="toc-number">1.3.</span> <span class="toc-text">Thread对象的相关方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">2.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2405,11 +2420,6 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">07/13</span><a class="archive-post-title" href= "/2020/07/13/Github%E7%9B%91%E6%8E%A7/" >Github-monitor监控</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2020/07/01/%E6%AF%95%E4%B8%9A%E6%84%9F%E8%A8%80/" >毕业感言</a>
         </li>
     
@@ -2461,6 +2471,11 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">02/08</span><a class="archive-post-title" href= "/2020/02/08/java%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E/" >从0开始学Java反序列化漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/01</span><a class="archive-post-title" href= "/2020/02/01/Python%E5%A4%9A%E7%BA%BF%E7%A8%8B/" >Python多线程</a>
         </li>
     
     
