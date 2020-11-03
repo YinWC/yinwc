@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1.1k</span> / Reading time: <span class="post-count">4 min</span></span>
+                        <span>Word count: <span class="post-count">1.3k</span> / Reading time: <span class="post-count">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -419,19 +419,19 @@ height:50vh;
 <!-- /TOC -->
 
 <p>廖雪峰:<a href="https://www.liaoxuefeng.com/wiki/1016959663602400/1017269809315232" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/1016959663602400/1017269809315232</a></p>
-<h2 id="python-一些特性"><a href="#python-一些特性" class="headerlink" title="python 一些特性"></a>python 一些特性</h2><h3 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h3><p>装饰器（Decorator）:在代码运行期间动态增加功能</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> functools</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(func)</span>:</span></span><br><span class="line"><span class="meta">    @functools.wraps(func)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kw)</span>:</span></span><br><span class="line">        print(<span class="string">'call %s():'</span> % func.__name__)</span><br><span class="line">        <span class="keyword">return</span> func(*args, **kw)</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@log</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'2015-3-25'</span>)</span><br><span class="line"></span><br><span class="line">now()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span><span class="params">(text)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decorator</span><span class="params">(func)</span>:</span></span><br><span class="line"><span class="meta">        @functools.wraps(func)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kw)</span>:</span></span><br><span class="line">            print(<span class="string">'%s %s():'</span> % (text, func.__name__))</span><br><span class="line">            <span class="keyword">return</span> func(*args, **kw)</span><br><span class="line">        <span class="keyword">return</span> wrapper</span><br><span class="line">    <span class="keyword">return</span> decorator</span><br><span class="line"></span><br><span class="line"><span class="meta">@logger('DEBUG')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">today</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'2015-3-25'</span>)</span><br><span class="line"></span><br><span class="line">today()</span><br><span class="line">print(today.__name__)</span><br></pre></td></tr></table></figure>
+<h2 id="python-一些特性"><a href="#python-一些特性" class="headerlink" title="python 一些特性"></a>python 一些特性</h2><h3 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h3><p>装饰器（Decorator）:在代码运行期间动态增加功能<br>希望增加某个函数的功能，但是不希望改变原函数，这种在带啊吗运行期间增加功能的方式就称为“装饰器”</p>
+<p>自定义python装饰器时一定要记住使用<code>@functools.wraps(func)</code>修饰wrapper</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> functools</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">log</span><span class="params">(func)</span>:</span></span><br><span class="line"><span class="meta">    @functools.wraps(func)  //自定义python装饰器时使用该函数来修饰wrapper</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kw)</span>:</span></span><br><span class="line">        print(<span class="string">'call %s():'</span> % func.__name__)</span><br><span class="line">        <span class="keyword">return</span> func(*args, **kw)</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@log</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">now</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'2015-3-25'</span>)</span><br><span class="line"></span><br><span class="line">now()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">logger</span><span class="params">(text)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decorator</span><span class="params">(func)</span>:</span></span><br><span class="line"><span class="meta">        @functools.wraps(func)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args, **kw)</span>:</span></span><br><span class="line">            print(<span class="string">'%s %s():'</span> % (text, func.__name__))</span><br><span class="line">            <span class="keyword">return</span> func(*args, **kw)</span><br><span class="line">        <span class="keyword">return</span> wrapper</span><br><span class="line">    <span class="keyword">return</span> decorator</span><br><span class="line"></span><br><span class="line"><span class="meta">@logger('DEBUG')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">today</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'2015-3-25'</span>)</span><br><span class="line"></span><br><span class="line">today()</span><br><span class="line">print(today.__name__)</span><br></pre></td></tr></table></figure>
 <p>输出的结果为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">call now():</span><br><span class="line">2015-3-25</span><br><span class="line">DEBUG today():</span><br><span class="line">2015-3-25</span><br><span class="line">today</span><br></pre></td></tr></table></figure>
-
-
+<p>其中<code>log</code>就是一个装饰器</p>
 <h2 id="进程、线程和多进程、多线程"><a href="#进程、线程和多进程、多线程" class="headerlink" title="进程、线程和多进程、多线程"></a>进程、线程和多进程、多线程</h2><p><strong>进程（Process)</strong>：相当于一个“任务”<br><strong>线程（Thread）</strong>：进程内的这些“子任务”称为线程<br><strong>多进程（multiprocessing）</strong>：Pool(进程池)：如果要启动大量的子进程，可以用进程池的方式批量创建子进程<br><strong>多线程</strong>：：<code>_thread</code> 和 <code>threading</code> 两个模块可以使用，一般使用<code>threading</code>模块:</p>
 <h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><ul>
 <li>利用切片操作，实现一个trim()函数，去除字符串首尾的空格，注意不要调用str的strip()方法：</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trim</span><span class="params">(s)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> s[:<span class="number">1</span>]==<span class="string">' '</span>:</span><br><span class="line">        <span class="keyword">return</span>(trim(s=s[<span class="number">1</span>:]))</span><br><span class="line">    <span class="keyword">if</span> s[<span class="number">-1</span>:]==<span class="string">' '</span>:</span><br><span class="line">        <span class="keyword">return</span>(trim(s=s[:<span class="number">-1</span>]))</span><br><span class="line">    <span class="keyword">return</span>(s)</span><br></pre></td></tr></table></figure>
 
-<h3 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h3><p>如果给定一个list或tuple，通过for循环来遍历这个list或tuple，这种遍历我们称为迭代（Iteration）。</p>
+<h3 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h3><p>逐个获取元素的过程就是迭代<br>如果给定一个list或tuple，通过for循环来遍历这个list或tuple，这种遍历我们称为迭代（Iteration）。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findMinAndMax</span><span class="params">(L)</span>:</span></span><br><span class="line">	<span class="keyword">if</span> L==[]:</span><br><span class="line">		<span class="keyword">return</span>(<span class="literal">None</span>,<span class="literal">None</span>)</span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		min=L[<span class="number">0</span>]</span><br><span class="line">		max=L[<span class="number">0</span>]</span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> L:</span><br><span class="line">			<span class="keyword">if</span> min&gt;i:</span><br><span class="line">				min=i</span><br><span class="line">			<span class="keyword">if</span> max&lt;i:</span><br><span class="line">				max=i</span><br><span class="line">	<span class="keyword">return</span>[min,max]</span><br><span class="line"></span><br><span class="line">print(findMinAndMax([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>]))</span><br></pre></td></tr></table></figure>
 
 <h3 id="列表生成式"><a href="#列表生成式" class="headerlink" title="列表生成式"></a>列表生成式</h3><p>列表生成式即List Comprehensions，是Python内置的非常简单却强大的可以用来创建list的生成式。</p>
@@ -445,10 +445,11 @@ height:50vh;
 <p>练习:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line">L1 = [<span class="string">'Hello'</span>, <span class="string">'World'</span>, <span class="number">18</span>, <span class="string">'Apple'</span>, <span class="literal">None</span>]</span><br><span class="line">L2 = [s.lower() <span class="keyword">for</span> s <span class="keyword">in</span> L1 <span class="keyword">if</span> isinstance(s,str)]  //isinstance函数可以判断一个变量是不是字符串</span><br></pre></td></tr></table></figure>
 <h3 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h3><p>在Python中，这种一边循环一边计算的机制，称为生成器:<code>generator</code></p>
-<p>列表生成式的[]改成()，就创建了一个<code>generator</code></p>
-<p><code>next()</code>函数获得generator的下一个返回值</p>
-<p>一般通过for循环来迭代生成器</p>
-<p>如果一个函数定义中包含<code>yield</code>关键字，那么这个函数就不再是一个普通函数，而是一个generator</p>
+<p>生成器函数是一种特殊的函数；生成器则是特殊的迭代器。</p>
+<p>列表生成式的[]改成()，就创建了一个<code>generator</code>，<code>next()</code>函数获得generator的下一个返回值</p>
+<p>如果一个函数定义中包含<code>yield</code>关键字，那么这个函数就不再是一个普通函数，而是一个生成器函数</p>
+<p>与普通函数不同，生成器函数被调用后，其函数体内的代码并不会立即执行，而是返回一个生成器（generator-iterator）。当返回的生成器调用成员方法时，相应的生成器函数中的代码才会执行。</p>
+<p><a href="https://liam.page/2017/06/30/understanding-yield-in-python/" target="_blank" rel="noopener">Python 中的黑暗角落（一）：理解 yield 关键字</a></p>
 <h3 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h3><p>可直接作用于<code>for</code>循环的数据类型有以下几种：</p>
 <p>一类是集合数据类型，如<code>list、tuple、dict、set、str</code>等；</p>
 <p>一类是<code>generator</code>，包括生成器和带<code>yield</code>的<code>generator function</code>。</p>
@@ -2432,9 +2433,33 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 112
+        Total : 114
         </div>
         <!-- search  -->
         
@@ -2447,6 +2472,11 @@ top:50vh;
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/28</span><a class="archive-post-title" href= "/2020/10/28/layui/" >layui</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2471,6 +2501,11 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/2020/06/28/XSS%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >XSS漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2020/06/16/python%E8%84%9A%E6%9C%AC/" >Python-scripts</a>
         </li>
     
     
@@ -3064,6 +3099,8 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="物联网安全"><span class="iconfont-archer">&#xe606;</span>物联网安全</span>
     
         <span class="sidebar-tag-name" data-tags="其他"><span class="iconfont-archer">&#xe606;</span>其他</span>
+    
+        <span class="sidebar-tag-name" data-tags="前端框架"><span class="iconfont-archer">&#xe606;</span>前端框架</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

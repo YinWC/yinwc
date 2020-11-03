@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">44</span> / Reading time: <span class="post-count">1 min</span></span>
+                        <span>Word count: <span class="post-count">203</span> / Reading time: <span class="post-count">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -398,9 +398,39 @@ height:50vh;
     <article class="article-entry">
         <h2 id="安全威胁分析"><a href="#安全威胁分析" class="headerlink" title="安全威胁分析"></a>安全威胁分析</h2><p>app面临的威胁主要来自这三方面</p>
 <p><img src="/2020/09/09/app%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/1.png" alt="app安全测试"></p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><img src="https://blog.csdn.net/shuryuu/article/details/103084983" alt="移动安全app渗透测试要点"></p>
+<p><strong>客户端：</strong></p>
+<ul>
+<li>反编译</li>
+<li>调试</li>
+<li>加密/签名破解</li>
+<li>输入记录</li>
+<li>导出组件</li>
+<li>进程注入</li>
+</ul>
+<p><strong>数据传输：</strong></p>
+<ul>
+<li>信息泄露</li>
+<li>传输数据篡改</li>
+<li>重放攻击</li>
+</ul>
+<p><strong>服务端</strong></p>
+<ul>
+<li>心血</li>
+<li>ST2</li>
+<li>注入</li>
+<li>跨站</li>
+<li>越权执行</li>
+<li>上传下载</li>
+<li>弱口令</li>
+</ul>
+<h2 id="app在什么情况下无法抓包（无法进行安全测试）"><a href="#app在什么情况下无法抓包（无法进行安全测试）" class="headerlink" title="app在什么情况下无法抓包（无法进行安全测试）"></a>app在什么情况下无法抓包（无法进行安全测试）</h2><ul>
+<li>一是APP截取的数据报文处于加密状态，在无法解密的情况下无法对数据包进行安全测试</li>
+<li>二是基于各类SSL的安全配置导致数据包无法抓取</li>
+</ul>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://blog.csdn.net/shuryuu/article/details/103084983" target="_blank" rel="noopener">移动安全app渗透测试要点</a></p>
 <p><a href="http://blog.nsfocus.net/mobile-app-security-security-test/" target="_blank" rel="noopener">绿盟：移动APP安全测试要点</a></p>
 <p><a href="https://www.anquanke.com/post/id/211562" target="_blank" rel="noopener">H5页面漏洞挖掘之路-加密篇</a></p>
+<p><a href="https://misakikata.github.io/2020/04/APP%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8%E6%A3%80%E6%B5%8B/" target="_blank" rel="noopener">APP应用安全检测</a></p>
 
     </article>
     <!-- license  -->
@@ -415,6 +445,11 @@ height:50vh;
     <!-- paginator  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/10/28/layui/" title= layui >
+                    <div class="nextTitle">layui</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -533,7 +568,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安全威胁分析"><span class="toc-number">1.</span> <span class="toc-text">安全威胁分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">2.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安全威胁分析"><span class="toc-number">1.</span> <span class="toc-text">安全威胁分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#app在什么情况下无法抓包（无法进行安全测试）"><span class="toc-number">2.</span> <span class="toc-text">app在什么情况下无法抓包（无法进行安全测试）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2358,9 +2393,33 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 112
+        Total : 114
         </div>
         <!-- search  -->
         
@@ -2373,6 +2432,11 @@ top:50vh;
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/28</span><a class="archive-post-title" href= "/2020/10/28/layui/" >layui</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2397,6 +2461,11 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/2020/06/28/XSS%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >XSS漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2020/06/16/python%E8%84%9A%E6%9C%AC/" >Python-scripts</a>
         </li>
     
     
@@ -2990,6 +3059,8 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="物联网安全"><span class="iconfont-archer">&#xe606;</span>物联网安全</span>
     
         <span class="sidebar-tag-name" data-tags="其他"><span class="iconfont-archer">&#xe606;</span>其他</span>
+    
+        <span class="sidebar-tag-name" data-tags="前端框架"><span class="iconfont-archer">&#xe606;</span>前端框架</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>

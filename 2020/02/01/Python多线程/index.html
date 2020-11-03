@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">584</span> / Reading time: <span class="post-count">2 min</span></span>
+                        <span>Word count: <span class="post-count">1k</span> / Reading time: <span class="post-count">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -405,11 +405,21 @@ height:50vh;
 <li><a href="#thread对象的相关方法">Thread对象的相关方法</a></li>
 </ul>
 </li>
+<li><a href="#锁">锁</a><ul>
+<li><a href="#解决的问题">解决的问题</a></li>
+</ul>
+</li>
+<li><a href="#队列queue">队列Queue</a></li>
+<li><a href="#队列的方法">队列的方法</a><ul>
+<li><a href="#生产者和消费者模型">生产者和消费者模型</a></li>
+</ul>
+</li>
 <li><a href="#reference">Reference</a></li>
 </ul>
 <!-- /TOC -->
 
-<h2 id="多线程的使用"><a href="#多线程的使用" class="headerlink" title="多线程的使用"></a>多线程的使用</h2><h3 id="继承threading-Thread"><a href="#继承threading-Thread" class="headerlink" title="继承threading.Thread"></a>继承threading.Thread</h3><blockquote>
+<h2 id="多线程的使用"><a href="#多线程的使用" class="headerlink" title="多线程的使用"></a>多线程的使用</h2><p><a href="https://blog.csdn.net/weixin_40481076/article/details/101594705?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param" target="_blank" rel="noopener">不错的文章</a></p>
+<h3 id="继承threading-Thread"><a href="#继承threading-Thread" class="headerlink" title="继承threading.Thread"></a>继承threading.Thread</h3><blockquote>
 <p>继承threading.Thread模块是一个很好的一个选择，就像java中也是可以继承类和实现接口一样，这都是很好的选择</p>
 </blockquote>
 <p>例子:</p>
@@ -424,6 +434,49 @@ height:50vh;
 <h3 id="Thread对象的相关方法"><a href="#Thread对象的相关方法" class="headerlink" title="Thread对象的相关方法"></a>Thread对象的相关方法</h3><blockquote>
 <p><code>start()</code> 启动线程<br><code>join([timeout])</code> 设置阻塞线程，timeout是可选的参数，表示阻塞的时间，如果没有就是当此线程运行结束才开始运行下一个线程<br><code>run()</code> 线程活动的方法<br><code>getName()</code> 获取线程名称<br><code>setName()</code> 设置线程的名称<br><code>isAlive()</code> 判断线程是否还活着<br><code>isDaemon()</code> 判断是否是守护线程<br><code>setDaemon()</code> 设置为守护线程，守护线程就是当主线程运行完后，这个线程也会随着主线程的结束而结束</p>
 </blockquote>
+<h2 id="锁"><a href="#锁" class="headerlink" title="锁"></a>锁</h2><h3 id="解决的问题"><a href="#解决的问题" class="headerlink" title="解决的问题"></a>解决的问题</h3><p>Python中的多线程并不是真正地多个任务同步执行, 而是给每个任务分配一部分的执行时间, 轮流执行, 因此资源竞争的问题就会随之而来</p>
+<h2 id="队列Queue"><a href="#队列Queue" class="headerlink" title="队列Queue"></a>队列Queue</h2><p>队列的作用：<br>1、解耦：避免两者之间的过度依赖，以免其中一方出现问题，另一方不能再执行。<br>2、效率：增加数据处理的效率。</p>
+<h2 id="队列的方法"><a href="#队列的方法" class="headerlink" title="队列的方法"></a>队列的方法</h2><table>
+<thead>
+<tr>
+<th align="center">方法</th>
+<th align="center">用法说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">put</td>
+<td align="center">放数据，Queue.put( )默认有block=True和timeout两个参数。当block=True时，写入是阻塞式的，阻塞时间由timeout确定。当队列q被（其他线程）写满后，这段代码就会阻塞，直至其他线程取走数据。Queue.put（）方法加上 block=False 的参数，即可解决这个隐蔽的问题。但要注意，非阻塞方式写队列，当队列满时会抛出 exception Queue.Full 的异常</td>
+</tr>
+<tr>
+<td align="center">get</td>
+<td align="center">取数据(默认阻塞),Queue.get([block[, timeout]])获取队列，timeout等待时间</td>
+</tr>
+<tr>
+<td align="center">empty</td>
+<td align="center">如果队列为空，返回True,反之False</td>
+</tr>
+<tr>
+<td align="center">qsize</td>
+<td align="center">显示队列中真实存在的元素长度</td>
+</tr>
+<tr>
+<td align="center">maxsize</td>
+<td align="center">最大支持的队列长度,使用时无括号</td>
+</tr>
+<tr>
+<td align="center">join</td>
+<td align="center">实际上意味着等到队列为空，再执行别的操作</td>
+</tr>
+<tr>
+<td align="center">task_done</td>
+<td align="center">在完成一项工作之后，Queue.task_done()函数向任务已经完成的队列发送一个信号</td>
+</tr>
+<tr>
+<td align="center">full</td>
+<td align="center">如果队列满了，返回True,反之False</td>
+</tr>
+</tbody></table>
+<h3 id="生产者和消费者模型"><a href="#生产者和消费者模型" class="headerlink" title="生产者和消费者模型"></a>生产者和消费者模型</h3><p><a href="https://blog.csdn.net/brucewong0516/article/details/84025027" target="_blank" rel="noopener">解决程序解耦,较少的资源解决高并发的问题</a></p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://chenjiabing666.github.io/2017/09/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BD%BF%E7%94%A8/" target="_blank" rel="noopener">https://chenjiabing666.github.io/2017/09/03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%9A%84%E4%BD%BF%E7%94%A8/</a></p>
 
     </article>
@@ -562,7 +615,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多线程的使用"><span class="toc-number">1.</span> <span class="toc-text">多线程的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#继承threading-Thread"><span class="toc-number">1.1.</span> <span class="toc-text">继承threading.Thread</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直接调用threading-Thread"><span class="toc-number">1.2.</span> <span class="toc-text">直接调用threading.Thread</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread对象的相关方法"><span class="toc-number">1.3.</span> <span class="toc-text">Thread对象的相关方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">2.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#多线程的使用"><span class="toc-number">1.</span> <span class="toc-text">多线程的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#继承threading-Thread"><span class="toc-number">1.1.</span> <span class="toc-text">继承threading.Thread</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#直接调用threading-Thread"><span class="toc-number">1.2.</span> <span class="toc-text">直接调用threading.Thread</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread对象的相关方法"><span class="toc-number">1.3.</span> <span class="toc-text">Thread对象的相关方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#锁"><span class="toc-number">2.</span> <span class="toc-text">锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#解决的问题"><span class="toc-number">2.1.</span> <span class="toc-text">解决的问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#队列Queue"><span class="toc-number">3.</span> <span class="toc-text">队列Queue</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#队列的方法"><span class="toc-number">4.</span> <span class="toc-text">队列的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#生产者和消费者模型"><span class="toc-number">4.1.</span> <span class="toc-text">生产者和消费者模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2387,9 +2440,33 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 112
+        Total : 114
         </div>
         <!-- search  -->
         
@@ -2402,6 +2479,11 @@ top:50vh;
     
     <div class="archive-year"> 2020 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/28</span><a class="archive-post-title" href= "/2020/10/28/layui/" >layui</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -2426,6 +2508,11 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">06/28</span><a class="archive-post-title" href= "/2020/06/28/XSS%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >XSS漏洞</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2020/06/16/python%E8%84%9A%E6%9C%AC/" >Python-scripts</a>
         </li>
     
     
@@ -3019,6 +3106,8 @@ top:50vh;
         <span class="sidebar-tag-name" data-tags="物联网安全"><span class="iconfont-archer">&#xe606;</span>物联网安全</span>
     
         <span class="sidebar-tag-name" data-tags="其他"><span class="iconfont-archer">&#xe606;</span>其他</span>
+    
+        <span class="sidebar-tag-name" data-tags="前端框架"><span class="iconfont-archer">&#xe606;</span>前端框架</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
