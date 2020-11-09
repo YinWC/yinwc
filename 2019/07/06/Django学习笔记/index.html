@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1.7k</span> / Reading time: <span class="post-count">6 min</span></span>
+                        <span>Word count: <span class="post-count">1.8k</span> / Reading time: <span class="post-count">7 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -396,7 +396,30 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="Django简介"><a href="#Django简介" class="headerlink" title="Django简介"></a>Django简介</h2><p>Django是一个高级Python Web框架, 鼓励快速,简洁, 以程序设计的思想进行开发. 通过使用这个框架, 可以减少很多开发麻烦, 使你更专注于编写自己的app, 而不需要重复造轮子. Django免费并且开源.</p>
+        <!-- TOC -->
+
+<ul>
+<li><a href="#工程的创建">工程的创建</a></li>
+<li><a href="#django简介">Django简介</a><ul>
+<li><a href="#django特点">Django特点</a></li>
+<li><a href="#mvc设计模式">MVC设计模式</a></li>
+</ul>
+</li>
+<li><a href="#学习笔记">学习笔记</a><ul>
+<li><a href="#django系统">Django系统</a></li>
+<li><a href="#环境搭建">环境搭建</a></li>
+<li><a href="#创建第一个django程序">创建第一个Django程序</a></li>
+<li><a href="#路由系统-urls">路由系统-urls</a></li>
+<li><a href="#2-正常映射">2. 正常映射</a></li>
+<li><a href="#3-url中带参数映射">3. URL中带参数映射</a></li>
+<li><a href="#4url在app中处理">4.URL在app中处理</a></li>
+<li><a href="#5url中的嵌套参数">5.URL中的嵌套参数</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h2 id="工程的创建"><a href="#工程的创建" class="headerlink" title="工程的创建"></a>工程的创建</h2><p>django-admin startproject xxx<br>python manage.py startapp users<br>python manage.py runserver</p>
+<h2 id="Django简介"><a href="#Django简介" class="headerlink" title="Django简介"></a>Django简介</h2><p>Django是一个高级Python Web框架, 鼓励快速,简洁, 以程序设计的思想进行开发. 通过使用这个框架, 可以减少很多开发麻烦, 使你更专注于编写自己的app, 而不需要重复造轮子. Django免费并且开源.</p>
 <h3 id="Django特点"><a href="#Django特点" class="headerlink" title="Django特点"></a>Django特点</h3><ul>
 <li><p>完全免费并开源源代码</p>
 </li>
@@ -695,7 +718,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Django简介"><span class="toc-number">1.</span> <span class="toc-text">Django简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Django特点"><span class="toc-number">1.1.</span> <span class="toc-text">Django特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MVC设计模式"><span class="toc-number">1.2.</span> <span class="toc-text">MVC设计模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#学习笔记"><span class="toc-number">2.</span> <span class="toc-text">学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Django系统"><span class="toc-number">2.1.</span> <span class="toc-text">Django系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#环境搭建"><span class="toc-number">2.2.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建第一个Django程序"><span class="toc-number">2.3.</span> <span class="toc-text">创建第一个Django程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#路由系统-urls"><span class="toc-number">2.4.</span> <span class="toc-text">路由系统-urls</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-正常映射"><span class="toc-number">2.5.</span> <span class="toc-text">2. 正常映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-URL中带参数映射"><span class="toc-number">2.6.</span> <span class="toc-text">3. URL中带参数映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-URL在app中处理"><span class="toc-number">2.7.</span> <span class="toc-text">4.URL在app中处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-URL中的嵌套参数"><span class="toc-number">2.8.</span> <span class="toc-text">5.URL中的嵌套参数</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#工程的创建"><span class="toc-number">1.</span> <span class="toc-text">工程的创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Django简介"><span class="toc-number">2.</span> <span class="toc-text">Django简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Django特点"><span class="toc-number">2.1.</span> <span class="toc-text">Django特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MVC设计模式"><span class="toc-number">2.2.</span> <span class="toc-text">MVC设计模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#学习笔记"><span class="toc-number">3.</span> <span class="toc-text">学习笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Django系统"><span class="toc-number">3.1.</span> <span class="toc-text">Django系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#环境搭建"><span class="toc-number">3.2.</span> <span class="toc-text">环境搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建第一个Django程序"><span class="toc-number">3.3.</span> <span class="toc-text">创建第一个Django程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#路由系统-urls"><span class="toc-number">3.4.</span> <span class="toc-text">路由系统-urls</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-正常映射"><span class="toc-number">3.5.</span> <span class="toc-text">2. 正常映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-URL中带参数映射"><span class="toc-number">3.6.</span> <span class="toc-text">3. URL中带参数映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-URL在app中处理"><span class="toc-number">3.7.</span> <span class="toc-text">4.URL在app中处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-URL中的嵌套参数"><span class="toc-number">3.8.</span> <span class="toc-text">5.URL中的嵌套参数</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2544,9 +2567,14 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 114
+        Total : 115
         </div>
         <!-- search  -->
         
@@ -2687,6 +2715,11 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">11/20</span><a class="archive-post-title" href= "/2019/11/20/%E6%8F%90%E6%9D%83%E7%AC%94%E8%AE%B0/" >提权笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/2019/11/18/flask%E6%A1%86%E6%9E%B6/" >Python flask框架学习记录</a>
         </li>
     
     
@@ -3125,17 +3158,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/28</span><a class="archive-post-title" href= "/2018/05/28/python/" >学习python中遇到的问题及总结</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">05/18</span><a class="archive-post-title" href= "/2018/05/18/rsa/" >Crypto_RSA算法总结</a>
         </li>
     
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/16</span><a class="archive-post-title" href= "/2018/05/16/problem/" >日常学习中问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2018/05/09/pythonlearn/" >pythonlearn</a>
         </li>
     
     
