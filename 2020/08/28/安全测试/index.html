@@ -503,8 +503,8 @@ height:50vh;
 <p>攻击者修改addressId即可得到他人的address信息</p>
 <h4 id="修复方案"><a href="#修复方案" class="headerlink" title="修复方案"></a>修复方案</h4><ol>
 <li><strong>在web层的逻辑中做鉴权</strong><br>这个是最直接有效的修复方案：在web层的逻辑中做鉴权，检查提交CRUD请求的操作者（通过session信息得到）与目标对象的权限所有者（查数据库）是否一致，如果不一致则阻断。这个方案实现成本低、能确保漏洞的修复质量，缺点是增加了一次查库操作。我之前一直用这种方案来对已发生的水平权限漏洞做紧急修复。</li>
-<li><strong>把权限的控制转移到数据接口层中</strong><br>最正规的方案：把权限的控制转移到数据接口层中，避免出现select/update/delete … where addressID=#addressID#的SQL语句，使用selectt/update/delete… where addressID=#addressID# and ownerId=#userId#来代替，要求web层在调用数据接口层的接口时额外提供userid，而这个userid在web层看来只能通过seesion来取到。这样在面对水平权限攻击时，web层的开发者不用额外花精力去注意鉴权的事情，也不需要增加一个SQL来专门判断权限——如果权限不对的话，那个and条件就满足不了，SQL自然就找不到相关对象去操作。而且这个方案对于一个接口多个地方使用的情况也比较有利，不需要每个地方都鉴权了。<br>但这个方案的缺陷在于实现起来要改动底层的设计，所以不适合作为修复方案，更适合作为统一的控制方案在最开始设计时就注意这方面的问题。</li>
-<li><strong>在生成表单时，增加一个token参数</strong><br>在生成表单时，增加一个token参数，即token=md5(addressId+sessionId+key)；在处理请求时，用addressId、sessionId和key来验证token。</li>
+<li><strong>把权限的控制转移到数据接口层中</strong><br>最正规的方案：把权限的控制转移到数据接口层中，避免出现<code>select/update/delete ... where addressID=#addressID#</code>的SQL语句，使用<code>selectt/update/delete... where addressID=#addressID# and ownerId=#userId#</code>来代替，要求web层在调用数据接口层的接口时额外提供userid，而这个userid在web层看来只能通过seesion来取到。这样在面对水平权限攻击时，web层的开发者不用额外花精力去注意鉴权的事情，也不需要增加一个SQL来专门判断权限——如果权限不对的话，那个and条件就满足不了，SQL自然就找不到相关对象去操作。而且这个方案对于一个接口多个地方使用的情况也比较有利，不需要每个地方都鉴权了。<br>但这个方案的缺陷在于实现起来要改动底层的设计，所以不适合作为修复方案，更适合作为统一的控制方案在最开始设计时就注意这方面的问题。</li>
+<li><strong>在生成表单时，增加一个token参数</strong><br>在生成表单时，增加一个token参数，即<code>token=md5(addressId+sessionId+key)；</code>在处理请求时，用addressId、sessionId和key来验证token。</li>
 </ol>
 <h3 id="垂直越权"><a href="#垂直越权" class="headerlink" title="垂直越权"></a>垂直越权</h3><h4 id="漏洞原理-3"><a href="#漏洞原理-3" class="headerlink" title="漏洞原理"></a>漏洞原理</h4><h4 id="测试方法-3"><a href="#测试方法-3" class="headerlink" title="测试方法"></a>测试方法</h4><p>用低权限的账户去访问高权限的账户的数据<br>一般就是修改token，通过接口来进行测试</p>
 <h4 id="修复方案-1"><a href="#修复方案-1" class="headerlink" title="修复方案"></a>修复方案</h4><p>对需要权限的页面进行 SESSION 认证，对用户访问的每一个 URL 做身份鉴别</p>
