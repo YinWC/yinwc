@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">207</span> / Reading time: <span class="post-count">1 min</span></span>
+                        <span>Word count: <span class="post-count">542</span> / Reading time: <span class="post-count">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -423,7 +423,30 @@ height:50vh;
 <li>上传下载</li>
 <li>弱口令</li>
 </ul>
-<h2 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h2><h3 id="app在什么情况下无法抓包（无法进行安全测试）"><a href="#app在什么情况下无法抓包（无法进行安全测试）" class="headerlink" title="app在什么情况下无法抓包（无法进行安全测试）"></a>app在什么情况下无法抓包（无法进行安全测试）</h3><ul>
+<h2 id="APP安全测试大概分类"><a href="#APP安全测试大概分类" class="headerlink" title="APP安全测试大概分类"></a>APP安全测试大概分类</h2><p>1、从数据的本地存储到数据的传输、处理以及远程访问等各个环节，基于相应的安全标准/行业标准评估APP的安全特性</p>
+<p>2、借鉴在Web App和网络安全测试的一些成功经验在智能终端APP测试中进行测试或适配</p>
+<p>3、检测APP的用户授权级别，数据泄露，非法授权访问等；</p>
+<p>4、对APP的输入有效性校验、认证、授权、敏感数据存储、数据加密等方面进行检测，以发现潜在的安全问题</p>
+<p>5、基于各种通信协议或相应的行业安全标准检查app是否满足相应的要求。</p>
+<h2 id="使用Burp抓取手机app的包（手机无需root）"><a href="#使用Burp抓取手机app的包（手机无需root）" class="headerlink" title="使用Burp抓取手机app的包（手机无需root）"></a>使用Burp抓取手机app的包（手机无需root）</h2><p>使用VirtualXposed抓包：<a href="https://testerhome.com/articles/18609" target="_blank" rel="noopener">https://testerhome.com/articles/18609</a> 然后将burp证书倒入进手机，设置代理抓包即可：</p>
+<ul>
+<li><p>1、手机安装VirtualXposed</p>
+<p>下载地址：<a href="https://github.com/android-hacker/VirtualXposed/releases" target="_blank" rel="noopener">https://github.com/android-hacker/VirtualXposed/releases</a></p>
+</li>
+<li><p>2、VirtualXposed中安装 JustTrustMe 或 SSLUnpinning 用于绕过 SSL 证书检查</p>
+<ul>
+<li>JustTrustMe：<a href="https://github.com/Fuzion24/JustTrustMe/releases" target="_blank" rel="noopener">https://github.com/Fuzion24/JustTrustMe/releases</a></li>
+<li>SSLUnpinning：<a href="https://github.com/ac-pm/SSLUnpinning_Xposed/blob/master/mobi.acpm.sslunpinning_latest.apk" target="_blank" rel="noopener">https://github.com/ac-pm/SSLUnpinning_Xposed/blob/master/mobi.acpm.sslunpinning_latest.apk</a> 在VirtualXposed中安装apk并启用模块 并在设置中，点击重启以使模块生效</li>
+</ul>
+</li>
+<li><p>配置Burp代理</p>
+<ul>
+<li><img src="/2020/09/09/app%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/2.png" alt="app安全测试"></li>
+<li>然后在真机中的WLAN中配置好对应的代理，Burp即可抓到VirtualXposed中的包</li>
+</ul>
+</li>
+</ul>
+<h2 id="app在什么情况下无法抓包（无法进行安全测试）"><a href="#app在什么情况下无法抓包（无法进行安全测试）" class="headerlink" title="app在什么情况下无法抓包（无法进行安全测试）"></a>app在什么情况下无法抓包（无法进行安全测试）</h2><ul>
 <li>一是APP截取的数据报文处于加密状态，在无法解密的情况下无法对数据包进行安全测试</li>
 <li>二是基于各类SSL的安全配置导致数据包无法抓取</li>
 </ul>
@@ -568,7 +591,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安全威胁分析"><span class="toc-number">1.</span> <span class="toc-text">安全威胁分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题记录"><span class="toc-number">2.</span> <span class="toc-text">问题记录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#app在什么情况下无法抓包（无法进行安全测试）"><span class="toc-number">2.1.</span> <span class="toc-text">app在什么情况下无法抓包（无法进行安全测试）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安全威胁分析"><span class="toc-number">1.</span> <span class="toc-text">安全威胁分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#APP安全测试大概分类"><span class="toc-number">2.</span> <span class="toc-text">APP安全测试大概分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Burp抓取手机app的包（手机无需root）"><span class="toc-number">3.</span> <span class="toc-text">使用Burp抓取手机app的包（手机无需root）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#app在什么情况下无法抓包（无法进行安全测试）"><span class="toc-number">4.</span> <span class="toc-text">app在什么情况下无法抓包（无法进行安全测试）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
