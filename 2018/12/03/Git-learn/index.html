@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">676</span> / Reading time: <span class="post-count">2 min</span></span>
+                        <span>Word count: <span class="post-count">1.2k</span> / Reading time: <span class="post-count">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -410,17 +410,74 @@ height:50vh;
 <p>如果要使用gitlab和github等还要配置多个ssh key </p>
 <p>要在~/.ssh中新建一个config文件，我的为：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># gitlab</span><br><span class="line">Host gitlab.com</span><br><span class="line">    HostName gitlab.com</span><br><span class="line">    IdentityFile ~&#x2F;.ssh&#x2F;id_rsa</span><br><span class="line"></span><br><span class="line"># github</span><br><span class="line">Host github.com</span><br><span class="line">    HostName github.com</span><br><span class="line">    IdentityFile ~&#x2F;.ssh&#x2F;id_rsa_github</span><br></pre></td></tr></table></figure>
-<h2 id="Git提交修改内容"><a href="#Git提交修改内容" class="headerlink" title="Git提交修改内容"></a>Git提交修改内容</h2><p>当修改文件后</p>
+<h2 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h2><blockquote>
+<p><code>git status</code> 查看当前仓库中文件的状态<br><code>git status -s</code> 文件状态的简写（M - 修改， A - 添加， D - 删除， R - 重命名，?? - 未追踪）<br><code>git add &lt;文件名&gt;</code> 将后方紧跟的文件进行暂存，以便commit使用<br><code>git reset HEAD &lt;文件名&gt;</code>  将已经暂存的文件进行撤销，回到未暂存的状态<br><code>git checkout -- &lt;文件名&gt;</code> 撤销对尚未暂存文件的修改，该操作不可逆，慎用<br><code>git commit -a</code> 对那些被修改的文件单尚未暂存和提交的文件进行暂存和提交。注意：对未暂存的新增文件无效<br><code>git commit -m&quot;&quot;</code> 对暂存区的文件进行提交到本地仓库并进行简单说明<br><code>git push</code> 将本地仓库已经提交的内容发布到远端<br><code>git pull</code> 取回远程主机某个分支的更新，再与本地的指定分支合并</p>
+</blockquote>
+<h3 id="常用的提交指令"><a href="#常用的提交指令" class="headerlink" title="常用的提交指令"></a>常用的提交指令</h3><p>当修改文件后</p>
 <p>** git add * **   或者 一个个地 git add + 文件名</p>
 <p><strong>git status</strong>    查看相关文件的状态</p>
 <p><strong>git commit -m</strong> 提交说明”` 将暂存区里的改动给提交到本地的版本库并简要说明这次提交的语句</p>
 <p><strong>git push</strong>      将修改内容推送到远程仓库</p>
 <p><strong>git pull</strong>      取回远程主机某个分支的更新，再与本地的指定分支合并</p>
 <p><img src="/2018/12/03/Git-learn/1.png" alt="Git learn"></p>
-<h2 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a>常用指令</h2><blockquote>
-<p><code>git status</code> 查看当前仓库中文件的状态<br><code>git status -s</code> 文件状态的简写（M - 修改， A - 添加， D - 删除， R - 重命名，?? - 未追踪）<br><code>git add &lt;文件名&gt;</code> 将后方紧跟的文件进行暂存，以便commit使用<br><code>git reset HEAD &lt;文件名&gt;</code>  将已经暂存的文件进行撤销，回到未暂存的状态<br><code>git checkout -- &lt;文件名&gt;</code> 撤销对尚未暂存文件的修改，该操作不可逆，慎用<br><code>git commit -a</code> 对那些被修改的文件单尚未暂存和提交的文件进行暂存和提交。注意：对未暂存的新增文件无效<br><code>git commit -m&quot;&quot;</code> 对暂存区的文件进行提交到本地仓库并进行简单说明<br><code>git push</code> 将本地仓库已经提交的内容发布到远端<br><code>git pull</code> 取回远程主机某个分支的更新，再与本地的指定分支合并</p>
-</blockquote>
-<p>参考文章：<a href="https://www.cnblogs.com/ludashi/p/8052739.html" target="_blank" rel="noopener">https://www.cnblogs.com/ludashi/p/8052739.html</a></p>
+<h3 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h3><ul>
+<li><code>git log</code>显示从最近到最远的提交日志<ul>
+<li><code>git log ----pretty=oneline</code> 优化输出日志</li>
+</ul>
+</li>
+<li><code>git reset --hard HEAD^</code>版本回退到上一个版本，<ul>
+<li><code>HEAD</code>指向的版本就是当前版本,因此,Git允许我们在版本的历史之间穿梭,使用命令:<ul>
+<li><code>git reset --hard commit_id</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>git reflog</code>查看命令历史，以便确定要回到哪个版本</li>
+</ul>
+<p><a href="https://www.liaoxuefeng.com/wiki/896043488029600/897013573512192" target="_blank" rel="noopener">廖雪峰：版本回退</a></p>
+<h3 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h3><ul>
+<li><p>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令<code>git checkout -- file</code></p>
+<ul>
+<li><code>git checkout</code>其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”</li>
+</ul>
+</li>
+<li><p>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令<code>git reset HEAD &lt;file&gt;</code>，就回到了场景1，第二步按场景1操作</p>
+</li>
+<li><p>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考<a href="https://www.liaoxuefeng.com/wiki/896043488029600/897013573512192" target="_blank" rel="noopener">版本回退</a>一节，不过前提是没有推送到远程库</p>
+</li>
+</ul>
+<p><a href="https://www.liaoxuefeng.com/wiki/896043488029600/900002180232448" target="_blank" rel="noopener">廖雪峰：撤销修改</a></p>
+<p><img src="/2018/12/03/Git-learn/0.jpeg" alt="Git learn"></p>
+<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><ul>
+<li><code>git commit</code>用于删除一个文件</li>
+</ul>
+<p>如果一个文件已经被提交到版本库，那么你永远不用担心误删，但是要小心，你只能恢复文件到最新版本，你会丢失<strong>最近一次提交后你修改的内容</strong>。</p>
+<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><h3 id="创建与合并分支"><a href="#创建与合并分支" class="headerlink" title="创建与合并分支"></a><a href="https://www.liaoxuefeng.com/wiki/896043488029600/900003767775424" target="_blank" rel="noopener">创建与合并分支</a></h3><ul>
+<li><p>查看分支：<code>git branch</code></p>
+</li>
+<li><p>创建分支：<code>git branch &lt;name&gt;</code></p>
+</li>
+<li><p>切换分支：<code>git checkout &lt;name&gt;</code>或者<code>git switch &lt;name&gt;</code></p>
+</li>
+<li><p>创建+切换分支：<code>git checkout -b &lt;name&gt;</code>或者<code>git switch -c &lt;name&gt;</code></p>
+</li>
+<li><p>合并某分支到当前分支：<code>git merge &lt;name&gt;</code></p>
+<ul>
+<li>例如：在master分支下，想合并dev分支到master，使用命令：<code>git merge dev</code><ul>
+<li>使用 <code>--no-ff</code>参数，表示禁用<code>Fast forward</code>模式（Git在合并分支时会使用<code>Fast forward</code>模式，这种模式下，删除分支后，会丢掉分支信息）：<ul>
+<li><code>git merge --no-ff -m &quot;merge with no-ff&quot; dev</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>删除分支：<code>git branch -d &lt;name&gt;</code></p>
+</li>
+</ul>
+<p>​    </p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://www.liaoxuefeng.com/wiki/896043488029600/897013573512192" target="_blank" rel="noopener">廖雪峰的Git教程</a></p>
+<p><a href="https://blog.csdn.net/sculpta/article/details/104448310?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-2.control" target="_blank" rel="noopener">GitHub 多人队伍合作详细教程</a></p>
 
     </article>
     <!-- license  -->
@@ -558,7 +615,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GitLab配置ssh-key"><span class="toc-number">2.</span> <span class="toc-text">GitLab配置ssh key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git提交修改内容"><span class="toc-number">3.</span> <span class="toc-text">Git提交修改内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用指令"><span class="toc-number">4.</span> <span class="toc-text">常用指令</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GitLab配置ssh-key"><span class="toc-number">2.</span> <span class="toc-text">GitLab配置ssh key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用指令"><span class="toc-number">3.</span> <span class="toc-text">常用指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用的提交指令"><span class="toc-number">3.1.</span> <span class="toc-text">常用的提交指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#版本回退"><span class="toc-number">3.2.</span> <span class="toc-text">版本回退</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#撤销修改"><span class="toc-number">3.3.</span> <span class="toc-text">撤销修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除文件"><span class="toc-number">3.4.</span> <span class="toc-text">删除文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分支管理"><span class="toc-number">4.</span> <span class="toc-text">分支管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建与合并分支"><span class="toc-number">4.1.</span> <span class="toc-text">创建与合并分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
