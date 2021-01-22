@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">192</span> / Reading time: <span class="post-count">1 min</span></span>
+                        <span>Word count: <span class="post-count">401</span> / Reading time: <span class="post-count">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -398,7 +398,8 @@ height:50vh;
     <article class="article-entry">
         <h2 id="读取前X行"><a href="#读取前X行" class="headerlink" title="读取前X行"></a>读取前X行</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 读取1.txt中的前两行</span></span><br><span class="line"><span class="keyword">with</span> open (<span class="string">'1.txt'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>):</span><br><span class="line">        print(f.readline().strip())</span><br></pre></td></tr></table></figure>
 
-
+<p>知识点：read(), readline()和readlines()使用方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">read():</span><br><span class="line">1、读取整个文件，返回的是一个字符串，字符串包括文件中的所有内容。</span><br><span class="line">2、若想要将每一行数据分离，即需要对每一行数据进行操作，此方法无效。</span><br><span class="line">3、若内存不足无法使用此方法。</span><br><span class="line"></span><br><span class="line">readline():</span><br><span class="line">1、每次读取下一行文件。</span><br><span class="line">2、可将每一行数据分离。</span><br><span class="line">3、主要使用场景是当内存不足时，使用readline()可以每次读取一行数据，只需要很少的内存。</span><br><span class="line"></span><br><span class="line">readlines():</span><br><span class="line">1、一次性读取所有行文件。</span><br><span class="line">2、可将每一行数据分离，从代码中可以看出，若需要对每一行数据进行处理，可以对readlines()求得的结果进行遍历。</span><br><span class="line">3、若内存不足无法使用此方法。</span><br></pre></td></tr></table></figure>
 
 <h2 id="删除重复的行数据"><a href="#删除重复的行数据" class="headerlink" title="删除重复的行数据"></a>删除重复的行数据</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">lines_seen = set()  <span class="comment"># set方法用来删除文件中重复的行</span></span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'test.txt'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f1:</span><br><span class="line">    <span class="keyword">with</span> open(<span class="string">'result.txt'</span>, <span class="string">'w'</span>) <span class="keyword">as</span> f2:</span><br><span class="line">        <span class="keyword">for</span> line <span class="keyword">in</span> f1.readlines():</span><br><span class="line">            url = line.strip()</span><br><span class="line">            <span class="keyword">if</span> url <span class="keyword">not</span> <span class="keyword">in</span> lines_seen:</span><br><span class="line">                <span class="comment"># print url</span></span><br><span class="line">                f2.write(url + <span class="string">'\n'</span>)</span><br><span class="line">                lines_seen.add(url)</span><br></pre></td></tr></table></figure>
 <p>此脚本删除<code>test.txt</code>中重复的数据，然后将不重复的数据保存到<code>result.txt</code>中去</p>
@@ -2425,16 +2426,9 @@ top:50vh;
     
     
     
-    
-    
-    
-    
-    
-    
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 117
+        Total : 116
         </div>
         <!-- search  -->
         
@@ -2664,7 +2658,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2019/06/18/App%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" >App渗透测试</a>
+            <span class="archive-post-date">06/18</span><a class="archive-post-title" href= "/2019/06/18/App%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" >App安全测试</a>
         </li>
     
     
@@ -2750,11 +2744,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">01/28</span><a class="archive-post-title" href= "/2019/01/28/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E4%B9%8B%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/" >渗透测试之信息收集</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">01/26</span><a class="archive-post-title" href= "/2019/01/26/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" >反向代理</a>
         </li>
     
     
@@ -3080,21 +3069,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="Crypto"><span class="iconfont-archer">&#xe606;</span>Crypto</span>
     
-        <span class="sidebar-tag-name" data-tags="安全建设"><span class="iconfont-archer">&#xe606;</span>安全建设</span>
-    
-        <span class="sidebar-tag-name" data-tags="Docker"><span class="iconfont-archer">&#xe606;</span>Docker</span>
-    
         <span class="sidebar-tag-name" data-tags="安全测试"><span class="iconfont-archer">&#xe606;</span>安全测试</span>
     
         <span class="sidebar-tag-name" data-tags="物联网安全"><span class="iconfont-archer">&#xe606;</span>物联网安全</span>
     
-        <span class="sidebar-tag-name" data-tags="其他"><span class="iconfont-archer">&#xe606;</span>其他</span>
-    
         <span class="sidebar-tag-name" data-tags="前端框架"><span class="iconfont-archer">&#xe606;</span>前端框架</span>
     
-        <span class="sidebar-tag-name" data-tags="前端开发"><span class="iconfont-archer">&#xe606;</span>前端开发</span>
-    
         <span class="sidebar-tag-name" data-tags="企业安全"><span class="iconfont-archer">&#xe606;</span>企业安全</span>
+    
+        <span class="sidebar-tag-name" data-tags="工具使用"><span class="iconfont-archer">&#xe606;</span>工具使用</span>
+    
+        <span class="sidebar-tag-name" data-tags="Others"><span class="iconfont-archer">&#xe606;</span>Others</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
