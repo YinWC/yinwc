@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">180</span> / Reading time: <span class="post-count">1 min</span></span>
+                        <span>Word count: <span class="post-count">436</span> / Reading time: <span class="post-count">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -404,10 +404,15 @@ height:50vh;
 
 <p><code>sum()</code> 方法对序列进行求和计算</p>
 <p>Reference: <a href="https://www.pythonheidong.com/blog/article/249069/53202e9ddbc9740732b4/" target="_blank" rel="noopener">https://www.pythonheidong.com/blog/article/249069/53202e9ddbc9740732b4/</a></p>
-<p>每日加油：</p>
-<blockquote>
-<p>我要再和生活死磕几年。要么我就毁灭，要么我就注定铸就辉煌。如果有一天，你发现我在平庸面前低了头，就向我开炮。<br>————杰克.凯鲁亚克《在路上》</p>
-</blockquote>
+<h3 id="2021-01-29"><a href="#2021-01-29" class="headerlink" title="2021.01.29"></a>2021.01.29</h3><ul>
+<li><a href="https://leetcode-cn.com/problems/two-sum/" target="_blank" rel="noopener">两数之和</a></li>
+</ul>
+<p>方法一：使用最容易理解的遍历数组进行查找</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(nums,target)</span>:</span></span><br><span class="line">	<span class="comment">#如果列表长度小于2，则直接结束</span></span><br><span class="line">	<span class="keyword">if</span> len(nums) &lt; <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="comment">#两次循环列表，分别对列表中的所有可能的数字进行相加</span></span><br><span class="line">        <span class="comment">#循环两次列表对应的时间复杂度为O(n²)</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(nums) - <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, len(nums)):</span><br><span class="line">                <span class="keyword">if</span> nums[i] + nums[j] == target:</span><br><span class="line">                    <span class="keyword">return</span> [i, j]</span><br></pre></td></tr></table></figure>
+
+<p>方法二：使用哈希表，通过以空间换取速度的方式，我们可以将查找时间从 O(n)降低到 O(1)。在python中列表字典的即为哈希类型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(nums,target)</span>:</span></span><br><span class="line">	<span class="comment">#新建立一个空字典用来保存数值及其在列表中对应的索引</span></span><br><span class="line">	dict1 = &#123;&#125;</span><br><span class="line">	<span class="comment">#遍历一遍列表对应的时间复杂度为O(n)</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(nums)):</span><br><span class="line">            <span class="comment">#相减得到另一个数值</span></span><br><span class="line">            num = target - nums[i]</span><br><span class="line">            <span class="comment">#如果另一个数值不在字典中，则将第一个数值及其的索引报错在字典中</span></span><br><span class="line">            <span class="comment">#因为在字典中查找的时间复杂度为O(1)，因此总时间复杂度为O(n)</span></span><br><span class="line">            <span class="keyword">if</span> num <span class="keyword">not</span> <span class="keyword">in</span> dict1:</span><br><span class="line">                dict1[nums[i]] = i</span><br><span class="line">            <span class="comment">#如果在字典中则返回</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> [dict1[num], i]</span><br></pre></td></tr></table></figure>
+
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2>
     </article>
     <!-- license  -->
@@ -540,7 +545,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#每日打卡"><span class="toc-number">1.</span> <span class="toc-text">每日打卡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2021"><span class="toc-number">2.</span> <span class="toc-text">2021</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-01-28"><span class="toc-number">2.1.</span> <span class="toc-text">2021.01.28</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#每日打卡"><span class="toc-number">1.</span> <span class="toc-text">每日打卡</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2021"><span class="toc-number">2.</span> <span class="toc-text">2021</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-01-28"><span class="toc-number">2.1.</span> <span class="toc-text">2021.01.28</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-01-29"><span class="toc-number">2.2.</span> <span class="toc-text">2021.01.29</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
