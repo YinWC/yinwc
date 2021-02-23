@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">3.2k</span> / Reading time: <span class="post-count">11 min</span></span>
+                        <span>Word count: <span class="post-count">4.1k</span> / Reading time: <span class="post-count">14 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -416,45 +416,39 @@ height:50vh;
 </ul>
 </li>
 <li><a href="#漏洞类型">漏洞类型</a><ul>
-<li><a href="#sql注入">SQL注入</a><ul>
-<li><a href="#漏洞原理">漏洞原理</a></li>
-<li><a href="#测试方法">测试方法</a></li>
-<li><a href="#修复建议">修复建议</a></li>
-</ul>
-</li>
-<li><a href="#xss">XSS</a><ul>
-<li><a href="#漏洞原理-1">漏洞原理</a></li>
-<li><a href="#测试方法-1">测试方法</a></li>
-<li><a href="#修复建议-1">修复建议</a></li>
-</ul>
-</li>
+<li><a href="#sql注入">SQL注入</a></li>
+<li><a href="#xss">XSS</a></li>
 <li><a href="#越权漏洞">越权漏洞</a><ul>
-<li><a href="#水平越权">水平越权</a><ul>
-<li><a href="#漏洞原理-2">漏洞原理</a></li>
-<li><a href="#测试方法-2">测试方法</a></li>
-<li><a href="#修复方案">修复方案</a></li>
-</ul>
-</li>
+<li><a href="#水平越权">水平越权</a></li>
 <li><a href="#垂直越权">垂直越权</a><ul>
-<li><a href="#漏洞原理-3">漏洞原理</a></li>
-<li><a href="#测试方法-3">测试方法</a></li>
-<li><a href="#修复方案-1">修复方案</a></li>
+<li><a href="#测试方法">测试方法</a></li>
+<li><a href="#修复方案">修复方案</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#文件上传漏洞">文件上传漏洞</a><ul>
-<li><a href="#漏洞原理-4">漏洞原理</a></li>
-<li><a href="#测试方法-4">测试方法</a></li>
-<li><a href="#修复建议-2">修复建议</a></li>
+<li><a href="#漏洞原理">漏洞原理</a></li>
+<li><a href="#测试方法-1">测试方法</a></li>
+<li><a href="#修复建议">修复建议</a></li>
 </ul>
 </li>
 <li><a href="#ssrf">SSRF</a><ul>
-<li><a href="#漏洞原理-5">漏洞原理</a></li>
-<li><a href="#测试方法-5">测试方法</a></li>
+<li><a href="#漏洞原理-1">漏洞原理</a></li>
+<li><a href="#漏洞危害">漏洞危害</a></li>
+<li><a href="#漏洞检测">漏洞检测</a></li>
+<li><a href="#修复方案-1">修复方案</a></li>
+</ul>
+</li>
+<li><a href="#url跳转漏洞">URL跳转漏洞</a><ul>
+<li><a href="#漏洞原理-2">漏洞原理</a></li>
+<li><a href="#漏洞危害-1">漏洞危害</a></li>
+<li><a href="#漏洞检测-1">漏洞检测</a></li>
 <li><a href="#修复方案-2">修复方案</a></li>
 </ul>
 </li>
+<li><a href="#短信轰炸">短信轰炸</a></li>
+<li><a href="#重放攻击">重放攻击</a></li>
 </ul>
 </li>
 <li><a href="#学习文章">学习文章</a></li>
@@ -463,6 +457,7 @@ height:50vh;
 <li><a href="#xss漏洞的修复">XSS漏洞的修复</a></li>
 </ul>
 </li>
+<li><a href="#others">Others</a></li>
 <li><a href="#reference">Reference</a></li>
 </ul>
 <!-- /TOC -->
@@ -486,29 +481,61 @@ height:50vh;
 </ul>
 <p>2、CSRF</p>
 <h2 id="文件上传处"><a href="#文件上传处" class="headerlink" title="文件上传处"></a>文件上传处</h2><p>1、文件上传XSS<br>2、普通上传</p>
-<h1 id="漏洞类型"><a href="#漏洞类型" class="headerlink" title="漏洞类型"></a>漏洞类型</h1><h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h2><h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>原理：开发者在编写操作数据库代码时，直接将外部可控的参数拼接到SQL语句中，没有经过任何过滤就直接放入数据库引擎执行。<br>把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。</p>
-<h3 id="漏洞危害"><a href="#漏洞危害" class="headerlink" title="漏洞危害"></a>漏洞危害</h3><h3 id="测试方法"><a href="#测试方法" class="headerlink" title="测试方法"></a>测试方法</h3><p>手工&amp;自动化工具一把梭<br><a href="https://www.jianshu.com/p/50a48ac63cc5" target="_blank" rel="noopener">SQL注入漏洞测试的方式总结</a></p>
-<h3 id="修复建议"><a href="#修复建议" class="headerlink" title="修复建议"></a>修复建议</h3><p>使用标准化的数据库查询语句API接口，进行参数过滤，转义等方式防止用户输入恶意字符</p>
-<h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><h3 id="漏洞原理-1"><a href="#漏洞原理-1" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>XSS的漏洞主要成因是后端接收参数时未经过滤，导致参数改变了HTML的结构，从而被浏览器或后端代码执行</p>
-<h3 id="测试方法-1"><a href="#测试方法-1" class="headerlink" title="测试方法"></a>测试方法</h3><p>找到一个存在问题的地方，提交一下代码，如果出现弹窗或者打开开发者，发现报错，即为XSS漏洞<br>获取流量，对流量进行分析，比如<code>Xray</code></p>
-<h3 id="修复建议-1"><a href="#修复建议-1" class="headerlink" title="修复建议"></a>修复建议</h3><p>a、在服务器端检查敏感的HTML代码，对敏感字符进行转义<br>b、接入xss过滤平台</p>
+<h1 id="漏洞类型"><a href="#漏洞类型" class="headerlink" title="漏洞类型"></a>漏洞类型</h1><h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h2><ul>
+<li><p>漏洞原理<br>原理：开发者在编写操作数据库代码时，直接将外部可控的参数拼接到SQL语句中，没有经过任何过滤就直接放入数据库引擎执行。<br>把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。</p>
+</li>
+<li><p>漏洞危害<br>（1）攻击者未经授权可以访问数据库中的数据，盗取用户的隐私以及个人信息，造成用户的信息泄露。<br>（2）可以对数据库的数据进行增加或删除操作，例如私自添加或删除管理员账号。<br>（3）如果网站目录存在写入权限，可以写入网页木马。攻击者进而可以对网页进行篡改，发布一些违法信息等。<br>（4）经过提权等步骤，服务器最高权限被攻击者获取。攻击者可以远程控制服务器，安装后门，得以修改或控制操作系统。</p>
+</li>
+<li><p>测试方法<br>手工&amp;自动化工具一把梭<br><a href="https://www.jianshu.com/p/50a48ac63cc5" target="_blank" rel="noopener">SQL注入漏洞测试的方式总结</a></p>
+</li>
+<li><p>修复建议</p>
+<ul>
+<li>sql语句预编译</li>
+<li>使用标准化的数据库查询语句API接口，进行参数过滤，转义等方式防止用户输入恶意字符</li>
+</ul>
+</li>
+</ul>
+<h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><ul>
+<li><p>漏洞原理<br>XSS的漏洞主要成因是后端接收参数时未经过滤，导致参数改变了HTML的结构，从而被浏览器或后端代码执行</p>
+</li>
+<li><p>漏洞危害<br>1、网络钓鱼，包括盗取各类用户账号；<br>2、窃取用户cookies资料，从而获取用户隐私信息，或利用用户身份进一步对网站执行操作；<br>3、劫持用户(浏览器)会话，从而执行任意操作，例如进行非法转账、强制发表日志、发送电子邮件等；<br>4、强制弹出广告页面、刷流量等；<br>5、网页挂马，进行恶意操作，例如任意篡改页面信息、删除文章等；<br>6、进行大量的客户端攻击，如DDoS攻击；<br>7、获取客户端信息，例如用户的浏览历史、真实IP、开放端口等；<br>8、控制受害者机器向其他网站发起攻击；<br>9、结合其他漏洞，如CSRF漏洞，实施进一步作恶；<br>10、提升用户权限，包括进一步渗透网站；<br>11、传播跨站脚本蠕虫等；</p>
+</li>
+<li><p>测试方法</p>
+<ul>
+<li>找到一个存在问题的地方，提交一下代码，如果出现弹窗或者打开开发者，发现报错，即为XSS漏洞</li>
+<li>获取流量，对流量进行分析，比如<code>Xray</code></li>
+</ul>
+</li>
+<li><p>修复建议<br>a、在服务器端检查敏感的HTML代码，对敏感字符进行转义<br>b、接入xss过滤平台，做统一的XSS关键字的过滤及管控</p>
+</li>
+</ul>
 <h2 id="越权漏洞"><a href="#越权漏洞" class="headerlink" title="越权漏洞"></a>越权漏洞</h2><p>水平越权：普通用户之间操作可互相影响<br>垂直越权：低权限用户能操作高权限用户才能操作的东西</p>
 <p>Bp 抓包查看并修改低权限用户的身份信息为同等权限的其他用户或者是高权限用户后进行重放<br>或用低权限的账户去访问高权限的账户的数据，一般是通过访问接口来进行测试<br>如果成功则说明漏洞存在</p>
 <p>首先需要确认身份认证的字段，确认确认等字段进行认证，然后更换认证字段的数值，进行测试越权<br>如：测试通过Authorization字段进行认证，首先需要删除如cookie字段的认证，然后看是否有回显<br>  若有，则表示Authorization字段是唯一认证，可直接进行测试<br>  若无，则需要删除cookie字段的数值进行排查，确认cookie中是否有一些字段和Authorization一起认证，然后修改对应的字段进行测试</p>
-<h3 id="水平越权"><a href="#水平越权" class="headerlink" title="水平越权"></a>水平越权</h3><h4 id="漏洞原理-2"><a href="#漏洞原理-2" class="headerlink" title="漏洞原理"></a>漏洞原理</h4><p>水平权限漏洞一般出现在一个用户对象关联多个其他对象（订单、地址等）、并且要实现对关联对象的CRUD的时候。开发容易习惯性的在生成CRUD表单（或AJAX请求）的时候根据认证过的用户身份来找出其有权限的被操作对象id，提供入口，然后让用户提交请求，并根据这个id来操作相关对象。在处理CRUD请求时，往往默认只有有权限的用户才能得到入口，进而才能操作相关对象，因此就不再校验权限了。可悲剧的是大多数对象的ID都被设置为自增整型，所以攻击者只要对相关id加1、减1、直至遍历，就可以操作其他用户所关联的对象了。</p>
-<h4 id="测试方法-2"><a href="#测试方法-2" class="headerlink" title="测试方法"></a>测试方法</h4><p>修改参数的值，若能看到其他账户的数据，即为水平越权</p>
+<h3 id="水平越权"><a href="#水平越权" class="headerlink" title="水平越权"></a>水平越权</h3><ul>
+<li><p>漏洞原理<br>水平权限漏洞一般出现在一个用户对象关联多个其他对象（订单、地址等）、并且要实现对关联对象的CRUD的时候。开发容易习惯性的在生成CRUD表单（或AJAX请求）的时候根据认证过的用户身份来找出其有权限的被操作对象id，提供入口，然后让用户提交请求，并根据这个id来操作相关对象。在处理CRUD请求时，往往默认只有有权限的用户才能得到入口，进而才能操作相关对象，因此就不再校验权限了。可悲剧的是大多数对象的ID都被设置为自增整型，所以攻击者只要对相关id加1、减1、直至遍历，就可以操作其他用户所关联的对象了。</p>
+</li>
+<li><p>测试方法<br>修改参数的值，若能看到其他账户的数据，即为水平越权</p>
+</li>
+</ul>
 <p><strong>漏洞示例：</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getAddress.do?addressId&#x3D;12345</span><br></pre></td></tr></table></figure>
 <p>攻击者修改addressId即可得到他人的address信息</p>
-<h4 id="修复方案"><a href="#修复方案" class="headerlink" title="修复方案"></a>修复方案</h4><ol>
+<ul>
+<li>修复方案</li>
+</ul>
+<ol>
 <li><strong>在web层的逻辑中做鉴权</strong><br>这个是最直接有效的修复方案：在web层的逻辑中做鉴权，检查提交CRUD请求的操作者（通过session信息得到）与目标对象的权限所有者（查数据库）是否一致，如果不一致则阻断。这个方案实现成本低、能确保漏洞的修复质量，缺点是增加了一次查库操作。我之前一直用这种方案来对已发生的水平权限漏洞做紧急修复。</li>
 <li><strong>把权限的控制转移到数据接口层中</strong><br>最正规的方案：把权限的控制转移到数据接口层中，避免出现<code>select/update/delete ... where addressID=#addressID#</code>的SQL语句，使用<code>selectt/update/delete... where addressID=#addressID# and ownerId=#userId#</code>来代替，要求web层在调用数据接口层的接口时额外提供userid，而这个userid在web层看来只能通过seesion来取到。这样在面对水平权限攻击时，web层的开发者不用额外花精力去注意鉴权的事情，也不需要增加一个SQL来专门判断权限——如果权限不对的话，那个and条件就满足不了，SQL自然就找不到相关对象去操作。而且这个方案对于一个接口多个地方使用的情况也比较有利，不需要每个地方都鉴权了。<br>但这个方案的缺陷在于实现起来要改动底层的设计，所以不适合作为修复方案，更适合作为统一的控制方案在最开始设计时就注意这方面的问题。</li>
 <li><strong>在生成表单时，增加一个token参数</strong><br>在生成表单时，增加一个token参数，即<code>token=md5(addressId+sessionId+key)；</code>在处理请求时，用addressId、sessionId和key来验证token。</li>
 </ol>
-<h3 id="垂直越权"><a href="#垂直越权" class="headerlink" title="垂直越权"></a>垂直越权</h3><h4 id="漏洞原理-3"><a href="#漏洞原理-3" class="headerlink" title="漏洞原理"></a>漏洞原理</h4><h4 id="测试方法-3"><a href="#测试方法-3" class="headerlink" title="测试方法"></a>测试方法</h4><p>用低权限的账户去访问高权限的账户的数据<br>一般就是修改token，通过接口来进行测试</p>
-<h4 id="修复方案-1"><a href="#修复方案-1" class="headerlink" title="修复方案"></a>修复方案</h4><p>对需要权限的页面进行 SESSION 认证，对用户访问的每一个 URL 做身份鉴别</p>
+<h3 id="垂直越权"><a href="#垂直越权" class="headerlink" title="垂直越权"></a>垂直越权</h3><ul>
+<li>漏洞原理</li>
+</ul>
+<h4 id="测试方法"><a href="#测试方法" class="headerlink" title="测试方法"></a>测试方法</h4><p>用低权限的账户去访问高权限的账户的数据<br>一般就是修改token，通过接口来进行测试</p>
+<h4 id="修复方案"><a href="#修复方案" class="headerlink" title="修复方案"></a>修复方案</h4><p>对需要权限的页面进行 SESSION 认证，对用户访问的每一个 URL 做身份鉴别</p>
 <p>正确校验用户的身份和 token</p>
-<h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><h3 id="漏洞原理-4"><a href="#漏洞原理-4" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>文件上传是一种<strong>数据与代码分理原则</strong>的攻击</p>
+<h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>文件上传是一种<strong>数据与代码分理原则</strong>的攻击</p>
 <p><strong>原理</strong>网站WEB应用都有一些文件上传功能，比如文档、图片、头像、视频上传，当上传功能的实现代码没有严格校验上传文件的后缀和文件类型时，就可以上传任意文件甚至是可执行文件后门，通过脚本文件获得了执行服务器端命令的能力<br>​<br><strong>危害</strong>: 恶意文件传递给解释器去执行，之后就可以在服务器上执行恶意代码，进行数据库执行、服务器文件管理，服务器命令执行等恶意操作。根据网站使用及可解析的程序脚本不同，可以上传的恶意脚本可以是PHP、ASP、JSP、ASPX文件。</p>
 <ul>
 <li>上传文件是Web脚本语言，服务器的Web容器解释并执行了用户上传的脚本，导致代码执行</li>
@@ -516,8 +543,8 @@ height:50vh;
 <li>上传文件是病毒、木马文件，黑客用以诱骗用户或者管理员下载执行</li>
 <li>上传文件是钓鱼图片或为包含了脚本的图片，在某些版本的浏览器中会被作为脚本执行，被用于钓鱼和欺诈</li>
 </ul>
-<h3 id="测试方法-4"><a href="#测试方法-4" class="headerlink" title="测试方法"></a>测试方法</h3><p>上传一个文件，通过一些方法绕过客户端和服务端的校验，具体方法总结如下：<br><a href="https://yinwc.github.io/2020/04/21/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/">文件上传漏洞总结</a></p>
-<h3 id="修复建议-2"><a href="#修复建议-2" class="headerlink" title="修复建议"></a>修复建议</h3><ul>
+<h3 id="测试方法-1"><a href="#测试方法-1" class="headerlink" title="测试方法"></a>测试方法</h3><p>上传一个文件，通过一些方法绕过客户端和服务端的校验，具体方法总结如下：<br><a href="https://yinwc.github.io/2020/04/21/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/">文件上传漏洞总结</a></p>
+<h3 id="修复建议"><a href="#修复建议" class="headerlink" title="修复建议"></a>修复建议</h3><ul>
 <li>文件扩展名服务端校验：判断文件类型，增加黑名单逻辑</li>
 <li>文件内容服务端校验</li>
 <li>上传文件重命名：使用随机数改写文件名跟路径</li>
@@ -525,10 +552,61 @@ height:50vh;
 <li>单独设置文件服务器的域名</li>
 <li>文件上传的目录设置为不可执行，文件上传后会放到独立的存储上，做静态文件处理。</li>
 </ul>
-<h2 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h2><h3 id="漏洞原理-5"><a href="#漏洞原理-5" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><h3 id="漏洞危害-1"><a href="#漏洞危害-1" class="headerlink" title="漏洞危害"></a>漏洞危害</h3><h3 id="漏洞检测"><a href="#漏洞检测" class="headerlink" title="漏洞检测"></a>漏洞检测</h3><h3 id="修复方案-2"><a href="#修复方案-2" class="headerlink" title="修复方案"></a>修复方案</h3><h2 id="URL跳转漏洞"><a href="#URL跳转漏洞" class="headerlink" title="URL跳转漏洞"></a>URL跳转漏洞</h2><h3 id="漏洞原理-6"><a href="#漏洞原理-6" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>服务端未对传入的跳转url变量进行检查和控制，可能导致可恶意构造任意一个恶意地址，诱导用户跳转到恶意网站。</p>
-<h3 id="漏洞危害-2"><a href="#漏洞危害-2" class="headerlink" title="漏洞危害"></a>漏洞危害</h3><p>由于是从可信的站点跳转出去的，用户会比较信任，所以跳转漏洞一般用于钓鱼攻击，通过转到恶意网站欺骗用户输入用户名和密码盗取用户信息，或欺骗用户进行金钱交易；还可以造成xss漏洞</p>
+<h2 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h2><h3 id="漏洞原理-1"><a href="#漏洞原理-1" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>SSRF漏洞就是通过篡改获取资源的请求发送给服务器，但是服务器并没有发现在这个请求是合法的，然后服务器以他的身份来访问其他服务器的资源</p>
+<h3 id="漏洞危害"><a href="#漏洞危害" class="headerlink" title="漏洞危害"></a>漏洞危害</h3><ol>
+<li>可以对外网、服务器所在内网、本地进行端口扫描，获取一些服务的 banner 信息</li>
+<li>攻击运行在内网或本地的应用程序（比如溢出）</li>
+<li>对内网 WEB 应用进行指纹识别，通过访问默认文件实现</li>
+<li>攻击内外网的 web 应用，主要是使用 GET 参数就可以实现的攻击（比如 Struts2，sqli 等）</li>
+<li>利用 file 协议读取本地文件等</li>
+</ol>
+<h3 id="漏洞检测"><a href="#漏洞检测" class="headerlink" title="漏洞检测"></a>漏洞检测</h3><ul>
+<li><p>1、从WEB功能上寻找</p>
+<ul>
+<li>分享：通过URL地址分享网页内容</li>
+<li>转码服务：通过URL地址把原地址的网页内容调优使其适合手机屏幕浏览</li>
+<li>在线翻译：通过URL地址翻译对应文本的内容</li>
+<li>图片加载与下载：通过URL地址加载或下载图片</li>
+<li>图片、文章收藏功能</li>
+<li>未公开的api实现及其他调用URL的功能</li>
+</ul>
+</li>
+<li><p>2、从URL关键字中寻找</p>
+<ul>
+<li>share</li>
+<li>wap</li>
+<li>url</li>
+<li>link</li>
+<li>src</li>
+<li>source</li>
+<li>target</li>
+<li>u</li>
+<li>3g</li>
+<li>display</li>
+<li>sourceURI</li>
+<li>imageURI</li>
+<li>domain</li>
+</ul>
+</li>
+</ul>
+<h3 id="修复方案-1"><a href="#修复方案-1" class="headerlink" title="修复方案"></a>修复方案</h3><ol>
+<li><p>禁止跳转</p>
+</li>
+<li><p>过滤返回信息，验证远程服务器对请求的响应是比较容易的方法。如果web应用是去获取某一种类型的文件。那么在把返回结果展示给用户之前先验证返回的信息是否符合标准。</p>
+</li>
+<li><p>禁用不需要的协议，仅仅允许http和https请求。可以防止类似于file://, gopher://, ftp:// 等引起的问题</p>
+</li>
+<li><p>设置URL白名单或者限制内网IP（使用gethostbyname()判断是否为内网IP）</p>
+</li>
+<li><p>限制请求的端口为http常用的端口，比如 80、443、8080、8090</p>
+</li>
+<li><p>统一错误信息，避免用户可以根据错误信息来判断远端服务器的端口状态。</p>
+</li>
+</ol>
+<h2 id="URL跳转漏洞"><a href="#URL跳转漏洞" class="headerlink" title="URL跳转漏洞"></a>URL跳转漏洞</h2><h3 id="漏洞原理-2"><a href="#漏洞原理-2" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>服务端未对传入的跳转url变量进行检查和控制，可能导致可恶意构造任意一个恶意地址，诱导用户跳转到恶意网站。</p>
+<h3 id="漏洞危害-1"><a href="#漏洞危害-1" class="headerlink" title="漏洞危害"></a>漏洞危害</h3><p>由于是从可信的站点跳转出去的，用户会比较信任，所以跳转漏洞一般用于钓鱼攻击，通过转到恶意网站欺骗用户输入用户名和密码盗取用户信息，或欺骗用户进行金钱交易；还可以造成xss漏洞</p>
 <h3 id="漏洞检测-1"><a href="#漏洞检测-1" class="headerlink" title="漏洞检测"></a>漏洞检测</h3><p>修改参数中的合法URL为非法URL，然后查看是否能正常跳转或者响应包是否包含了任意的构造URL</p>
-<h3 id="修复方案-3"><a href="#修复方案-3" class="headerlink" title="修复方案"></a>修复方案</h3><ul>
+<h3 id="修复方案-2"><a href="#修复方案-2" class="headerlink" title="修复方案"></a>修复方案</h3><ul>
 <li><p>1.若跳转的URL事先是可以确定的，包括url和参数的值，则可以在后台先配置好，url参数只需传对应url的索引即可，通过索引找到对应具体url再进行跳转；</p>
 </li>
 <li><p>2.若跳转的URL事先不确定，但其输入是由后台生成的（不是用户通过参数传人），则可以先生成好跳转链接然后进行签名，而跳转cg首先需要进行验证签名通过才能进行跳转；</p>
@@ -544,7 +622,7 @@ height:50vh;
 <li>横向：可以通过xff头等绕过短信发送频率限制，插件：<a href="https://github.com/TheKingOfDuck/burpFakeIP" target="_blank" rel="noopener">burpFakeIP</a></li>
 <li>纵向：如果没有设置获取短信的获取发送频率，就可以通过多次重放，导致短信轰炸</li>
 </ul>
-<h1 id="学习文章"><a href="#学习文章" class="headerlink" title="学习文章"></a>学习文章</h1><p><a href="https://testerhome.com/topics/24719" target="_blank" rel="noopener">基于全流量权限漏洞检测技术</a></p>
+<h2 id="重放攻击"><a href="#重放攻击" class="headerlink" title="重放攻击"></a>重放攻击</h2><h1 id="学习文章"><a href="#学习文章" class="headerlink" title="学习文章"></a>学习文章</h1><p><a href="https://testerhome.com/topics/24719" target="_blank" rel="noopener">基于全流量权限漏洞检测技术</a></p>
 <h1 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h1><h2 id="token未及时失效问题记录"><a href="#token未及时失效问题记录" class="headerlink" title="token未及时失效问题记录"></a>token未及时失效问题记录</h2><p>token在主页，无法进行刷新token并发处理</p>
 <p>设置autherization字段进行验证<br>登录一次刷新一次 定期10分钟刷新</p>
 <h2 id="XSS漏洞的修复"><a href="#XSS漏洞的修复" class="headerlink" title="XSS漏洞的修复"></a>XSS漏洞的修复</h2><p>接入工具XSS过滤器</p>
@@ -695,7 +773,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#业务安全测试"><span class="toc-number">1.</span> <span class="toc-text">业务安全测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞功能点"><span class="toc-number">2.</span> <span class="toc-text">漏洞功能点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#登录认证处"><span class="toc-number">2.1.</span> <span class="toc-text">登录认证处</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#暴力破解"><span class="toc-number">2.1.1.</span> <span class="toc-text">暴力破解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地加密传输测试"><span class="toc-number">2.1.2.</span> <span class="toc-text">本地加密传输测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索处"><span class="toc-number">2.2.</span> <span class="toc-text">搜索处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#留言处"><span class="toc-number">2.3.</span> <span class="toc-text">留言处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除处"><span class="toc-number">2.4.</span> <span class="toc-text">删除处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码处"><span class="toc-number">2.5.</span> <span class="toc-text">修改密码处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改信息处"><span class="toc-number">2.6.</span> <span class="toc-text">修改信息处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#订单处"><span class="toc-number">2.7.</span> <span class="toc-text">订单处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传处"><span class="toc-number">2.8.</span> <span class="toc-text">文件上传处</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞类型"><span class="toc-number">3.</span> <span class="toc-text">漏洞类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL注入"><span class="toc-number">3.1.</span> <span class="toc-text">SQL注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞原理"><span class="toc-number">3.1.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞危害"><span class="toc-number">3.1.2.</span> <span class="toc-text">漏洞危害</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试方法"><span class="toc-number">3.1.3.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复建议"><span class="toc-number">3.1.4.</span> <span class="toc-text">修复建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS"><span class="toc-number">3.2.</span> <span class="toc-text">XSS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞原理-1"><span class="toc-number">3.2.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试方法-1"><span class="toc-number">3.2.2.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复建议-1"><span class="toc-number">3.2.3.</span> <span class="toc-text">修复建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#越权漏洞"><span class="toc-number">3.3.</span> <span class="toc-text">越权漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#水平越权"><span class="toc-number">3.3.1.</span> <span class="toc-text">水平越权</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#漏洞原理-2"><span class="toc-number">3.3.1.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#测试方法-2"><span class="toc-number">3.3.1.2.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修复方案"><span class="toc-number">3.3.1.3.</span> <span class="toc-text">修复方案</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垂直越权"><span class="toc-number">3.3.2.</span> <span class="toc-text">垂直越权</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#漏洞原理-3"><span class="toc-number">3.3.2.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#测试方法-3"><span class="toc-number">3.3.2.2.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修复方案-1"><span class="toc-number">3.3.2.3.</span> <span class="toc-text">修复方案</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传漏洞"><span class="toc-number">3.4.</span> <span class="toc-text">文件上传漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞原理-4"><span class="toc-number">3.4.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试方法-4"><span class="toc-number">3.4.2.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复建议-2"><span class="toc-number">3.4.3.</span> <span class="toc-text">修复建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSRF"><span class="toc-number">3.5.</span> <span class="toc-text">SSRF</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞原理-5"><span class="toc-number">3.5.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞危害-1"><span class="toc-number">3.5.2.</span> <span class="toc-text">漏洞危害</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞检测"><span class="toc-number">3.5.3.</span> <span class="toc-text">漏洞检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复方案-2"><span class="toc-number">3.5.4.</span> <span class="toc-text">修复方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL跳转漏洞"><span class="toc-number">3.6.</span> <span class="toc-text">URL跳转漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞原理-6"><span class="toc-number">3.6.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞危害-2"><span class="toc-number">3.6.2.</span> <span class="toc-text">漏洞危害</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞检测-1"><span class="toc-number">3.6.3.</span> <span class="toc-text">漏洞检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复方案-3"><span class="toc-number">3.6.4.</span> <span class="toc-text">修复方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#短信轰炸"><span class="toc-number">3.7.</span> <span class="toc-text">短信轰炸</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#学习文章"><span class="toc-number">4.</span> <span class="toc-text">学习文章</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题记录"><span class="toc-number">5.</span> <span class="toc-text">问题记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#token未及时失效问题记录"><span class="toc-number">5.1.</span> <span class="toc-text">token未及时失效问题记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS漏洞的修复"><span class="toc-number">5.2.</span> <span class="toc-text">XSS漏洞的修复</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Others"><span class="toc-number">6.</span> <span class="toc-text">Others</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#业务安全测试"><span class="toc-number">1.</span> <span class="toc-text">业务安全测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞功能点"><span class="toc-number">2.</span> <span class="toc-text">漏洞功能点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#登录认证处"><span class="toc-number">2.1.</span> <span class="toc-text">登录认证处</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#暴力破解"><span class="toc-number">2.1.1.</span> <span class="toc-text">暴力破解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#本地加密传输测试"><span class="toc-number">2.1.2.</span> <span class="toc-text">本地加密传输测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索处"><span class="toc-number">2.2.</span> <span class="toc-text">搜索处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#留言处"><span class="toc-number">2.3.</span> <span class="toc-text">留言处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除处"><span class="toc-number">2.4.</span> <span class="toc-text">删除处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码处"><span class="toc-number">2.5.</span> <span class="toc-text">修改密码处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改信息处"><span class="toc-number">2.6.</span> <span class="toc-text">修改信息处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#订单处"><span class="toc-number">2.7.</span> <span class="toc-text">订单处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传处"><span class="toc-number">2.8.</span> <span class="toc-text">文件上传处</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞类型"><span class="toc-number">3.</span> <span class="toc-text">漏洞类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL注入"><span class="toc-number">3.1.</span> <span class="toc-text">SQL注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS"><span class="toc-number">3.2.</span> <span class="toc-text">XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#越权漏洞"><span class="toc-number">3.3.</span> <span class="toc-text">越权漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#水平越权"><span class="toc-number">3.3.1.</span> <span class="toc-text">水平越权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垂直越权"><span class="toc-number">3.3.2.</span> <span class="toc-text">垂直越权</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#测试方法"><span class="toc-number">3.3.2.1.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修复方案"><span class="toc-number">3.3.2.2.</span> <span class="toc-text">修复方案</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传漏洞"><span class="toc-number">3.4.</span> <span class="toc-text">文件上传漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞原理"><span class="toc-number">3.4.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试方法-1"><span class="toc-number">3.4.2.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复建议"><span class="toc-number">3.4.3.</span> <span class="toc-text">修复建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSRF"><span class="toc-number">3.5.</span> <span class="toc-text">SSRF</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞原理-1"><span class="toc-number">3.5.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞危害"><span class="toc-number">3.5.2.</span> <span class="toc-text">漏洞危害</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞检测"><span class="toc-number">3.5.3.</span> <span class="toc-text">漏洞检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复方案-1"><span class="toc-number">3.5.4.</span> <span class="toc-text">修复方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL跳转漏洞"><span class="toc-number">3.6.</span> <span class="toc-text">URL跳转漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞原理-2"><span class="toc-number">3.6.1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞危害-1"><span class="toc-number">3.6.2.</span> <span class="toc-text">漏洞危害</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞检测-1"><span class="toc-number">3.6.3.</span> <span class="toc-text">漏洞检测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修复方案-2"><span class="toc-number">3.6.4.</span> <span class="toc-text">修复方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#短信轰炸"><span class="toc-number">3.7.</span> <span class="toc-text">短信轰炸</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重放攻击"><span class="toc-number">3.8.</span> <span class="toc-text">重放攻击</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#学习文章"><span class="toc-number">4.</span> <span class="toc-text">学习文章</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题记录"><span class="toc-number">5.</span> <span class="toc-text">问题记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#token未及时失效问题记录"><span class="toc-number">5.1.</span> <span class="toc-text">token未及时失效问题记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS漏洞的修复"><span class="toc-number">5.2.</span> <span class="toc-text">XSS漏洞的修复</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Others"><span class="toc-number">6.</span> <span class="toc-text">Others</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2581,9 +2659,44 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 117
+        Total : 118
         </div>
         <!-- search  -->
         
@@ -2888,6 +3001,11 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">03/06</span><a class="archive-post-title" href= "/2019/03/06/python%E7%88%AC%E8%99%AB%E6%95%B0%E6%8D%AE%E6%8F%90%E5%8F%96/" >python爬虫数据提取</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/28</span><a class="archive-post-title" href= "/2019/02/28/xss%E9%9D%B6%E5%9C%BA%E7%BB%83%E4%B9%A0/" >xss靶场练习</a>
         </li>
     
     
