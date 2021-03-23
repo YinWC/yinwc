@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">697</span> / Reading time: <span class="post-count">2 min</span></span>
+                        <span>Word count: <span class="post-count">818</span> / Reading time: <span class="post-count">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -396,11 +396,26 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>整理一些文章，方便学习。</p>
+        <!-- TOC -->
+
+<ul>
+<li><a href="#前言">前言</a></li>
+<li><a href="#github项目">Github项目</a></li>
+<li><a href="#代码审计系列">代码审计系列</a></li>
+<li><a href="#fastjson">FastJson</a></li>
+<li><a href="#反序列化">反序列化</a></li>
+<li><a href="#安全编码合集">安全编码合集</a></li>
+<li><a href="#漏洞分析">漏洞分析</a></li>
+<li><a href="#其他">其他</a></li>
+<li><a href="#总结">总结</a></li>
+</ul>
+<!-- /TOC -->
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>整理一些文章，方便学习。</p>
 <p>Know it then do it.</p>
 <hr>
 <p>来自豪哥的语录：</p>
-<p>作为一个要学习java sec的人</p>
+<p>作为一个学习java sec的人</p>
 <p>要熟读文章: <a href="https://xz.aliyun.com/t/7107" target="_blank" rel="noopener">https://xz.aliyun.com/t/7107</a></p>
 <p>熟读源码:<a href="http://note.youdao.com/noteshare?id=134e909f364d738c3b4a4d3b826cb5ec" target="_blank" rel="noopener">http://note.youdao.com/noteshare?id=134e909f364d738c3b4a4d3b826cb5ec</a></p>
 <h2 id="Github项目"><a href="#Github项目" class="headerlink" title="Github项目"></a>Github项目</h2><p><a href="https://github.com/JoyChou93/java-sec-code" target="_blank" rel="noopener">Java Web常见漏洞和安全代码</a> 包含了在线演示demo<br><a href="https://github.com/threedr3am/learnjavabug" target="_blank" rel="noopener">learnjavabug</a> 豪哥的项目</p>
@@ -419,7 +434,8 @@ height:50vh;
 <p><a href="https://www.iswin.org/2019/02/16/Nexus-Repository-Manager-3-RCE-CVE-2019-7238-Analysis/" target="_blank" rel="noopener">Nexus Repository Manager 3 远程代码执行漏洞 (CVE-2019-7238) 分析及利用</a></p>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p><a href="https://www.anquanke.com/post/id/87031" target="_blank" rel="noopener">关于JNDI注入</a><br><a href="https://mp.weixin.qq.com/s/WT1EXEryUGGqHQpSi959xw" target="_blank" rel="noopener">层层放大java审计的攻击面</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzIzMzgxOTQ5NA==&mid=2247483954&idx=1&sn=418b7e55b16c717ee5140af990298e22&chksm=e8fe9e3bdf89172d0670690060944bf2434cc2d2e8fba4477711299a0775cf3735a2022c0778#rd" target="_blank" rel="noopener">以Java的视角来聊聊SQL注入</a><br><a href="https://mp.weixin.qq.com/s?__biz=MzIzMzgxOTQ5NA==&mid=100000340&idx=1&sn=6ca4ec15ef6338daf1d4a907351d7c08&chksm=68fe9e5d5f89174b44fd0cae2e3d5c0018859d3d1dc6d60a2e16dcde34499ba224d6ea17a982#rd" target="_blank" rel="noopener">站在Java的视角，深度分析防不胜防的小偷——“XSS”
 </a><br><a href="https://mp.weixin.qq.com/s?__biz=MzIzMzgxOTQ5NA==&mid=100000318&idx=1&sn=9011af3e3968e0d87499605ef1a68291&chksm=68fe9e375f8917213297855bd9e1ab1203ae4c9b0b5ca351de7b2c0f7a7799bd1f4843cd13f4#rd" target="_blank" rel="noopener">你的 Java web 配置安全吗</a><br><a href="https://github.com/ilmila/springcss-cve-2014-3625/tree/master/src" target="_blank" rel="noopener">spring任意文件读取</a><br><a href="https://mp.weixin.qq.com/s/zCe_O37rdRqgN-Yvlq1FDg" target="_blank" rel="noopener">在 Runtime.getRuntime().exec(String cmd) 中执行任意shell命令的几种方法</a><br><a href="https://xz.aliyun.com/search?keyword=ysoserial+JRMP%20" target="_blank" rel="noopener">ysoserial 分析系列</a><br><a href="http://wiki.ioin.in/search?word=java" target="_blank" rel="noopener">sec-news集合</a><br><a href="https://www.sec-wiki.com/news/search?wd=java" target="_blank" rel="noopener">sec-wiki集合</a><br><a href="https://xz.aliyun.com/search?keyword=java" target="_blank" rel="noopener">先知文章集合</a></p>
-
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>个人代码审计流程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">查看访问控制部分</span><br><span class="line">查看三方组件是否有已知风险</span><br><span class="line">查看一些组件配置，如JWT、Shiro密钥等</span><br><span class="line">查看数据库查询是否存在注入</span><br><span class="line">查看文件IO操作</span><br><span class="line">一些其他敏感操作，如命令执行、反射等</span><br><span class="line">查看重要逻辑，如密码重置</span><br></pre></td></tr></table></figure>
     </article>
     <!-- license  -->
     
@@ -556,7 +572,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Github项目"><span class="toc-number">2.</span> <span class="toc-text">Github项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码审计系列"><span class="toc-number">3.</span> <span class="toc-text">代码审计系列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FastJson"><span class="toc-number">4.</span> <span class="toc-text">FastJson</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反序列化"><span class="toc-number">5.</span> <span class="toc-text">反序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全编码合集"><span class="toc-number">6.</span> <span class="toc-text">安全编码合集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞分析"><span class="toc-number">7.</span> <span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-number">8.</span> <span class="toc-text">其他</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Github项目"><span class="toc-number">2.</span> <span class="toc-text">Github项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#代码审计系列"><span class="toc-number">3.</span> <span class="toc-text">代码审计系列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FastJson"><span class="toc-number">4.</span> <span class="toc-text">FastJson</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#反序列化"><span class="toc-number">5.</span> <span class="toc-text">反序列化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全编码合集"><span class="toc-number">6.</span> <span class="toc-text">安全编码合集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞分析"><span class="toc-number">7.</span> <span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他"><span class="toc-number">8.</span> <span class="toc-text">其他</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">9.</span> <span class="toc-text">总结</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
