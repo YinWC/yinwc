@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Ywc&#39;s blog</title>
+    <title>LeetCode的一些记录 · Ywc&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,6 +70,8 @@
 
     <link rel="preload" href= /css/style.css?v=201807017_1502 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /css/mobile.css?v=20180709 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -194,12 +196,23 @@
 <meta name="generator" content="Hexo 4.2.0"></head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Ywc&#39;s blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">LeetCode的一些记录</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Ywc's blog</a>
 </header>
@@ -213,24 +226,74 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/blog.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+            LeetCode的一些记录
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "learn">learn</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">1k</span> / Reading time: <span class="post-count">4 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/11/28</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -331,41 +394,112 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2021/01/28/leetcodepractice/" >
-            
-                <span class="stick-top iconfont-archer">&#xe63d;</span>
-                
-                <span>LeetCode每日打卡</span>
-        </a>
-        <div class="abstract-content">
-            学习一些不是那么好学的东西～比如算法....
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2021/01/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "learn">learn</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <!-- TOC -->
+
+<ul>
+<li><a href="#每日打卡">每日打卡</a><ul>
+<li><a href="#2021">2021</a><ul>
+<li><a href="#20210128寻找数组的中心索引">2021.01.28：寻找数组的中心索引</a></li>
+<li><a href="#20210129两数之和">2021.01.29：两数之和</a></li>
+<li><a href="#20210130整数反转">2021.01.30：整数反转</a></li>
+<li><a href="#20210131回文数">2021.01.31：回文数</a></li>
+<li><a href="#20210201-罗马数字转整数">2021.02.01 罗马数字转整数</a></li>
+<li><a href="#20210202-最长公共前缀">2021.02.02 最长公共前缀</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+<!-- /TOC -->
+
+
+<h1 id="每日打卡"><a href="#每日打卡" class="headerlink" title="每日打卡"></a>每日打卡</h1><h2 id="2021"><a href="#2021" class="headerlink" title="2021"></a>2021</h2><h3 id="2021-01-28：寻找数组的中心索引"><a href="#2021-01-28：寻找数组的中心索引" class="headerlink" title="2021.01.28：寻找数组的中心索引"></a>2021.01.28：寻找数组的中心索引</h3><ul>
+<li><a href="https://leetcode-cn.com/problems/find-pivot-index/" target="_blank" rel="noopener">寻找数组的中心索引</a></li>
+</ul>
+<p>解题思路：先求出所有数的总和，然后遍历数组，如果遍历数的左边*2 + 遍历数 == 总和 ， 那这个数就一定是中心索引。 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pivotIndex</span><span class="params">(self, nums: List[int])</span> -&gt; int:</span></span><br><span class="line">        S=sum(nums)</span><br><span class="line">        leftnums=<span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">            <span class="keyword">if</span> leftnums *<span class="number">2</span>  +  nums[i] == S:</span><br><span class="line">                <span class="keyword">return</span> i</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                leftnums += nums[i]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br></pre></td></tr></table></figure>
+
+<p><code>sum()</code> 方法对序列进行求和计算</p>
+<p>Reference: <a href="https://www.pythonheidong.com/blog/article/249069/53202e9ddbc9740732b4/" target="_blank" rel="noopener">https://www.pythonheidong.com/blog/article/249069/53202e9ddbc9740732b4/</a></p>
+<h3 id="2021-01-29：两数之和"><a href="#2021-01-29：两数之和" class="headerlink" title="2021.01.29：两数之和"></a>2021.01.29：两数之和</h3><ul>
+<li><a href="https://leetcode-cn.com/problems/two-sum/" target="_blank" rel="noopener">两数之和</a></li>
+</ul>
+<p>方法一：使用最容易理解的遍历数组进行查找</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(nums,target)</span>:</span></span><br><span class="line">	<span class="comment">#如果列表长度小于2，则直接结束</span></span><br><span class="line">	<span class="keyword">if</span> len(nums) &lt; <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="comment">#两次循环列表，分别对列表中的所有可能的数字进行相加</span></span><br><span class="line">        <span class="comment">#循环两次列表对应的时间复杂度为O(n²)</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(nums) - <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, len(nums)):</span><br><span class="line">                <span class="keyword">if</span> nums[i] + nums[j] == target:</span><br><span class="line">                    <span class="keyword">return</span> [i, j]</span><br></pre></td></tr></table></figure>
+
+<p>方法二：使用哈希表，通过以空间换取速度的方式，可以将查找时间从 O(n)降低到 O(1)。在python中列表字典的即为哈希类型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(nums,target)</span>:</span></span><br><span class="line">	<span class="comment">#新建立一个空字典用来保存数值及其在列表中对应的索引</span></span><br><span class="line">	dict1 = &#123;&#125;</span><br><span class="line">	<span class="comment">#遍历一遍列表对应的时间复杂度为O(n)</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(nums)):</span><br><span class="line">            <span class="comment">#相减得到另一个数值</span></span><br><span class="line">            num = target - nums[i]</span><br><span class="line">            <span class="comment">#如果另一个数值不在字典中，则将第一个数值及其的索引报错在字典中</span></span><br><span class="line">            <span class="comment">#因为在字典中查找的时间复杂度为O(1)，因此总时间复杂度为O(n)</span></span><br><span class="line">            <span class="keyword">if</span> num <span class="keyword">not</span> <span class="keyword">in</span> dict1:</span><br><span class="line">                dict1[nums[i]] = i</span><br><span class="line">            <span class="comment">#如果在字典中则返回</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> [dict1[num], i]</span><br></pre></td></tr></table></figure>
+
+<h3 id="2021-01-30：整数反转"><a href="#2021-01-30：整数反转" class="headerlink" title="2021.01.30：整数反转"></a>2021.01.30：整数反转</h3><ul>
+<li><a href="https://leetcode-cn.com/problems/reverse-integer/" target="_blank" rel="noopener">整数反转</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverse</span><span class="params">(self, x: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> x == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> x &gt; <span class="number">0</span>:</span><br><span class="line">            x = str(x)</span><br><span class="line">            x = x[::<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            x = str(x)</span><br><span class="line">            x = x[<span class="number">1</span>:]    <span class="comment">#为了删除负号</span></span><br><span class="line">            x = x[::<span class="number">-1</span>]</span><br><span class="line">            x = <span class="string">'-'</span> + x</span><br><span class="line">        x = int(x)</span><br><span class="line">        <span class="keyword">if</span> <span class="number">-2</span>**<span class="number">31</span> &lt; x &lt; <span class="number">2</span>**<span class="number">31</span><span class="number">-1</span>:    <span class="comment">#为了不超出32位整数</span></span><br><span class="line">            <span class="keyword">return</span> x</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>利用R = X[::-1]这种方法对X（X必须是字符串）进行一个反转复制的操作<br><a href="https://www.cnblogs.com/mxh1099/p/5804064.html" target="_blank" rel="noopener">python 中的[::-1]</a><br><a href="https://www.cnblogs.com/malinqing/p/11272485.html" target="_blank" rel="noopener">彻底搞懂切片操作</a></p>
+<h3 id="2021-01-31：回文数"><a href="#2021-01-31：回文数" class="headerlink" title="2021.01.31：回文数"></a>2021.01.31：回文数</h3><ul>
+<li><a href="https://leetcode-cn.com/problems/palindrome-number/" target="_blank" rel="noopener">回文数</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isPalindrome</span><span class="params">(self, x: int)</span> -&gt; bool:</span></span><br><span class="line">            <span class="keyword">if</span> x&lt;<span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            x=str(x)</span><br><span class="line">            y=x[::<span class="number">-1</span>]</span><br><span class="line">            <span class="keyword">if</span> x==y:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2021-02-01-罗马数字转整数"><a href="#2021-02-01-罗马数字转整数" class="headerlink" title="2021.02.01 罗马数字转整数"></a>2021.02.01 罗马数字转整数</h3><ul>
+<li><a href="https://leetcode-cn.com/problems/roman-to-integer/" target="_blank" rel="noopener">罗马数字转整数</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">romanToInt</span><span class="params">(self, s: str)</span> -&gt; int:</span></span><br><span class="line">        d = &#123;<span class="string">'I'</span>: <span class="number">1</span>, <span class="string">'IV'</span>: <span class="number">4</span>, <span class="string">'V'</span>: <span class="number">5</span>, <span class="string">'IX'</span>: <span class="number">9</span>, <span class="string">'X'</span>: <span class="number">10</span>, <span class="string">'XL'</span>: <span class="number">40</span>, <span class="string">'L'</span>: <span class="number">50</span>, <span class="string">'XC'</span>: <span class="number">90</span>,  <span class="string">'C'</span>: <span class="number">100</span>, <span class="string">'CD'</span>: <span class="number">400</span>, <span class="string">'D'</span>: <span class="number">500</span>, <span class="string">'CM'</span>: <span class="number">900</span>, <span class="string">'M'</span>: <span class="number">1000</span>&#125;</span><br><span class="line">        result = <span class="number">0</span></span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> i &lt; len(s):</span><br><span class="line">            <span class="comment">#查看当前位和下一位的字符</span></span><br><span class="line">            str1 = s[i:i+<span class="number">2</span>]</span><br><span class="line">            <span class="comment">#如果当前位置是特殊情况，那么返回其在字典中对应值，并且下一次从特殊字符之后一位开始索引</span></span><br><span class="line">            <span class="keyword">if</span> str1 <span class="keyword">in</span> d:</span><br><span class="line">                result += d.get(str1)</span><br><span class="line">                i += <span class="number">2</span></span><br><span class="line">            <span class="comment">#如果当前位不是特殊情况，那么只返回当前位的数值</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                result += d[s[i]]</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
+
+<h3 id="2021-02-02-最长公共前缀"><a href="#2021-02-02-最长公共前缀" class="headerlink" title="2021.02.02 最长公共前缀"></a>2021.02.02 最长公共前缀</h3><ul>
+<li><a href="https://leetcode-cn.com/problems/longest-common-prefix/" target="_blank" rel="noopener">最长公共前缀</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestCommonPrefix</span><span class="params">(self, strs)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type strs: List[str]</span></span><br><span class="line"><span class="string">        :rtype: str</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> strs:                                        <span class="comment">#边界条件判断，若字符串为空，则返回空</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">        short_word=min(strs,key=len)                        <span class="comment">#筛选出长度最短的单词然后进行遍历</span></span><br><span class="line">        <span class="keyword">for</span> i,e <span class="keyword">in</span> enumerate(short_word):                   <span class="comment">#遍历长度最短的单词</span></span><br><span class="line">            <span class="keyword">for</span> others <span class="keyword">in</span> strs:                             <span class="comment">#遍历列表中的其他字符串</span></span><br><span class="line">                <span class="keyword">if</span> others[i]!=e:                            <span class="comment">#一旦出现非公共字符，返回公共字符</span></span><br><span class="line">                    <span class="keyword">return</span> short_word[:i]</span><br><span class="line">        <span class="keyword">return</span> short_word                                   <span class="comment">#遍历结束后依然没匹配到非公共字符，则返回整个字符</span></span><br></pre></td></tr></table></figure>
+
+<p><a href="https://www.runoob.com/python/python-func-enumerate.html" target="_blank" rel="noopener">enumerate</a><br><code>enumerate()</code> 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标，一般用在 for 循环当中。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1>
     </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者: <a href="https://yinwc.github.io">Ywc</a>
+            <p>原文链接: <a href="https://yinwc.github.io/2020/11/28/leetcodepractice/">https://yinwc.github.io/2020/11/28/leetcodepractice/</a>
+            <p>发表日期: <a href="https://yinwc.github.io/2020/11/28/leetcodepractice/">November 28th 2020, 10:15:40 am</a>
+            <p>版权声明: </p>
+        </div>
     
     <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/12/31/%E5%BE%AE%E7%9B%9F2020%E4%BA%8B%E4%BB%B6/" title= 2020年安全事件以及后续整改的反思 >
+                    <div class="nextTitle">2020年安全事件以及后续整改的反思</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/10/28/layui/" title= layui >
+                    <div class="prevTitle">layui</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
+    
+    <!--PC和WAP自适应版-->
+
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
 </main>
             <!-- profile -->
             
@@ -443,6 +577,24 @@
     </div>
     <!-- toc -->
     
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#每日打卡"><span class="toc-number">1.</span> <span class="toc-text">每日打卡</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2021"><span class="toc-number">1.1.</span> <span class="toc-text">2021</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-01-28：寻找数组的中心索引"><span class="toc-number">1.1.1.</span> <span class="toc-text">2021.01.28：寻找数组的中心索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-01-29：两数之和"><span class="toc-number">1.1.2.</span> <span class="toc-text">2021.01.29：两数之和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-01-30：整数反转"><span class="toc-number">1.1.3.</span> <span class="toc-text">2021.01.30：整数反转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-01-31：回文数"><span class="toc-number">1.1.4.</span> <span class="toc-text">2021.01.31：回文数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-02-01-罗马数字转整数"><span class="toc-number">1.1.5.</span> <span class="toc-text">2021.02.01 罗马数字转整数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-02-02-最长公共前缀"><span class="toc-number">1.1.6.</span> <span class="toc-text">2021.02.02 最长公共前缀</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">2.</span> <span class="toc-text">Reference</span></a></li></ol>
+    </div>
+    
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
     <ul class="sidebar-tabs sidebar-tabs-active-0">
@@ -453,6 +605,10 @@
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
     
     
     
@@ -2379,7 +2535,7 @@
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/28</span><a class="archive-post-title" href= "/2021/01/28/leetcodepractice/" >LeetCode每日打卡</a>
+            <span class="archive-post-date">02/24</span><a class="archive-post-title" href= "/2021/02/24/%E7%94%B2%E6%96%B9%E5%AE%89%E5%85%A8/" >甲方安全建设</a>
         </li>
     
     
@@ -2394,6 +2550,11 @@
     
         <li class="archive-post-item">
             <span class="archive-post-date">12/31</span><a class="archive-post-title" href= "/2020/12/31/%E5%BE%AE%E7%9B%9F2020%E4%BA%8B%E4%BB%B6/" >2020年安全事件以及后续整改的反思</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/2020/11/28/leetcodepractice/" >LeetCode的一些记录</a>
         </li>
     
     
@@ -2543,11 +2704,6 @@
     
         <li class="archive-post-item">
             <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2019/11/06/Apache-Solr-Velocity%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5RCE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" >Apache Solr Velocity模板注入RCE漏洞复现</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/24</span><a class="archive-post-title" href= "/2019/10/24/%E7%94%B2%E6%96%B9%E5%AE%89%E5%85%A8/" >甲方安全建设</a>
         </li>
     
     
@@ -3104,6 +3260,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>

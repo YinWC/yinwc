@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">12k</span> / Reading time: <span class="post-count">44 min</span></span>
+                        <span>Word count: <span class="post-count">12.2k</span> / Reading time: <span class="post-count">44 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -520,25 +520,22 @@ height:50vh;
 </ul>
 <!-- /TOC -->
 
-<h1 id="常见漏洞"><a href="#常见漏洞" class="headerlink" title="常见漏洞"></a><font color="red">常见漏洞</font></h1><h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a><font color="blue">SQL注入</font></h2><h3 id="sql注入的原理、防御"><a href="#sql注入的原理、防御" class="headerlink" title="sql注入的原理、防御"></a>sql注入的原理、防御</h3><p>原理：当攻击者发送的sql语句被sql解释器执行，通过执行这些恶意语句欺骗数据库执行，导致数据库信息泄露。</p>
+<h1 id="常见漏洞"><a href="#常见漏洞" class="headerlink" title="常见漏洞"></a><font color="red">常见漏洞</font></h1><h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a><font color="blue">SQL注入</font></h2><h3 id="sql注入的原理、防御"><a href="#sql注入的原理、防御" class="headerlink" title="sql注入的原理、防御"></a>sql注入的原理、防御</h3><p>原理：开发者在编写操作数据库代码时，直接将外部可控的参数拼接到SQL语句中，没有经过任何过滤就直接放入数据库引擎执行。</p>
 <p>防御：<br>1.使用预编译语句,绑定变量（PreparedStatement） <a href="https://blog.csdn.net/cjx529377/article/details/77413577" target="_blank" rel="noopener">复习文章</a><br>2.使用存储过程<br>3.检查数据类型<br>4.使用安全函数<code>mysql_real_escape_string()</code></p>
-<h3 id="如何判断sql注入"><a href="#如何判断sql注入" class="headerlink" title="如何判断sql注入"></a>如何判断sql注入</h3><p>单引号判断法对两种注入都有效</p>
+<h3 id="如何判断sql注入"><a href="#如何判断sql注入" class="headerlink" title="如何判断sql注入"></a>如何判断sql注入</h3><ul>
+<li>在参数后面加单引号或双引号，判断返回结果是否有报错</li>
+<li>如果参数（id）是数字，测试id=2-1与id=1返回的结果是否相同，如果做了2-1=1的运算，说明可能存在数字型注入。如果要用+号运算的话，因为URL编码的问题，需要把加好换成%2B，如id=1%2B1</li>
+<li>添加注释符，判断前后是否有报错，如id=1’ –+ 或 id=1” –+ 或id=1’ # 或id=1” –+ （–后面跟+号，是把+当成空格使用）</li>
+<li>有些参数可能在括号里面，如：SELECT first_name, last_name FROM users WHERE user_id = （’$id’）；所以也可以在参数后面加单、双引号和括号，如id=1’) –+ 或 id=1”) –+ 或id=1’) # 或id=1”) –+</li>
+<li>参数后面跟or 或者and，判断返回结果是否有变化，如1’ or ‘a’=’a 或者and ‘a’=’a或者1’ or ‘a’=’b或者1’ or ‘1’=’2 如果返回的正确页面与错误页面都一样，可以考虑时间延迟的方法判断是否存在注入，如 1’ and sleep(5)</li>
+</ul>
+<p>单引号判断法对两种注入都有效</p>
 <p><strong>1.数字型注入</strong><br>使用 and 1=1 或者 and 1=2 来进行判断</p>
 <p>?id=1 and 1=1 和 ?id=1 and 1=2</p>
 <p><strong>2.字符型注入</strong><br>使用 1’ and ‘1’=1’ 和 1’ and ‘1’=’2来进行判断</p>
 <p>?id=1’ and ‘1’=1’ 和 ?id=1’ and ‘1’=’2</p>
 <p>1.单引号判断法<br>2.and大法 and 1=1 and 1=2  同真为真，其余为假<br>3.ord大法 or 1=1 or 1=2  同假为假，其余为真</p>
 <p>通过对其传入的可控参数进行简单的构造，通过服务端返回的内容来判断有无注入</p>
-<ul>
-<li>服务端返回错误形式<ul>
-<li>错误直接回显在页面上</li>
-<li>错误隐藏在页面源代码中</li>
-<li>检测到错误跳转到另一个页面</li>
-<li>返回HTTP错误代码500或重定向302</li>
-<li>适当处理错误结果，常显示一个通用错误页面</li>
-</ul>
-</li>
-</ul>
 <h3 id="sql注入的利用方式"><a href="#sql注入的利用方式" class="headerlink" title="sql注入的利用方式"></a>sql注入的利用方式</h3><p>1.非法查询其他数据库资源，如管理员帐号<br>2.执行系统命令<br>3.获取服务器root权限</p>
 <h3 id="时间盲注除了sleep还有哪些利用函数"><a href="#时间盲注除了sleep还有哪些利用函数" class="headerlink" title="时间盲注除了sleep还有哪些利用函数"></a>时间盲注除了sleep还有哪些利用函数</h3><p>benchmark、笛卡尔积、GET_LOCK、RLIKE<br><a href="https://www.cdxy.me/?p=789" target="_blank" rel="noopener">参考文章</a></p>
 <h3 id="为什么有的时候没有错误回显，用php举例"><a href="#为什么有的时候没有错误回显，用php举例" class="headerlink" title="为什么有的时候没有错误回显，用php举例"></a>为什么有的时候没有错误回显，用php举例</h3><p>php的配置文件php.ini进行了修改，display_errors = On 修改为 display_errors = off时候就没有报错提示.<br>在php脚本开头添加error_reporting(0); 也可以达到关闭报错的作用.</p>
@@ -3151,6 +3148,10 @@ top:50vh;
     
     
     
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
         Total : 118
@@ -3169,7 +3170,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/28</span><a class="archive-post-title" href= "/2021/01/28/leetcodepractice/" >LeetCode每日打卡</a>
+            <span class="archive-post-date">02/24</span><a class="archive-post-title" href= "/2021/02/24/%E7%94%B2%E6%96%B9%E5%AE%89%E5%85%A8/" >甲方安全建设</a>
         </li>
     
     
@@ -3184,6 +3185,11 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">12/31</span><a class="archive-post-title" href= "/2020/12/31/%E5%BE%AE%E7%9B%9F2020%E4%BA%8B%E4%BB%B6/" >2020年安全事件以及后续整改的反思</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/2020/11/28/leetcodepractice/" >LeetCode的一些记录</a>
         </li>
     
     
@@ -3333,11 +3339,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2019/11/06/Apache-Solr-Velocity%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5RCE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" >Apache Solr Velocity模板注入RCE漏洞复现</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/24</span><a class="archive-post-title" href= "/2019/10/24/%E7%94%B2%E6%96%B9%E5%AE%89%E5%85%A8/" >甲方安全建设</a>
         </li>
     
     

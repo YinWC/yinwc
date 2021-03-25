@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>LeetCode每日打卡 · Ywc&#39;s blog</title>
+    <title>甲方安全建设 · Ywc&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -210,7 +210,7 @@
                 <a href="/" >Ywc&#39;s blog</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">LeetCode每日打卡</a>
+                <a href="#" class="post-name">甲方安全建设</a>
             </div>
     </div>
     
@@ -242,7 +242,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            LeetCode每日打卡
+            甲方安全建设
             <!-- 404 -->
             
         </h1>
@@ -261,18 +261,18 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "learn">learn</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "企业安全">企业安全</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1k</span> / Reading time: <span class="post-count">4 min</span></span>
+                        <span>Word count: <span class="post-count">3.6k</span> / Reading time: <span class="post-count">12 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2021/01/28</span>
+                    <span class="post-intro-time">2021/02/24</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -399,69 +399,207 @@ height:50vh;
         <!-- TOC -->
 
 <ul>
-<li><a href="#每日打卡">每日打卡</a><ul>
-<li><a href="#2021">2021</a><ul>
-<li><a href="#20210128寻找数组的中心索引">2021.01.28：寻找数组的中心索引</a></li>
-<li><a href="#20210129两数之和">2021.01.29：两数之和</a></li>
-<li><a href="#20210130整数反转">2021.01.30：整数反转</a></li>
-<li><a href="#20210131回文数">2021.01.31：回文数</a></li>
-<li><a href="#20210201-罗马数字转整数">2021.02.01 罗马数字转整数</a></li>
-<li><a href="#20210202-最长公共前缀">2021.02.02 最长公共前缀</a></li>
+<li><a href="#基本步骤">基本步骤</a></li>
+<li><a href="#网络系统安全建设">网络系统安全建设</a><ul>
+<li><a href="#安全域划分">安全域划分</a></li>
+<li><a href="#安全域风险等级">安全域风险等级</a></li>
+<li><a href="#安全域风险对象">安全域风险对象</a></li>
+<li><a href="#安全建设方案">安全建设方案</a><ul>
+<li><a href="#办公网-网络安全建设">办公网-网络安全建设</a><ul>
+<li><a href="#wifi安全">WIFI安全</a></li>
+<li><a href="#vpn安全">VPN安全</a></li>
+<li><a href="#日志流量采集检测">日志流量采集检测</a></li>
+<li><a href="#router统一管理">Router统一管理</a></li>
+<li><a href="#终端网络准入">终端网络准入</a></li>
+<li><a href="#安全域之间网络隔离">安全域之间网络隔离</a></li>
+</ul>
+</li>
+<li><a href="#办公网-系统安全建设">办公网-系统安全建设</a><ul>
+<li><a href="#办公网服务器安全">办公网服务器安全</a></li>
+<li><a href="#办公网终端pc安全">办公网终端PC安全</a></li>
+</ul>
+</li>
+<li><a href="#办公网-应用安全建设">办公网-应用安全建设</a><ul>
+<li><a href="#sso统一登录入口">SSO统一登录入口</a></li>
+<li><a href="#网站水印技术">网站水印技术</a></li>
+<li><a href="#邮箱安全">邮箱安全</a></li>
+<li><a href="#waf">WAF</a></li>
+</ul>
+</li>
+<li><a href="#办公网-员工安全">办公网-员工安全</a><ul>
+<li><a href="#在职员工安全教育">在职员工安全教育</a></li>
+<li><a href="#离职员工安全审计">离职员工安全审计</a></li>
+</ul>
+</li>
+<li><a href="#办公网-安全合规">办公网-安全合规</a></li>
+<li><a href="#生产网-系统安全建设">生产网-系统安全建设</a></li>
+<li><a href="#外网边界安全建设">外网边界安全建设</a></li>
+<li><a href="#产品安全建设">产品安全建设</a></li>
+<li><a href="#企业红蓝对抗">企业红蓝对抗</a></li>
+<li><a href="#私有云安全">私有云安全</a></li>
+<li><a href="#私有云安全-1">私有云安全</a></li>
+<li><a href="#安全组织架构">安全组织架构</a><ul>
+<li><a href="#小规模">小规模</a></li>
+<li><a href="#大规模">大规模</a></li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a href="#其他">其他</a><ul>
+<li><a href="#开源项目待完善">开源项目（待完善）</a></li>
 <li><a href="#reference">Reference</a></li>
+</ul>
+</li>
 </ul>
 <!-- /TOC -->
 
-<h1 id="每日打卡"><a href="#每日打卡" class="headerlink" title="每日打卡"></a>每日打卡</h1><h2 id="2021"><a href="#2021" class="headerlink" title="2021"></a>2021</h2><h3 id="2021-01-28：寻找数组的中心索引"><a href="#2021-01-28：寻找数组的中心索引" class="headerlink" title="2021.01.28：寻找数组的中心索引"></a>2021.01.28：寻找数组的中心索引</h3><ul>
-<li><a href="https://leetcode-cn.com/problems/find-pivot-index/" target="_blank" rel="noopener">寻找数组的中心索引</a></li>
+
+
+
+<h1 id="基本步骤"><a href="#基本步骤" class="headerlink" title="基本步骤"></a>基本步骤</h1><p><strong>1. 资产梳理</strong></p>
+<ul>
+<li>IP列表、业务分组(负责人、联系方向)、业务属性</li>
+<li>业务端口</li>
+<li>业务应用架构、技术堆栈</li>
 </ul>
-<p>解题思路：先求出所有数的总和，然后遍历数组，如果遍历数的左边*2 + 遍历数 == 总和 ， 那这个数就一定是中心索引。 </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pivotIndex</span><span class="params">(self, nums: List[int])</span> -&gt; int:</span></span><br><span class="line">        S=sum(nums)</span><br><span class="line">        leftnums=<span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</span><br><span class="line">            <span class="keyword">if</span> leftnums *<span class="number">2</span>  +  nums[i] == S:</span><br><span class="line">                <span class="keyword">return</span> i</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                leftnums += nums[i]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br></pre></td></tr></table></figure>
-
-<p><code>sum()</code> 方法对序列进行求和计算</p>
-<p>Reference: <a href="https://www.pythonheidong.com/blog/article/249069/53202e9ddbc9740732b4/" target="_blank" rel="noopener">https://www.pythonheidong.com/blog/article/249069/53202e9ddbc9740732b4/</a></p>
-<h3 id="2021-01-29：两数之和"><a href="#2021-01-29：两数之和" class="headerlink" title="2021.01.29：两数之和"></a>2021.01.29：两数之和</h3><ul>
-<li><a href="https://leetcode-cn.com/problems/two-sum/" target="_blank" rel="noopener">两数之和</a></li>
+<p><strong>2.边界安全，防火墙策略控制（需要梳理业务端口）</strong></p>
+<ul>
+<li>如果是硬件，使用防火墙统一控制</li>
+<li>如果是操作系统，Iptalbes＋IPSEC</li>
+<li>及时监控业务端口的变化（外部nmap扫描搜集结果比对，或者编写脚步放到运维平台收集系统监听端口和防火墙策略)</li>
+<li>跳板机安全控制</li>
 </ul>
-<p>方法一：使用最容易理解的遍历数组进行查找</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(nums,target)</span>:</span></span><br><span class="line">	<span class="comment">#如果列表长度小于2，则直接结束</span></span><br><span class="line">	<span class="keyword">if</span> len(nums) &lt; <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="comment">#两次循环列表，分别对列表中的所有可能的数字进行相加</span></span><br><span class="line">        <span class="comment">#循环两次列表对应的时间复杂度为O(n²)</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(nums) - <span class="number">1</span>):</span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, len(nums)):</span><br><span class="line">                <span class="keyword">if</span> nums[i] + nums[j] == target:</span><br><span class="line">                    <span class="keyword">return</span> [i, j]</span><br></pre></td></tr></table></figure>
-
-<p>方法二：使用哈希表，通过以空间换取速度的方式，可以将查找时间从 O(n)降低到 O(1)。在python中列表字典的即为哈希类型。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(nums,target)</span>:</span></span><br><span class="line">	<span class="comment">#新建立一个空字典用来保存数值及其在列表中对应的索引</span></span><br><span class="line">	dict1 = &#123;&#125;</span><br><span class="line">	<span class="comment">#遍历一遍列表对应的时间复杂度为O(n)</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(nums)):</span><br><span class="line">            <span class="comment">#相减得到另一个数值</span></span><br><span class="line">            num = target - nums[i]</span><br><span class="line">            <span class="comment">#如果另一个数值不在字典中，则将第一个数值及其的索引报错在字典中</span></span><br><span class="line">            <span class="comment">#因为在字典中查找的时间复杂度为O(1)，因此总时间复杂度为O(n)</span></span><br><span class="line">            <span class="keyword">if</span> num <span class="keyword">not</span> <span class="keyword">in</span> dict1:</span><br><span class="line">                dict1[nums[i]] = i</span><br><span class="line">            <span class="comment">#如果在字典中则返回</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> [dict1[num], i]</span><br></pre></td></tr></table></figure>
-
-<h3 id="2021-01-30：整数反转"><a href="#2021-01-30：整数反转" class="headerlink" title="2021.01.30：整数反转"></a>2021.01.30：整数反转</h3><ul>
-<li><a href="https://leetcode-cn.com/problems/reverse-integer/" target="_blank" rel="noopener">整数反转</a></li>
+<p><strong>3.账户安全管理</strong></p>
+<ul>
+<li>弱密码</li>
+<li>root、sudoer权限</li>
+<li>账户、授权、访问、审计等等</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reverse</span><span class="params">(self, x: int)</span> -&gt; int:</span></span><br><span class="line">        <span class="keyword">if</span> x == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        <span class="keyword">if</span> x &gt; <span class="number">0</span>:</span><br><span class="line">            x = str(x)</span><br><span class="line">            x = x[::<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            x = str(x)</span><br><span class="line">            x = x[<span class="number">1</span>:]    <span class="comment">#为了删除负号</span></span><br><span class="line">            x = x[::<span class="number">-1</span>]</span><br><span class="line">            x = <span class="string">'-'</span> + x</span><br><span class="line">        x = int(x)</span><br><span class="line">        <span class="keyword">if</span> <span class="number">-2</span>**<span class="number">31</span> &lt; x &lt; <span class="number">2</span>**<span class="number">31</span><span class="number">-1</span>:    <span class="comment">#为了不超出32位整数</span></span><br><span class="line">            <span class="keyword">return</span> x</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-
-<p>利用R = X[::-1]这种方法对X（X必须是字符串）进行一个反转复制的操作<br><a href="https://www.cnblogs.com/mxh1099/p/5804064.html" target="_blank" rel="noopener">python 中的[::-1]</a><br><a href="https://www.cnblogs.com/malinqing/p/11272485.html" target="_blank" rel="noopener">彻底搞懂切片操作</a></p>
-<h3 id="2021-01-31：回文数"><a href="#2021-01-31：回文数" class="headerlink" title="2021.01.31：回文数"></a>2021.01.31：回文数</h3><ul>
-<li><a href="https://leetcode-cn.com/problems/palindrome-number/" target="_blank" rel="noopener">回文数</a></li>
+<p><strong>4.服务器安全</strong></p>
+<ul>
+<li>安全基线检测</li>
+<li>操作审计</li>
+<li>异常登录审计(日志收集分析)</li>
+<li>漏洞清点/扫描，补丁修复测试和推进</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isPalindrome</span><span class="params">(self, x: int)</span> -&gt; bool:</span></span><br><span class="line">            <span class="keyword">if</span> x&lt;<span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            x=str(x)</span><br><span class="line">            y=x[::<span class="number">-1</span>]</span><br><span class="line">            <span class="keyword">if</span> x==y:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="2021-02-01-罗马数字转整数"><a href="#2021-02-01-罗马数字转整数" class="headerlink" title="2021.02.01 罗马数字转整数"></a>2021.02.01 罗马数字转整数</h3><ul>
-<li><a href="https://leetcode-cn.com/problems/roman-to-integer/" target="_blank" rel="noopener">罗马数字转整数</a></li>
+<p><strong>5.WEB安全</strong></p>
+<ul>
+<li>应用渗透测试</li>
+<li>接口安全(加密、通信)</li>
+<li>webshell实时监测</li>
+<li>Nginx日志分析/Nginx流量旁路分析</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">romanToInt</span><span class="params">(self, s: str)</span> -&gt; int:</span></span><br><span class="line">        d = &#123;<span class="string">'I'</span>: <span class="number">1</span>, <span class="string">'IV'</span>: <span class="number">4</span>, <span class="string">'V'</span>: <span class="number">5</span>, <span class="string">'IX'</span>: <span class="number">9</span>, <span class="string">'X'</span>: <span class="number">10</span>, <span class="string">'XL'</span>: <span class="number">40</span>, <span class="string">'L'</span>: <span class="number">50</span>, <span class="string">'XC'</span>: <span class="number">90</span>,  <span class="string">'C'</span>: <span class="number">100</span>, <span class="string">'CD'</span>: <span class="number">400</span>, <span class="string">'D'</span>: <span class="number">500</span>, <span class="string">'CM'</span>: <span class="number">900</span>, <span class="string">'M'</span>: <span class="number">1000</span>&#125;</span><br><span class="line">        result = <span class="number">0</span></span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> i &lt; len(s):</span><br><span class="line">            <span class="comment">#查看当前位和下一位的字符</span></span><br><span class="line">            str1 = s[i:i+<span class="number">2</span>]</span><br><span class="line">            <span class="comment">#如果当前位置是特殊情况，那么返回其在字典中对应值，并且下一次从特殊字符之后一位开始索引</span></span><br><span class="line">            <span class="keyword">if</span> str1 <span class="keyword">in</span> d:</span><br><span class="line">                result += d.get(str1)</span><br><span class="line">                i += <span class="number">2</span></span><br><span class="line">            <span class="comment">#如果当前位不是特殊情况，那么只返回当前位的数值</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                result += d[s[i]]</span><br><span class="line">                i += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> result</span><br></pre></td></tr></table></figure>
-
-<h3 id="2021-02-02-最长公共前缀"><a href="#2021-02-02-最长公共前缀" class="headerlink" title="2021.02.02 最长公共前缀"></a>2021.02.02 最长公共前缀</h3><ul>
-<li><a href="https://leetcode-cn.com/problems/longest-common-prefix/" target="_blank" rel="noopener">最长公共前缀</a></li>
+<p><strong>6.业务风控安全</strong></p>
+<ul>
+<li>用户安全机制（密码、验证码、登录）</li>
+<li>交易安全</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestCommonPrefix</span><span class="params">(self, strs)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type strs: List[str]</span></span><br><span class="line"><span class="string">        :rtype: str</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> strs:                                        <span class="comment">#边界条件判断，若字符串为空，则返回空</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">        short_word=min(strs,key=len)                        <span class="comment">#筛选出长度最短的单词然后进行遍历</span></span><br><span class="line">        <span class="keyword">for</span> i,e <span class="keyword">in</span> enumerate(short_word):                   <span class="comment">#遍历长度最短的单词</span></span><br><span class="line">            <span class="keyword">for</span> others <span class="keyword">in</span> strs:                             <span class="comment">#遍历列表中的其他字符串</span></span><br><span class="line">                <span class="keyword">if</span> others[i]!=e:                            <span class="comment">#一旦出现非公共字符，返回公共字符</span></span><br><span class="line">                    <span class="keyword">return</span> short_word[:i]</span><br><span class="line">        <span class="keyword">return</span> short_word                                   <span class="comment">#遍历结束后依然没匹配到非公共字符，则返回整个字符</span></span><br></pre></td></tr></table></figure>
+<p><strong>7.安全培训</strong></p>
+<ul>
+<li>安全意识培训</li>
+<li>运维安全培训</li>
+<li>WEB安全开发</li>
+</ul>
+<p><strong>8.安全规范和流程</strong></p>
+<ul>
+<li>人员入职账户开通</li>
+<li>人员离职账户注销</li>
+<li>服务器上下架安全管理</li>
+<li>安全应急响应机制</li>
+</ul>
+<p><strong>9.内网安全</strong></p>
+<ul>
+<li>内网服务器安全</li>
+<li>账户统一验证和管理机制(域ldap协议统一验证OA、RTX、邮件、内网业务系统)</li>
+<li>弱口令监测(NTLM/LM)</li>
+<li>账户异常登录</li>
+<li>网络隔离（物理／虚拟化）</li>
+<li>网络准入</li>
+<li>PC安全(病毒统一管理、通知处理)</li>
+</ul>
+<h1 id="网络系统安全建设"><a href="#网络系统安全建设" class="headerlink" title="网络系统安全建设"></a>网络系统安全建设</h1><h2 id="安全域划分"><a href="#安全域划分" class="headerlink" title="安全域划分"></a>安全域划分</h2><p>内部网络系统：主要指OA办公网内部、生产网内部、测试开发网内部、以及其他内部网络系统<br>外部网络系统：主要指OA办公网互联网边界、生产网互联网边界、测试开发网互联网边界、互联网上相关所属的网络系统（不限于：公有云、Github、云存储等）</p>
+<h2 id="安全域风险等级"><a href="#安全域风险等级" class="headerlink" title="安全域风险等级"></a>安全域风险等级</h2><p>外部网络系统&gt;生产网内部网络系统&gt;测试开发网内部网络系统&gt;办公网内部网络系统&gt;其他网络系统</p>
+<h2 id="安全域风险对象"><a href="#安全域风险对象" class="headerlink" title="安全域风险对象"></a>安全域风险对象</h2><p>外部系统：外部攻击者（黑客、白帽子）<br>内部系统：内部违规操作员工、已渗透到内网系统的外部攻击者</p>
+<h2 id="安全建设方案"><a href="#安全建设方案" class="headerlink" title="安全建设方案"></a>安全建设方案</h2><p>由于不同安全域的风险等级、风险对象有所区别，因此我个人认为不同安全域的安全建设方案也该因地制宜。以下文章篇幅，我将根据不同安全域通过事前、事中、事后三个方面记录信息安全建设思路。</p>
+<h3 id="办公网-网络安全建设"><a href="#办公网-网络安全建设" class="headerlink" title="办公网-网络安全建设"></a>办公网-网络安全建设</h3><h4 id="WIFI安全"><a href="#WIFI安全" class="headerlink" title="WIFI安全"></a>WIFI安全</h4><p>事前安全措施：1、建立双因素认证（通过个人账户密码+短信、动态密码）；2、建立设备安全认证（限定特定的设备才能连接）<br>事中安全措施：1、建议WIFI账号爆破监控；2、WIFI账号爆破封禁策略运营</p>
+<h4 id="VPN安全"><a href="#VPN安全" class="headerlink" title="VPN安全"></a>VPN安全</h4><p>事前安全措施：1、远程接入公司内部网络进行双因素认证（个人账户密码+短信、动态密码）；2、硬件指纹获取识别<br>事中安全措施：1、VPN异地登录；2、异常登录监控；3、VPN爆破监控以及封禁策略<br>事后安全措施：1、联系VPN账号所属者确定攻击行为</p>
+<h4 id="日志流量采集检测"><a href="#日志流量采集检测" class="headerlink" title="日志流量采集检测"></a>日志流量采集检测</h4><p>事前安全措施：1、办公网网络流量（到边界、到IDC）；2、日志采集检测<br>事中安全措施：1、员工异常行为监控（比如上传内部数据到网盘等）；2、攻击监控<br>事后安全措施：1、对涉事员工进行相应处罚</p>
+<h4 id="Router统一管理"><a href="#Router统一管理" class="headerlink" title="Router统一管理"></a>Router统一管理</h4><p>事前安全措施：1、即统一管理内部网络映射到外网需求（可利用nginx反向代理），减少系统暴露风险<br>事中安全措施：1、外网端口扫描监控</p>
+<h4 id="终端网络准入"><a href="#终端网络准入" class="headerlink" title="终端网络准入"></a>终端网络准入</h4><p>事前安全措施：1、办公终端（PC）需要安装准入程序，才允许上内部网络<br>事中安全措施：1、终端异常行为监控<br>事后安全措施：1、对涉事员工进行相应处罚</p>
+<h4 id="安全域之间网络隔离"><a href="#安全域之间网络隔离" class="headerlink" title="安全域之间网络隔离"></a>安全域之间网络隔离</h4><p>例如：办公网与生产网之间只能通过堡垒机登录，且只有特定端口才能通信等策略（根据实际情况配置）</p>
+<h3 id="办公网-系统安全建设"><a href="#办公网-系统安全建设" class="headerlink" title="办公网-系统安全建设"></a>办公网-系统安全建设</h3><h4 id="办公网服务器安全"><a href="#办公网服务器安全" class="headerlink" title="办公网服务器安全"></a>办公网服务器安全</h4><p>事前安全措施：1、服务器基线检查；2、补丁检查；3、端口服务监控；4、服务器登录统一管理<br>事中安全措施：1、服务器进程监控；2、敏感账户登录监控；3、敏感命令执行监控；4、文件上传下载等（依赖主机安全产品，服务器上安装Agent）<br>事后安全措施：1、服务器木马；2、后门查杀；3、服务器安全加固（服务器应急响应）</p>
+<h4 id="办公网终端PC安全"><a href="#办公网终端PC安全" class="headerlink" title="办公网终端PC安全"></a>办公网终端PC安全</h4><p>事前安全措施：1、防病毒；2、DLP；3、水印；4、行为监控<br>事中安全措施：1、DLP数据监控；2、水印监控</p>
+<h3 id="办公网-应用安全建设"><a href="#办公网-应用安全建设" class="headerlink" title="办公网-应用安全建设"></a>办公网-应用安全建设</h3><h4 id="SSO统一登录入口"><a href="#SSO统一登录入口" class="headerlink" title="SSO统一登录入口"></a>SSO统一登录入口</h4><p>事前安全措施：1、内部所有的办公系统使用一套SSO认证系统，可有效管理员工账户密码，预防弱口令等风险<br>事中安全措施：1、异常登录监控；2、弱口令监控<br>事后安全措施：1、强制修改用户账号密码；2、加固SSO</p>
+<h4 id="网站水印技术"><a href="#网站水印技术" class="headerlink" title="网站水印技术"></a>网站水印技术</h4><p>事前安全措施：1、对有重要敏感数据的网站加上水印，防止数据被截图泄露等风险<br>事中安全措施：1、水印攻防监控<br>事后安全措施：1、对涉事员工进行相应处罚</p>
+<h4 id="邮箱安全"><a href="#邮箱安全" class="headerlink" title="邮箱安全"></a>邮箱安全</h4><p>事前安全措施：1、邮箱访问安全加固方案，用来解决邮箱接口被爆破风险；2、附件安全扫描；3、异地登录报警；4、弱口令扫描<br>事中安全措施：1、邮件爆破监控；2、账户或者IP封禁；3、异地登录监控<br>事后安全措施：1、若爆破成功，则强制修改相关员工密码，且排查安全风险</p>
+<h4 id="WAF"><a href="#WAF" class="headerlink" title="WAF"></a>WAF</h4><p>事前安全措施：1、应用服务器上部署WAF，拦截web攻击<br>事中安全措施：2、WAF上进行攻击监测<br>事后安全措施：3、更新优化WAF拦截策略</p>
+<h3 id="办公网-员工安全"><a href="#办公网-员工安全" class="headerlink" title="办公网-员工安全"></a>办公网-员工安全</h3><h4 id="在职员工安全教育"><a href="#在职员工安全教育" class="headerlink" title="在职员工安全教育"></a>在职员工安全教育</h4><p>事前安全措施：<br>1、定期对所有员工进行安全培训；<br>2、对新员工进行入职安全培训；<br>3、定期开展内部钓鱼测试；<br>4、针对RD可培训WEB安全开发；<br>5、针对OP可培训安全运维。<br>事中安全措施：1、对员工行为进行监控（可通过前面介绍的几种方案）；2、对钓鱼邮件进行告警<br>事后安全措施：1、对涉事员工进行相应处罚；2、钓鱼邮件影响评估</p>
+<h4 id="离职员工安全审计"><a href="#离职员工安全审计" class="headerlink" title="离职员工安全审计"></a>离职员工安全审计</h4><p>1、离职行为审计；2、办公电脑审计；3、人员离职账户注销</p>
+<h3 id="办公网-安全合规"><a href="#办公网-安全合规" class="headerlink" title="办公网-安全合规"></a>办公网-安全合规</h3><p>1、ISO27001；2、等保2.0</p>
+<h3 id="生产网-系统安全建设"><a href="#生产网-系统安全建设" class="headerlink" title="生产网-系统安全建设"></a>生产网-系统安全建设</h3><ul>
+<li>主机安全:1、内部资产发现；2、webshell监控；3、反弹shell监控等日常运营工作</li>
+<li>日志分析监控：1、可以偏业务一些，比如接口防刷监控运维；2、也可以偏系统一些，攻击行为的监控运维</li>
+<li>网络抗DDOS、应用抗CC：主要靠部署一些流量清洗产品</li>
+<li>入侵检测、防御：IDS、IPS（对于告警记录的运维工作）</li>
+<li>堡垒机：服务器统一登录管理，秘钥管理，访问控制策略运维工作</li>
+<li>Router层统一映射管理：互联网端口、IP映射管理，结合cmdb平台运维工作</li>
+<li>WAF：部署waf产品，拦截WEB攻击，告警记录运营工作</li>
+<li>端口开放策略（ACL）</li>
+<li>IPTABLES</li>
+<li>态势感知（SOC平台）：流量监控平台，通过监控不同方向的流量，发现攻击行为</li>
+<li>蜜罐（欺骗防御）：通过在内、外部部署蜜罐产品，发现攻击行为</li>
+<li>邮件沙箱、网关：针对邮件钓鱼、恶意附件的检测</li>
+<li>威胁情报：往往跟态势感知相结合</li>
+</ul>
+<p>除了系统层面的安全建设，生产网更多的是跟运维相关的一些安全内容（比如安全基线等），也包含项目上线的一些安全流程规范管理。</p>
+<h3 id="外网边界安全建设"><a href="#外网边界安全建设" class="headerlink" title="外网边界安全建设"></a>外网边界安全建设</h3><ul>
+<li>资产收集：IP、域名、URL、数据接口、端口服务监控，梳理统计内外网端口映射关系、业务线负责人等信息，盘点边界资产。</li>
+<li>黑盒漏洞扫描：WEB漏洞扫描、主机漏洞扫描（可采购也可自研，定期巡检）</li>
+<li>业务逻辑漏洞扫描：通过流量、日志被动式检测简单的业务逻辑漏洞</li>
+<li>GITHUB监控：自动化监控github泄露的公司相关代码、服务器个人相关信息等</li>
+<li>SRC上报漏洞响应：建设SRC平台，收集白帽子提交的安全漏洞</li>
+<li>最新漏洞、0day响应：0day、1day漏洞的研究、应急团队，推动漏洞修复</li>
+<li>威胁情报</li>
+<li>渗透测试：定期开展从互联网边界实施的渗透测试工作，寻找安全漏洞</li>
+</ul>
+<p>外网边界的安全建设工作，大致分为三个步骤：资产盘点、漏洞扫描、漏洞推修（定期重复），0day漏洞应急另算。</p>
+<h3 id="产品安全建设"><a href="#产品安全建设" class="headerlink" title="产品安全建设"></a>产品安全建设</h3><p>第一道防线：产品安全设计（早期可通过安全编码、意识培训使RD、PM具备信息安全意识）<br>第二道防线：需求评审、架构评审、代码审计、白盒扫描（通过建立需求安全评审等机制，严格控制新项目上线流程）<br>第三道防线：黑盒扫描、灰盒扫描（项目上线后可定期开展黑盒扫描）<br>第四道防线：SRC、企业蓝军（通过SRC、蓝军渗透发现的漏洞进行补充）<br>在整个产品安全建设过程中，企业可自研沉淀”产品安全开发库”、”SDL流程平台”以及制定”产品安全相关流程制度”。</p>
+<h3 id="企业红蓝对抗"><a href="#企业红蓝对抗" class="headerlink" title="企业红蓝对抗"></a>企业红蓝对抗</h3><p>企业红军：负责企业安全建设、安全监控、安全加固<br>企业蓝军：负责攻击安全堡垒、找出安全薄弱点</p>
+<p>网络安全红军的工作包含了以上所有的安全建设工作，而网络安全蓝军的工作是一个全新的视角，包含不限于：</p>
+<p>内部钓鱼攻击<br>外部漏洞攻击<br>APT攻击<br>内部爆破攻击<br>员工信息收集<br>……<br>企业在蓝军团队建设过程中，可自研沉淀：漏洞扫描器、社工库、漏洞库等</p>
+<h3 id="私有云安全"><a href="#私有云安全" class="headerlink" title="私有云安全"></a>私有云安全</h3><p>有些企业内部会建设私有云，关于私有云安全我接触不多，大致列一下所涉猎的内容：</p>
+<p>网络安全：租户间的虚拟网络隔离、虚拟机与宿主机间的访问策略、同租户不同虚机间的访问策略等<br>数据安全：数据的备份加密、数据接口防重放、数据分级分类等<br>主机安全：防逃逸、内存溢出、入侵检测等<br>安全合规：等保2.0云安全相关章节</p>
+<h3 id="私有云安全-1"><a href="#私有云安全-1" class="headerlink" title="私有云安全"></a>私有云安全</h3><p>有些企业内部会建设私有云，关于私有云安全我接触不多，大致列一下所涉猎的内容：</p>
+<p>网络安全：租户间的虚拟网络隔离、虚拟机与宿主机间的访问策略、同租户不同虚机间的访问策略等<br>数据安全：数据的备份加密、数据接口防重放、数据分级分类等<br>主机安全：防逃逸、内存溢出、入侵检测等<br>安全合规：等保2.0云安全相关章节</p>
+<h3 id="安全组织架构"><a href="#安全组织架构" class="headerlink" title="安全组织架构"></a>安全组织架构</h3><h4 id="小规模"><a href="#小规模" class="headerlink" title="小规模"></a>小规模</h4><p>若公司规模小，个人认为可按事前、事中、事后划分信息安全组织架构（仅供参考）</p>
+<p>系统安全<br>事前团队：负责内外网安全建设<br>事中团队：负责入侵监控、异常监控<br>事后团队：负责应急响应、事后处罚整改<br>产品安全：SDL<br>安全合规<br>业务安全</p>
+<h4 id="大规模"><a href="#大规模" class="headerlink" title="大规模"></a>大规模</h4><p>若公司规模大，可按安全区域划分组织架构（仅供参考）</p>
+<p>系统安全：<br>办公网团队：负责办公网安全建设、安全监控、应急响应（内部可再按照前、中、后细分，再细分，可分WEB、移动、硬件等）<br>生产网团队：负责生产网安全建设、安全监控、应急响应<br>外网边界团队：负责边界安全建设、安全监控、应急响应<br>产品安全：SDL<br>安全合规<br>蓝军团队：如果规模小可不用设置蓝军团队。蓝军团队是脱离安全区域之外的，但属于事前。<br>业务安全<br>云安全</p>
+<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>红队建设</p>
+<ul>
+<li><a href="https://github.com/aleenzz/Cobalt_Strike_wiki" target="_blank" rel="noopener">Cobalt_Strike_wiki</a></li>
+</ul>
+<p>情报</p>
+<ul>
+<li><a href="http://wechat.doonsec.com/" target="_blank" rel="noopener">http://wechat.doonsec.com/</a></li>
+<li><a href="https://sec.thief.one/?type_id=a17165288561873d8fdf8e29586c891a" target="_blank" rel="noopener">https://sec.thief.one/?type_id=a17165288561873d8fdf8e29586c891a</a></li>
+</ul>
+<p>漏洞预警</p>
+<ul>
+<li><a href="https://sec.thief.one/?type_id=dc31e48fe511b8ec10969ba13d282355" target="_blank" rel="noopener">https://sec.thief.one/?type_id=dc31e48fe511b8ec10969ba13d282355</a></li>
+</ul>
+<h2 id="开源项目（待完善）"><a href="#开源项目（待完善）" class="headerlink" title="开源项目（待完善）"></a>开源项目（待完善）</h2><p><a href="http://wiki.beysec.com/" target="_blank" rel="noopener">http://wiki.beysec.com/</a></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://mp.weixin.qq.com/s/0Uu_os9MB5ZHnowlWkYbEA" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/0Uu_os9MB5ZHnowlWkYbEA</a></p>
 
-<p><a href="https://www.runoob.com/python/python-func-enumerate.html" target="_blank" rel="noopener">enumerate</a><br><code>enumerate()</code> 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标，一般用在 for 循环当中。</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1>
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者: <a href="https://yinwc.github.io">Ywc</a>
-            <p>原文链接: <a href="https://yinwc.github.io/2021/01/28/leetcodepractice/">https://yinwc.github.io/2021/01/28/leetcodepractice/</a>
-            <p>发表日期: <a href="https://yinwc.github.io/2021/01/28/leetcodepractice/">January 28th 2021, 10:15:40 am</a>
+            <p>原文链接: <a href="https://yinwc.github.io/2021/02/24/%E7%94%B2%E6%96%B9%E5%AE%89%E5%85%A8/">https://yinwc.github.io/2021/02/24/%E7%94%B2%E6%96%B9%E5%AE%89%E5%85%A8/</a>
+            <p>发表日期: <a href="https://yinwc.github.io/2021/02/24/%E7%94%B2%E6%96%B9%E5%AE%89%E5%85%A8/">February 24th 2021, 9:49:56 am</a>
             <p>版权声明: </p>
         </div>
     
@@ -586,7 +724,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#每日打卡"><span class="toc-number">1.</span> <span class="toc-text">每日打卡</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2021"><span class="toc-number">1.1.</span> <span class="toc-text">2021</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-01-28：寻找数组的中心索引"><span class="toc-number">1.1.1.</span> <span class="toc-text">2021.01.28：寻找数组的中心索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-01-29：两数之和"><span class="toc-number">1.1.2.</span> <span class="toc-text">2021.01.29：两数之和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-01-30：整数反转"><span class="toc-number">1.1.3.</span> <span class="toc-text">2021.01.30：整数反转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-01-31：回文数"><span class="toc-number">1.1.4.</span> <span class="toc-text">2021.01.31：回文数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-02-01-罗马数字转整数"><span class="toc-number">1.1.5.</span> <span class="toc-text">2021.02.01 罗马数字转整数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2021-02-02-最长公共前缀"><span class="toc-number">1.1.6.</span> <span class="toc-text">2021.02.02 最长公共前缀</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">2.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本步骤"><span class="toc-number">1.</span> <span class="toc-text">基本步骤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#网络系统安全建设"><span class="toc-number">2.</span> <span class="toc-text">网络系统安全建设</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#安全域划分"><span class="toc-number">2.1.</span> <span class="toc-text">安全域划分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全域风险等级"><span class="toc-number">2.2.</span> <span class="toc-text">安全域风险等级</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全域风险对象"><span class="toc-number">2.3.</span> <span class="toc-text">安全域风险对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全建设方案"><span class="toc-number">2.4.</span> <span class="toc-text">安全建设方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#办公网-网络安全建设"><span class="toc-number">2.4.1.</span> <span class="toc-text">办公网-网络安全建设</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#WIFI安全"><span class="toc-number">2.4.1.1.</span> <span class="toc-text">WIFI安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VPN安全"><span class="toc-number">2.4.1.2.</span> <span class="toc-text">VPN安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#日志流量采集检测"><span class="toc-number">2.4.1.3.</span> <span class="toc-text">日志流量采集检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Router统一管理"><span class="toc-number">2.4.1.4.</span> <span class="toc-text">Router统一管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#终端网络准入"><span class="toc-number">2.4.1.5.</span> <span class="toc-text">终端网络准入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安全域之间网络隔离"><span class="toc-number">2.4.1.6.</span> <span class="toc-text">安全域之间网络隔离</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#办公网-系统安全建设"><span class="toc-number">2.4.2.</span> <span class="toc-text">办公网-系统安全建设</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#办公网服务器安全"><span class="toc-number">2.4.2.1.</span> <span class="toc-text">办公网服务器安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#办公网终端PC安全"><span class="toc-number">2.4.2.2.</span> <span class="toc-text">办公网终端PC安全</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#办公网-应用安全建设"><span class="toc-number">2.4.3.</span> <span class="toc-text">办公网-应用安全建设</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SSO统一登录入口"><span class="toc-number">2.4.3.1.</span> <span class="toc-text">SSO统一登录入口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网站水印技术"><span class="toc-number">2.4.3.2.</span> <span class="toc-text">网站水印技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#邮箱安全"><span class="toc-number">2.4.3.3.</span> <span class="toc-text">邮箱安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WAF"><span class="toc-number">2.4.3.4.</span> <span class="toc-text">WAF</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#办公网-员工安全"><span class="toc-number">2.4.4.</span> <span class="toc-text">办公网-员工安全</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#在职员工安全教育"><span class="toc-number">2.4.4.1.</span> <span class="toc-text">在职员工安全教育</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#离职员工安全审计"><span class="toc-number">2.4.4.2.</span> <span class="toc-text">离职员工安全审计</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#办公网-安全合规"><span class="toc-number">2.4.5.</span> <span class="toc-text">办公网-安全合规</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#生产网-系统安全建设"><span class="toc-number">2.4.6.</span> <span class="toc-text">生产网-系统安全建设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#外网边界安全建设"><span class="toc-number">2.4.7.</span> <span class="toc-text">外网边界安全建设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#产品安全建设"><span class="toc-number">2.4.8.</span> <span class="toc-text">产品安全建设</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#企业红蓝对抗"><span class="toc-number">2.4.9.</span> <span class="toc-text">企业红蓝对抗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#私有云安全"><span class="toc-number">2.4.10.</span> <span class="toc-text">私有云安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#私有云安全-1"><span class="toc-number">2.4.11.</span> <span class="toc-text">私有云安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全组织架构"><span class="toc-number">2.4.12.</span> <span class="toc-text">安全组织架构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#小规模"><span class="toc-number">2.4.12.1.</span> <span class="toc-text">小规模</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#大规模"><span class="toc-number">2.4.12.2.</span> <span class="toc-text">大规模</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其他"><span class="toc-number">3.</span> <span class="toc-text">其他</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#开源项目（待完善）"><span class="toc-number">3.1.</span> <span class="toc-text">开源项目（待完善）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.2.</span> <span class="toc-text">Reference</span></a></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -599,6 +737,10 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
     
     
     
@@ -2525,7 +2667,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/28</span><a class="archive-post-title" href= "/2021/01/28/leetcodepractice/" >LeetCode每日打卡</a>
+            <span class="archive-post-date">02/24</span><a class="archive-post-title" href= "/2021/02/24/%E7%94%B2%E6%96%B9%E5%AE%89%E5%85%A8/" >甲方安全建设</a>
         </li>
     
     
@@ -2540,6 +2682,11 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">12/31</span><a class="archive-post-title" href= "/2020/12/31/%E5%BE%AE%E7%9B%9F2020%E4%BA%8B%E4%BB%B6/" >2020年安全事件以及后续整改的反思</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/28</span><a class="archive-post-title" href= "/2020/11/28/leetcodepractice/" >LeetCode的一些记录</a>
         </li>
     
     
@@ -2689,11 +2836,6 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2019/11/06/Apache-Solr-Velocity%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5RCE%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/" >Apache Solr Velocity模板注入RCE漏洞复现</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">10/24</span><a class="archive-post-title" href= "/2019/10/24/%E7%94%B2%E6%96%B9%E5%AE%89%E5%85%A8/" >甲方安全建设</a>
         </li>
     
     
