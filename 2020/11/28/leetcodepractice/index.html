@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1.1k</span> / Reading time: <span class="post-count">4 min</span></span>
+                        <span>Word count: <span class="post-count">1.2k</span> / Reading time: <span class="post-count">5 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -398,7 +398,7 @@ height:50vh;
     <article class="article-entry">
         <!-- TOC -->
 
-<pre><code>- [木头切割](#木头切割)
+<pre><code>- [一组数数组的动态和](#一组数数组的动态和)
 - [寻找数组的中心索引](#寻找数组的中心索引)
 - [两数之和](#两数之和)
 - [整数反转](#整数反转)
@@ -410,8 +410,11 @@ height:50vh;
 <!-- /TOC -->
 
 
-<h3 id="木头切割"><a href="#木头切割" class="headerlink" title="木头切割"></a>木头切割</h3><p>题目描述：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">给定长度为n的数组，每个元素代表一个木头的长度，木头可以任意截断，从这堆木头中截出至少k个相同长度为m的木块。已知k，求max(m)。</span><br><span class="line"></span><br><span class="line">ps: 截断的长度必须是整数</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">输入两行，第一行n, k，第二行为数组序列。输出最大值。</span><br></pre></td></tr></table></figure>
+<h3 id="一组数数组的动态和"><a href="#一组数数组的动态和" class="headerlink" title="一组数数组的动态和"></a>一组数数组的动态和</h3><p>给你一个数组 nums 。数组「动态和」的计算公式为：runningSum[i] = sum(nums[0]…nums[i]) 。<br>请返回 nums 的动态和。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：nums &#x3D; [1,2,3,4]</span><br><span class="line">输出：[1,3,6,10]</span><br><span class="line">解释：动态和计算过程为 [1, 1+2, 1+2+3, 1+2+3+4] 。</span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：nums &#x3D; [1,1,1,1,1]</span><br><span class="line">输出：[1,2,3,4,5]</span><br><span class="line">解释：动态和计算过程为 [1, 1+1, 1+1+1, 1+1+1+1, 1+1+1+1+1] 。</span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入：nums &#x3D; [3,1,2,10,1]</span><br><span class="line">输出：[3,4,6,16,17]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">runningSum</span><span class="params">(self, nums: List[int])</span> -&gt; List[int]:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> nums:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,len(nums)):</span><br><span class="line">            nums[i]=nums[i]+nums[i<span class="number">-1</span>]</span><br><span class="line">        <span class="keyword">return</span> nums</span><br></pre></td></tr></table></figure>
+
 
 
 <h3 id="寻找数组的中心索引"><a href="#寻找数组的中心索引" class="headerlink" title="寻找数组的中心索引"></a>寻找数组的中心索引</h3><ul>
@@ -590,7 +593,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#木头切割"><span class="toc-number">1.</span> <span class="toc-text">木头切割</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#寻找数组的中心索引"><span class="toc-number">2.</span> <span class="toc-text">寻找数组的中心索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两数之和"><span class="toc-number">3.</span> <span class="toc-text">两数之和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整数反转"><span class="toc-number">4.</span> <span class="toc-text">整数反转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回文数"><span class="toc-number">5.</span> <span class="toc-text">回文数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#罗马数字转整数"><span class="toc-number">6.</span> <span class="toc-text">罗马数字转整数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长公共前缀"><span class="toc-number">7.</span> <span class="toc-text">最长公共前缀</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number"></span> <span class="toc-text">Reference</span></a>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一组数数组的动态和"><span class="toc-number">1.</span> <span class="toc-text">一组数数组的动态和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#寻找数组的中心索引"><span class="toc-number">2.</span> <span class="toc-text">寻找数组的中心索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两数之和"><span class="toc-number">3.</span> <span class="toc-text">两数之和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整数反转"><span class="toc-number">4.</span> <span class="toc-text">整数反转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回文数"><span class="toc-number">5.</span> <span class="toc-text">回文数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#罗马数字转整数"><span class="toc-number">6.</span> <span class="toc-text">罗马数字转整数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长公共前缀"><span class="toc-number">7.</span> <span class="toc-text">最长公共前缀</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number"></span> <span class="toc-text">Reference</span></a>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
