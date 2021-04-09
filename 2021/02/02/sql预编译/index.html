@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Ywc&#39;s blog</title>
+    <title>深入理解SQL盲注与SQL预编译 · Ywc&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,6 +70,8 @@
 
     <link rel="preload" href= /css/style.css?v=201807017_1502 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /css/mobile.css?v=20180709 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -194,14 +196,23 @@
 <meta name="generator" content="Hexo 4.2.0"></head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Ywc&#39;s blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">深入理解SQL盲注与SQL预编译</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Ywc's blog</a>
 </header>
@@ -222,7 +233,7 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-img" style="background-image: url(/intro/blog.jpg)"></div>
@@ -231,8 +242,8 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Ywc's blog
-            <!-- 文章页  -->
+            深入理解SQL盲注与SQL预编译
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -240,12 +251,49 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                生活就像一座围城，城外的人想进去,城里的人想出来。
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞">漏洞</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">2.3k</span> / Reading time: <span class="post-count">9 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2021/02/02</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -346,405 +394,134 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/09/09/app%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/" >
-            
-                <span>App安全测试</span>
-        </a>
-        <div class="abstract-content">
-            App安全测试的一些思路和知识
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/09</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "安全测试">安全测试</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="SQL盲注"><a href="#SQL盲注" class="headerlink" title="SQL盲注"></a>SQL盲注</h2><p>所谓的盲注就是猜测，通过寻找差异（包括运行时间的差异和页面返回结果的差异）来进行注入</p>
+<p>也就是说我们想实现的是我们要构造一条语句来测试我们输入的布尔表达式，使得布尔表达式结果的真假直接影响整条语句的执行结果，从而使得系统有不同的反应，在时间盲注中是不同的返回的时间，在布尔盲注中则是不同的页面反应。</p>
+<h3 id="布尔盲注"><a href="#布尔盲注" class="headerlink" title="布尔盲注"></a>布尔盲注</h3><p>布尔盲注是最基础的一种注入，其本质是使SQL语句永真或永假，使<strong>页面上显示的内容不同</strong>，然后逐个字符的去判断，以此来得到数据库中的所有数据。<br>基于布尔的盲注是在这样的一种情况下使用：</p>
+<ul>
+<li>页面虽然不能返回查询的结果，但是对于输入 布尔值 0 和 1 的反应是不同的，那我们就可以利用这个输入布尔值的注入点来注入我们的条件语句，从而能根据页面的返回情况推测出我们输入的语句是否正确(<strong>输入语句的真假直接影响整条查询语句最后查询的结果的真假</strong>)</li>
+</ul>
+<p>常用函数：<br><code>left</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">left(a,b)从左侧截取a的前b位</span><br></pre></td></tr></table></figure>
+
+<p><code>substr</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">substr(a,b,c)从b位置开始，截取字符串a的c长度。结合ascii()使用</span><br></pre></td></tr></table></figure>
+
+<p><code>MID/ORD</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mid(a,b,c)同substr</span><br><span class="line">OPD()同ascii()</span><br></pre></td></tr></table></figure>
+
+<p><code>regexp</code><br>REGEXP注入，即regexp正则表达式注入。REGEXP注入，又叫盲注值正则表达式攻击。<br>原理是直接查询自己需要的数据，然后通过正则表达式进行匹配。</p>
+<ul>
+<li>基本注入<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> (<span class="keyword">select</span>语句) regexp <span class="string">'正则'</span></span><br><span class="line"><span class="comment"># eg：</span></span><br><span class="line"><span class="comment"># 正常查询：</span></span><br><span class="line"><span class="keyword">select</span> username <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>;</span><br><span class="line"><span class="comment"># 正则注入，若匹配则返回1，不匹配返回0</span></span><br><span class="line"><span class="keyword">select</span> (<span class="keyword">select</span> username <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>) regexp <span class="string">'^a'</span>;</span><br><span class="line">^表示pattern(模式串)的开头。即若匹配到username字段下id=1的数据开头为a，则返回1；否则返回0</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>regexp关键字还可以代替where条件里的=号</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">password</span> regexp <span class="string">'^ad'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>常用regexp正则语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">regexp '^[a-z]'  <span class="comment">#判断一个表的第一个字符串是否在a-z中</span></span><br><span class="line">regexp '^r'      <span class="comment">#判断第一个字符串是否为r</span></span><br><span class="line">regexp '^r[a-z]' <span class="comment">#判断一个表的第二个字符串是否在a-z中</span></span><br></pre></td></tr></table></figure>
+
+<p>在联合查询中的使用</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 union <span class="keyword">select</span> <span class="number">1</span>,<span class="keyword">database</span>() regexp <span class="string">'^s'</span>,<span class="number">3</span><span class="comment">--+</span></span><br></pre></td></tr></table></figure>
+
+<p>eg:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">## 普通查询</span></span><br><span class="line"></span><br><span class="line">mysql&gt; select 123 from test where 1=1;</span><br><span class="line">+<span class="comment">-----+</span></span><br><span class="line">| 123 |</span><br><span class="line">+<span class="comment">-----+</span></span><br><span class="line">| 123 |</span><br><span class="line">+<span class="comment">-----+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> <span class="number">123</span> <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> <span class="number">1</span>=<span class="number">0</span>;</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 使用 ^</span></span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span>^<span class="number">0</span>;</span><br><span class="line">+<span class="comment">----+--------+----------+</span></span><br><span class="line">| id | name   | password |</span><br><span class="line">+<span class="comment">----+--------+----------+</span></span><br><span class="line">|  1 | v1zkra | 123456   |</span><br><span class="line">+<span class="comment">----+--------+----------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span>^<span class="number">1</span>;</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 使用 &amp;</span></span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span> &amp; <span class="number">1</span>;</span><br><span class="line">+<span class="comment">----+--------+----------+</span></span><br><span class="line">| id | name   | password |</span><br><span class="line">+<span class="comment">----+--------+----------+</span></span><br><span class="line">|  1 | v1zkra | 123456   |</span><br><span class="line">+<span class="comment">----+--------+----------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">1</span> &amp; <span class="number">0</span>;</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 使用 |</span></span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">0</span> | <span class="number">1</span>;</span><br><span class="line">+<span class="comment">----+--------+----------+</span></span><br><span class="line">| id | name   | password |</span><br><span class="line">+<span class="comment">----+--------+----------+</span></span><br><span class="line">|  1 | v1zkra | 123456   |</span><br><span class="line">+<span class="comment">----+--------+----------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">test</span> <span class="keyword">where</span> <span class="keyword">id</span> = <span class="number">0</span> | <span class="number">0</span>;</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 使用 ~</span></span><br><span class="line"></span><br><span class="line">使用情况：当系统不允许输入大的数字的时候，可能是限制了字符的长度，限制了不能使用科学计数法，但是我们还是想让其报错，我们就能采取这种方式</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> ~<span class="number">1</span> ;</span><br><span class="line">+<span class="comment">----------------------+</span></span><br><span class="line">| ~1                   |</span><br><span class="line">+<span class="comment">----------------------+</span></span><br><span class="line">| 18446744073709551614 |</span><br><span class="line">+<span class="comment">----------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> <span class="keyword">bin</span>(~<span class="number">1</span>);</span><br><span class="line">+<span class="comment">------------------------------------------------------------------+</span></span><br><span class="line">| bin(~1)                                                          |</span><br><span class="line">+<span class="comment">------------------------------------------------------------------+</span></span><br><span class="line">| 1111111111111111111111111111111111111111111111111111111111111110 |</span><br><span class="line">+<span class="comment">------------------------------------------------------------------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.32</span> sec)</span><br></pre></td></tr></table></figure>
+
+<h3 id="时间盲注"><a href="#时间盲注" class="headerlink" title="时间盲注"></a>时间盲注</h3><p>基于时间的盲注的一般思路是延迟注入，说白了就是将判断条件结合延迟函数注入进入，然后根据语句执行时间的长短来确定判断语句返回的 TRUE 还是 FALSE，从而去猜解一些未知的字段(整个猜解过程其实就是一种 fuzz)。</p>
+<p>常用函数：</p>
+<ul>
+<li>1、MySQL的sleep和benchmark</li>
+</ul>
+<p><strong>sleep()</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=1' and if(1=0,1, sleep(10)) <span class="comment">--+  # 注释符用于闭合语句，使语句正常执行</span></span><br></pre></td></tr></table></figure>
+<p>IF表达式：<br>IF(expr1,expr2,expr3) ：如果 expr1 是TRUE (expr1 &lt;&gt; 0 and expr1 &lt;&gt; NULL)，则 IF()的返回值为expr2; 否则返回值则为 expr3。IF() 的返回值为数字值或字符串值，具体情况视其所在语境而定。</p>
+<p><strong>benchmark(count,expr)</strong><br>BENCHMARK()函数重复countTimes次执行表达式expr，它可以用于计时MySQL处理表达式有多快。结果值总是0。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> (<span class="keyword">select</span> username <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>) regexp <span class="string">'^a'</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>2、Heavy Query 笛卡尔积</li>
+</ul>
+<p>将简单的表查询不断的叠加，使之以指数倍运算量的速度增长，不断增加系统执行 sql 语句的负荷，直到产生攻击者想要的时间延迟，这就非常的类似于 dos 这个系统</p>
+<p>eg:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT count(*) FROM information_schema.columns A, information_schema.columns B, information_schema.tables C;</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">| count(*)  |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">| 113101560 |</span><br><span class="line">+<span class="comment">-----------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">2.07</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> ctf_test <span class="keyword">where</span> <span class="keyword">user</span>=<span class="string">'1'</span> <span class="keyword">and</span> <span class="number">1</span>=<span class="number">1</span> <span class="keyword">and</span> (<span class="keyword">SELECT</span> <span class="keyword">count</span>(*) <span class="keyword">FROM</span> information_schema.columns A, information_schema.columns B, information_schema.tables C);</span><br><span class="line">+<span class="comment">------+-----+</span></span><br><span class="line">| user | pwd |</span><br><span class="line">+<span class="comment">------+-----+</span></span><br><span class="line">| 1    | 0   |</span><br><span class="line">+<span class="comment">------+-----+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">2.08</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> ctf_test <span class="keyword">where</span> <span class="keyword">user</span>=<span class="string">'1'</span> <span class="keyword">and</span> <span class="number">1</span>=<span class="number">0</span> <span class="keyword">and</span> (<span class="keyword">SELECT</span> <span class="keyword">count</span>(*) <span class="keyword">FROM</span> information_schema.columns A, information_schema.columns B, information_schema.tables C);</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>3.Get_lock() 加锁机制<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">get_lock(key,timeout) 一个是key，就是根据这个参数进行加锁的，另一个是等待时间(s)。</span><br><span class="line">如果key是第一次加锁返回1，反之等待时间进行第二次加锁。</span><br></pre></td></tr></table></figure>
+利用条件比较苛刻，需要使用 <code>mysql_pconnect</code>函数来连接数据库</li>
+</ul>
+<p>如果已经开了一个session，对关键字进行了get_lock,那么再开另一个session再次对关键进行get_lock，就会延时我们指定的时间。</p>
+<p>此盲注手法有一些限制，就是必须要同时开两个SESSION进行注入</p>
+<ul>
+<li>4、RLIKE注入<br>正则DOS，和benchmark相似，利用SQL多次计算正则消耗计算资源产生延时效果</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from flag where flag='1' and if(mid(user(),1,1)='s',concat(rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a')) RLIKE '(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+b',1);</span><br><span class="line">+<span class="comment">------+</span></span><br><span class="line">| flag |</span><br><span class="line">+<span class="comment">------+</span></span><br><span class="line">| 1    |</span><br><span class="line">+<span class="comment">------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> flag <span class="keyword">where</span> flag=<span class="string">'1'</span> <span class="keyword">and</span> <span class="keyword">if</span>(<span class="keyword">mid</span>(<span class="keyword">user</span>(),<span class="number">1</span>,<span class="number">1</span>)=<span class="string">'r'</span>,<span class="keyword">concat</span>(rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>)) <span class="keyword">RLIKE</span> <span class="string">'(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+cd'</span>,<span class="number">1</span>);</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">3.83</span> sec)</span><br></pre></td></tr></table></figure>
+
+<h2 id="SQL预编译"><a href="#SQL预编译" class="headerlink" title="SQL预编译"></a>SQL预编译</h2><p>sql 预编译指的是数据库驱动在发送 sql 语句和参数给 DBMS 之前对 sql 语句进行编译，这样 DBMS 执行 sql 时，就不需要重新编译。</p>
+<p>使用预编译四步走：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1：定义预编译的sql语句，其中待填入的参数用  ?  占位。注意，?无关类型，不需要加分号之类。其具体数据类型在下面setXX（）时决定。</span><br><span class="line"></span><br><span class="line">2：创建预编译Statement，并把sql语句传入。此时sql语句已与此preparedStatement绑定。所以第4步执行语句时无需再把sql语句作为参数传入execute()。</span><br><span class="line"></span><br><span class="line">3：填入具体参数。通过setXX(问号下标，数值）来为sql语句填入具体数据。注意：问号下标从1开始，setXX与数值类型有关，字符串就是setString（index，str）.</span><br><span class="line"></span><br><span class="line">4：执行预处理对象。主要有</span><br><span class="line">boolean execute() 在此 PreparedStatement 对象中执行 SQL 语句，该语句可以是任何种类的 SQL 语句</span><br><span class="line">ResultSet   executeQuery() 在此 PreparedStatement 对象中执行 SQL 查询，并返回该查询生成的 ResultSet 对象</span><br><span class="line">int    executeUpdate() 在此 PreparedStatement 对象中执行 SQL 语句，该语句必须是一个 SQL 数据操作语言（Data Manipulation Language，DML）语句，比如 INSERT、UPDATE 或 DELETE 语句；或者是无返回内容的 SQL 语句，比如 DDL 语句。</span><br></pre></td></tr></table></figure>
+<p>示例代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String username = <span class="string">"ye"</span>;</span><br><span class="line">String password = <span class="string">"ye"</span>;</span><br><span class="line">String sql = <span class="string">"select * from user where username = ? and password = ?;"</span>;</span><br><span class="line"></span><br><span class="line">db.stmt = db.conn.prepareStatement(sql);</span><br><span class="line">db.stmt.setString(<span class="number">1</span>, username);</span><br><span class="line">db.stmt.setString(<span class="number">2</span>, password);</span><br><span class="line">ResultSet rs = db.stmt.executeQuery();</span><br></pre></td></tr></table></figure>
+
+<h3 id="Mybatis预编译"><a href="#Mybatis预编译" class="headerlink" title="Mybatis预编译"></a>Mybatis预编译</h3><p>mybatis 中使用 sqlMap 进行 sql 查询时，经常需要动态传递参数,使用<code>#{ }</code>和 <code>${ }</code>来进行动态传参</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="keyword">name</span> = <span class="string">"test"</span>;</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="keyword">name</span> = <span class="comment">#&#123;name&#125;;</span></span><br><span class="line">或</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="keyword">name</span> = <span class="string">'$&#123;name&#125;'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>但是在动态 SQL 解析阶段，<code>#{ }</code>和 <code>${ }</code> 会有不同的表现：</p>
+<p><strong>#{ }会解析为一个 JDBC 预编译语句（prepared statement）的参数标记符</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">eg:</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="keyword">name</span> = <span class="comment">#&#123;name&#125;;</span></span><br><span class="line"><span class="comment"># 解析为：</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="keyword">name</span> = ?;</span><br></pre></td></tr></table></figure>
+<p>一个 <code>#{ }</code> 被解析为一个参数占位符 <code>?</code> </p>
+<p><strong>${ } 仅仅为一个纯碎的 string 替换，在动态 SQL 解析阶段将会进行变量替换</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="keyword">name</span> = <span class="string">'$&#123;name&#125;'</span>;</span><br><span class="line"><span class="comment"># 当传递的参数为 "test" 时，上述 sql 的解析为</span></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="keyword">name</span> = <span class="string">"test"</span>;</span><br></pre></td></tr></table></figure>
+<p>预编译之前的 SQL 语句已经不包含变量 name 了<br><code>${ }</code>的变量的替换阶段是在动态 SQL 解析阶段，而 <code>#{ }</code> 的变量的替换是在 DBMS 中</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://blog.nowcoder.net/n/9d9987c816214f62b9266276da65e11f" target="_blank" rel="noopener">深入理解SQL注入与预编译</a><br><a href="https://www.anquanke.com/post/id/170626" target="_blank" rel="noopener">K0rz3n师傅：一篇文章带你深入理解 SQL 盲注</a><br><a href="https://xz.aliyun.com/t/5505" target="_blank" rel="noopener">SQL注入的有趣姿势</a><br><a href="https://xz.aliyun.com/t/8003" target="_blank" rel="noopener">REGEXP注入与LIKE注入学习笔记</a><br><a href="https://segmentfault.com/a/1190000004617028" target="_blank" rel="noopener">mybatis深入理解(一)之 # 与 $ 区别以及 sql 预编译</a></p>
+
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >
-            
-                <span>CSRF漏洞挖掘</span>
-        </a>
-        <div class="abstract-content">
-            CSRF漏洞的挖掘思路总结
+        <div class="license-wrapper">
+            <p>原文作者: <a href="https://yinwc.github.io">Ywc</a>
+            <p>原文链接: <a href="https://yinwc.github.io/2021/02/02/sql%E9%A2%84%E7%BC%96%E8%AF%91/">https://yinwc.github.io/2021/02/02/sql%E9%A2%84%E7%BC%96%E8%AF%91/</a>
+            <p>发表日期: <a href="https://yinwc.github.io/2021/02/02/sql%E9%A2%84%E7%BC%96%E8%AF%91/">February 2nd 2021, 5:27:26 pm</a>
+            <p>版权声明: </p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/22</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞">漏洞</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/01/%E6%AF%95%E4%B8%9A%E6%84%9F%E8%A8%80/" >
-            
-                <span>毕业感言</span>
-        </a>
-        <div class="abstract-content">
-            致敬逝去的青春
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/01</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Others">Others</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/28/XSS%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >
-            
-                <span>XSS漏洞</span>
-        </a>
-        <div class="abstract-content">
-            SS漏洞的挖掘思路总结
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/28</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞">漏洞</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/16/python%E8%84%9A%E6%9C%AC/" >
-            
-                <span>Python-scripts</span>
-        </a>
-        <div class="abstract-content">
-            记录平时学习工作中写过的一些脚本
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/16</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "python">python</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/16/MQTT%E5%AE%89%E5%85%A8%E5%88%9D%E6%8E%A2/" >
-            
-                <span>物联网安全——MQTT安全初探</span>
-        </a>
-        <div class="abstract-content">
-            所遇即所学
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/16</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "物联网安全">物联网安全</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/06/%E7%BA%A2%E5%8C%85%E4%BA%8B%E4%BB%B6/" >
-            
-                <span>假红包事件——一次应急响应</span>
-        </a>
-        <div class="abstract-content">
-            黑产无处不在...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "企业安全">企业安全</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/12/%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/" >
-            
-                <span>逻辑漏洞之我见</span>
-        </a>
-        <div class="abstract-content">
-            一些逻辑漏洞的总结
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞">漏洞</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/25/Xray%E6%89%AB%E6%8F%8F%E5%99%A8/" >
-            
-                <span>Xray扫描器</span>
-        </a>
-        <div class="abstract-content">
-            Xray扫描器的学习记录
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/25</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "learn">learn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/21/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" >
-            
-                <span>文件上传漏洞总结</span>
-        </a>
-        <div class="abstract-content">
-            测试的过程中思路要清晰
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/21</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞">漏洞</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/">&amp;#60; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/3/">NEXT &amp;#62;</a>
-    </nav>
-    
-</main>
-            <!-- profile -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="profile">
-    <img class="profile-avatar" src= /avatar/ywc.jpg >
-    <div class="profile-name">V1ZkRA</div>
-    
-    <div class="profile-signature">
-        Security learning...
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2021/02/24/%E7%94%B2%E6%96%B9%E5%AE%89%E5%85%A8/" title= 甲方安全建设 >
+                    <div class="nextTitle">甲方安全建设</div>
+                </a>
             
-                <a href="mailto:V1ZkRA@126.com" class="iconfont-archer email" title=email ></a>
+        </li>
+        <li class="previous">
             
-        
-    
-        
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/12/31/%E5%BE%AE%E7%9B%9F2020%E4%BA%8B%E4%BB%B6/" title= 2020年安全事件以及后续整改的反思 >
+                    <div class="prevTitle">2020年安全事件以及后续整改的反思</div>
+                </a>
             
-                <a href="//github.com/YinWC" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/example_qr.png" />
-                </span>
-            
-        
     
-        
+    <!--PC和WAP自适应版-->
+
+    <!--PC版-->
+
+
     
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
     
 
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href= //driverxdw.github.io/ target="_black">Xdw</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //chensem.github.io/ target="_black">sunny</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.51xkx.cn/ target="_black">温酒送诗人</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.cnblogs.com/bmjoker/ target="_black">bmjoker</a>
-                    </span>
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
             
         </div>
         <footer class="footer footer-unloaded">
@@ -819,6 +596,24 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL盲注"><span class="toc-number">1.</span> <span class="toc-text">SQL盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#布尔盲注"><span class="toc-number">1.1.</span> <span class="toc-text">布尔盲注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时间盲注"><span class="toc-number">1.2.</span> <span class="toc-text">时间盲注</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL预编译"><span class="toc-number">2.</span> <span class="toc-text">SQL预编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Mybatis预编译"><span class="toc-number">2.1.</span> <span class="toc-text">Mybatis预编译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -3485,6 +3280,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
