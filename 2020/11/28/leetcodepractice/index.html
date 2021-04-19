@@ -398,13 +398,14 @@ height:50vh;
     <article class="article-entry">
         <!-- TOC -->
 
-<pre><code>- [一组数数组的动态和](#一组数数组的动态和)
-- [寻找数组的中心索引](#寻找数组的中心索引)
-- [两数之和](#两数之和)
-- [整数反转](#整数反转)
-- [回文数](#回文数)
-- [罗马数字转整数](#罗马数字转整数)
-- [最长公共前缀](#最长公共前缀)</code></pre><ul>
+<ul>
+<li><a href="#一组数数组的动态和">一组数数组的动态和</a></li>
+<li><a href="#寻找数组的中心索引">寻找数组的中心索引</a></li>
+<li><a href="#两数之和">两数之和</a></li>
+<li><a href="#整数反转">整数反转</a></li>
+<li><a href="#回文数">回文数</a></li>
+<li><a href="#罗马数字转整数">罗马数字转整数</a></li>
+<li><a href="#最长公共前缀">最长公共前缀</a></li>
 <li><a href="#reference">Reference</a></li>
 </ul>
 <!-- /TOC -->
@@ -455,7 +456,7 @@ height:50vh;
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">longestCommonPrefix</span><span class="params">(self, strs)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        :type strs: List[str]</span></span><br><span class="line"><span class="string">        :rtype: str</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> strs:                                        <span class="comment">#边界条件判断，若字符串为空，则返回空</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">        short_word=min(strs,key=len)                        <span class="comment">#筛选出长度最短的单词然后进行遍历</span></span><br><span class="line">        <span class="keyword">for</span> i,e <span class="keyword">in</span> enumerate(short_word):                   <span class="comment">#遍历长度最短的单词</span></span><br><span class="line">            <span class="keyword">for</span> others <span class="keyword">in</span> strs:                             <span class="comment">#遍历列表中的其他字符串</span></span><br><span class="line">                <span class="keyword">if</span> others[i]!=e:                            <span class="comment">#一旦出现非公共字符，返回公共字符</span></span><br><span class="line">                    <span class="keyword">return</span> short_word[:i]</span><br><span class="line">        <span class="keyword">return</span> short_word                                   <span class="comment">#遍历结束后依然没匹配到非公共字符，则返回整个字符</span></span><br></pre></td></tr></table></figure>
 
 <p><a href="https://www.runoob.com/python/python-func-enumerate.html" target="_blank" rel="noopener">enumerate</a><br><code>enumerate()</code> 函数用于将一个可遍历的数据对象(如列表、元组或字符串)组合为一个索引序列，同时列出数据和数据下标，一般用在 for 循环当中。</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3>
     </article>
     <!-- license  -->
     
@@ -592,7 +593,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一组数数组的动态和"><span class="toc-number">1.</span> <span class="toc-text">一组数数组的动态和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#寻找数组的中心索引"><span class="toc-number">2.</span> <span class="toc-text">寻找数组的中心索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两数之和"><span class="toc-number">3.</span> <span class="toc-text">两数之和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整数反转"><span class="toc-number">4.</span> <span class="toc-text">整数反转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回文数"><span class="toc-number">5.</span> <span class="toc-text">回文数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#罗马数字转整数"><span class="toc-number">6.</span> <span class="toc-text">罗马数字转整数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长公共前缀"><span class="toc-number">7.</span> <span class="toc-text">最长公共前缀</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number"></span> <span class="toc-text">Reference</span></a>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#一组数数组的动态和"><span class="toc-number">1.</span> <span class="toc-text">一组数数组的动态和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#寻找数组的中心索引"><span class="toc-number">2.</span> <span class="toc-text">寻找数组的中心索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两数之和"><span class="toc-number">3.</span> <span class="toc-text">两数之和</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#整数反转"><span class="toc-number">4.</span> <span class="toc-text">整数反转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#回文数"><span class="toc-number">5.</span> <span class="toc-text">回文数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#罗马数字转整数"><span class="toc-number">6.</span> <span class="toc-text">罗马数字转整数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最长公共前缀"><span class="toc-number">7.</span> <span class="toc-text">最长公共前缀</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reference"><span class="toc-number">8.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
