@@ -402,18 +402,15 @@ height:50vh;
 <ul>
 <li>页面虽然不能返回查询的结果，但是对于输入 布尔值 0 和 1 的反应是不同的，那我们就可以利用这个输入布尔值的注入点来注入我们的条件语句，从而能根据页面的返回情况推测出我们输入的语句是否正确(<strong>输入语句的真假直接影响整条查询语句最后查询的结果的真假</strong>)</li>
 </ul>
-<p>常用函数：<br><code>left</code></p>
+<p><strong>常用函数：</strong><br><code>left</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">left(a,b)从左侧截取a的前b位</span><br></pre></td></tr></table></figure>
-
 <p><code>substr</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">substr(a,b,c)从b位置开始，截取字符串a的c长度。结合ascii()使用</span><br></pre></td></tr></table></figure>
-
 <p><code>MID/ORD</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mid(a,b,c)同substr</span><br><span class="line">OPD()同ascii()</span><br></pre></td></tr></table></figure>
-
 <p><code>regexp</code><br>REGEXP注入，即regexp正则表达式注入。REGEXP注入，又叫盲注值正则表达式攻击。<br>原理是直接查询自己需要的数据，然后通过正则表达式进行匹配。</p>
 <ul>
-<li>基本注入<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> (<span class="keyword">select</span>语句) regexp <span class="string">'正则'</span></span><br><span class="line"><span class="comment"># eg：</span></span><br><span class="line"><span class="comment"># 正常查询：</span></span><br><span class="line"><span class="keyword">select</span> username <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>;</span><br><span class="line"><span class="comment"># 正则注入，若匹配则返回1，不匹配返回0</span></span><br><span class="line"><span class="keyword">select</span> (<span class="keyword">select</span> username <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>) regexp <span class="string">'^a'</span>;</span><br><span class="line">^表示pattern(模式串)的开头。即若匹配到username字段下id=1的数据开头为a，则返回1；否则返回0</span><br></pre></td></tr></table></figure>
+<li>regexp基本注入方法<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> (<span class="keyword">select</span>语句) regexp <span class="string">'正则'</span></span><br><span class="line"><span class="comment"># eg：</span></span><br><span class="line"><span class="comment"># 正常查询：</span></span><br><span class="line"><span class="keyword">select</span> username <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>;</span><br><span class="line"><span class="comment"># 正则注入，若匹配则返回1，不匹配返回0</span></span><br><span class="line"><span class="keyword">select</span> (<span class="keyword">select</span> username <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> <span class="keyword">id</span>=<span class="number">1</span>) regexp <span class="string">'^a'</span>;</span><br><span class="line">^表示pattern(模式串)的开头。即若匹配到username字段下id=1的数据开头为a，则返回1；否则返回0</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
@@ -454,8 +451,9 @@ height:50vh;
 <p>如果已经开了一个session，对关键字进行了get_lock,那么再开另一个session再次对关键进行get_lock，就会延时我们指定的时间。</p>
 <p>此盲注手法有一些限制，就是必须要同时开两个SESSION进行注入</p>
 <ul>
-<li>4、RLIKE注入<br>正则DOS，和benchmark相似，利用SQL多次计算正则消耗计算资源产生延时效果</li>
+<li>4、RLIKE注入</li>
 </ul>
+<p>正则DOS，和benchmark相似，利用SQL多次计算正则消耗计算资源产生延时效果</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from flag where flag='1' and if(mid(user(),1,1)='s',concat(rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a'),rpad(1,999999,'a')) RLIKE '(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+b',1);</span><br><span class="line">+<span class="comment">------+</span></span><br><span class="line">| flag |</span><br><span class="line">+<span class="comment">------+</span></span><br><span class="line">| 1    |</span><br><span class="line">+<span class="comment">------+</span></span><br><span class="line">1 row in <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="keyword">select</span> * <span class="keyword">from</span> flag <span class="keyword">where</span> flag=<span class="string">'1'</span> <span class="keyword">and</span> <span class="keyword">if</span>(<span class="keyword">mid</span>(<span class="keyword">user</span>(),<span class="number">1</span>,<span class="number">1</span>)=<span class="string">'r'</span>,<span class="keyword">concat</span>(rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>),rpad(<span class="number">1</span>,<span class="number">999999</span>,<span class="string">'a'</span>)) <span class="keyword">RLIKE</span> <span class="string">'(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+(a.*)+cd'</span>,<span class="number">1</span>);</span><br><span class="line">Empty <span class="keyword">set</span> (<span class="number">3.83</span> sec)</span><br></pre></td></tr></table></figure>
 
 <h2 id="SQL预编译"><a href="#SQL预编译" class="headerlink" title="SQL预编译"></a>SQL预编译</h2><p>sql 预编译指的是数据库驱动在发送 sql 语句和参数给 DBMS 之前对 sql 语句进行编译，这样 DBMS 执行 sql 时，就不需要重新编译。</p>
@@ -499,8 +497,8 @@ height:50vh;
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2020/12/31/%E5%BE%AE%E7%9B%9F2020%E4%BA%8B%E4%BB%B6/" title= 2020年安全事件以及后续整改的反思 >
-                    <div class="prevTitle">2020年安全事件以及后续整改的反思</div>
+                <a href= "/2021/01/12/Python-Celery/" title= 基于Celery的后台任务 >
+                    <div class="prevTitle">基于Celery的后台任务</div>
                 </a>
             
         </li>
@@ -2532,9 +2530,50 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 119
+        Total : 120
         </div>
         <!-- search  -->
         
@@ -2556,6 +2595,11 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">02/02</span><a class="archive-post-title" href= "/2021/02/02/sql%E9%A2%84%E7%BC%96%E8%AF%91/" >深入理解SQL盲注与SQL预编译</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/12</span><a class="archive-post-title" href= "/2021/01/12/Python-Celery/" >基于Celery的后台任务</a>
         </li>
     
     
