@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">6k</span> / Reading time: <span class="post-count">21 min</span></span>
+                        <span>Word count: <span class="post-count">6.6k</span> / Reading time: <span class="post-count">23 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -422,6 +422,7 @@ height:50vh;
 </ul>
 </li>
 <li><a href="#文件上传漏洞">文件上传漏洞</a></li>
+<li><a href="#cors跨域资源共享漏洞">CORS跨域资源共享漏洞</a></li>
 <li><a href="#弱口令漏洞">弱口令漏洞</a></li>
 <li><a href="#url跳转漏洞">URL跳转漏洞</a></li>
 <li><a href="#短信轰炸">短信轰炸</a></li>
@@ -641,11 +642,25 @@ height:50vh;
 <li>上传文件重命名：使用随机数改写文件名跟路径</li>
 <li>上传文件路径隐藏.</li>
 <li>单独设置文件服务器的域名</li>
-<li>文件上传的目录设置为不可执行，文件上传后会放到独立的存储上，做静态文件处理。<h2 id="弱口令漏洞"><a href="#弱口令漏洞" class="headerlink" title="弱口令漏洞"></a>弱口令漏洞</h2></li>
+<li>文件上传的目录设置为不可执行，文件上传后会放到独立的存储上，做静态文件处理。</li>
 </ul>
 </li>
+</ul>
+<h2 id="CORS跨域资源共享漏洞"><a href="#CORS跨域资源共享漏洞" class="headerlink" title="CORS跨域资源共享漏洞"></a>CORS跨域资源共享漏洞</h2><ul>
 <li><p>漏洞原理</p>
+<ul>
+<li>CORS全称为Cross-Origin Resource Sharing即跨域资源共享，用于绕过SOP（同源策略）来实现跨域资源访问的一种技术。CORS漏洞则是利用CORS技术窃取用户敏感数据，CORS漏洞的成因是<code>服务端配置的规则不当所导致的</code>，服务器端没有配置<code>Access-Control-Allow-Origin</code>等字段</li>
+</ul>
 </li>
+<li><p>漏洞危害</p>
+</li>
+<li><p>测试方法<br>更改响应头</p>
+</li>
+<li><p>修复建议<br>1、仔细评估是否开启CORS，如果不必要就不要开启CORS。<br>2、如果是绝对必要的话，要定义“源”的白名单。尽量不使用正则表达式配置，不要配置“Access-Contol-Allow-Origin”为通配符“*”，同时严格校验来自请求的Origin值。<br>3、仅仅允许安全的协议，有必要验证协议以确保不允许来自不安全通道（HTTP）的交互，否则中间人(MitM)将绕过应用是所使用的HTTPS。<br>4、要尽可能的返回”Vary: Origin”这个头部，以避免攻击者利用浏览器缓存。<br>5、如果可能的话避免使用“Credentials”头，由于“Access-Control-Allow-Credentials”标头设置为“true”时允许跨域请求中带有凭证数据，因此只有在严格必要时才应配置它。此头部也增加了CSRF攻击的风险;因此，有必要对其进行保护。<br>6、限制使用的方法，通过“Access-Control-Allow-Methods”头部，还可以配置允许跨域请求的方法，这样可以最大限度地减少所涉及的方法。<br>7、限制缓存的时间，通过“Access-Control-Allow-Methods”和“Access-Control-Allow-Headers”头部，限制浏览器缓存信息的时间。可以通过使用“Access-Control-Max-Age”标题来完成，该头部接收时间数作为输入，该数字是浏览器保存缓存的时间。配置相对较低的值（例如大约30分钟），确保浏览器在短时间内可以更新策略（比如允许的源）。<br>8、仅配置所需要的头，仅在接收到跨域请求的时候才配置有关于跨域的头部，并且确保跨域请求是合法的（只允许来自合法的源）。</p>
+</li>
+</ul>
+<h2 id="弱口令漏洞"><a href="#弱口令漏洞" class="headerlink" title="弱口令漏洞"></a>弱口令漏洞</h2><ul>
+<li>漏洞原理</li>
 </ul>
 <p>这个应该是与个人习惯相关与意识相关，为了避免忘记密码，使用一个非常容易记住的密码，或者是直接采用系统的默认密码等。相关的安全意识不够，总认为不会有人会猜到我这个弱口令的，相关的安全意识不够，总认为不会有人会猜到我这个弱口令的。</p>
 <ul>
@@ -654,9 +669,10 @@ height:50vh;
 <li><p>测试方法<br>burp抓包或使用批量的脚本，来爆破弱密码</p>
 </li>
 <li><p>修复建议<br>规定密码强度，设置密码通常遵循以下原则：<br>（1）不使用空口令或系统缺省的口令，这些口令众所周之，为典型的弱口令。<br>（2）口令长度不小于8 个字符。<br>（3）口令不应该为连续的某个字符（例如：AAAAAAAA）或重复某些字符的组合（例如：tzf.tzf.）。<br>（4）口令应该为以下四类字符的组合，大写字母(A-Z)、小写字母(a-z)、数字(0-9)和特殊字符。每类字符至少包含一个。如果某类字符只包含一个，那么该字符不应为首字符或尾字符。<br>（5）口令中不应包含本人、父母、子女和配偶的姓名和出生日期、纪念日期、登录名、E-mail 地址等等与本人有关的信息，以及字典中的单词。<br>（6）口令不应该为用数字或符号代替某些字母的单词。<br>（7）口令应该易记且可以快速输入，防止他人从你身后很容易看到你的输入。<br>（8）至少90 天内更换一次口令，防止未被发现的入侵者继续使用该口令</p>
-<h2 id="URL跳转漏洞"><a href="#URL跳转漏洞" class="headerlink" title="URL跳转漏洞"></a>URL跳转漏洞</h2></li>
-<li><p>漏洞原理</p>
 </li>
+</ul>
+<h2 id="URL跳转漏洞"><a href="#URL跳转漏洞" class="headerlink" title="URL跳转漏洞"></a>URL跳转漏洞</h2><ul>
+<li>漏洞原理</li>
 </ul>
 <p>服务端未对传入的跳转url变量进行检查和控制，可能导致可恶意构造任意一个恶意地址，诱导用户跳转到恶意网站。</p>
 <ul>
@@ -838,7 +854,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#业务安全测试"><span class="toc-number">1.</span> <span class="toc-text">业务安全测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞功能点"><span class="toc-number">2.</span> <span class="toc-text">漏洞功能点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#登录认证处"><span class="toc-number">2.1.</span> <span class="toc-text">登录认证处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索处"><span class="toc-number">2.2.</span> <span class="toc-text">搜索处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#留言处"><span class="toc-number">2.3.</span> <span class="toc-text">留言处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除处"><span class="toc-number">2.4.</span> <span class="toc-text">删除处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码处"><span class="toc-number">2.5.</span> <span class="toc-text">修改密码处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改信息处"><span class="toc-number">2.6.</span> <span class="toc-text">修改信息处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#订单处"><span class="toc-number">2.7.</span> <span class="toc-text">订单处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传处"><span class="toc-number">2.8.</span> <span class="toc-text">文件上传处</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞类型"><span class="toc-number">3.</span> <span class="toc-text">漏洞类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL注入"><span class="toc-number">3.1.</span> <span class="toc-text">SQL注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS"><span class="toc-number">3.2.</span> <span class="toc-text">XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSRF"><span class="toc-number">3.3.</span> <span class="toc-text">CSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSRF"><span class="toc-number">3.4.</span> <span class="toc-text">SSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#越权漏洞"><span class="toc-number">3.5.</span> <span class="toc-text">越权漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#水平越权"><span class="toc-number">3.5.1.</span> <span class="toc-text">水平越权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垂直越权"><span class="toc-number">3.5.2.</span> <span class="toc-text">垂直越权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传漏洞"><span class="toc-number">3.6.</span> <span class="toc-text">文件上传漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弱口令漏洞"><span class="toc-number">3.7.</span> <span class="toc-text">弱口令漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL跳转漏洞"><span class="toc-number">3.8.</span> <span class="toc-text">URL跳转漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#短信轰炸"><span class="toc-number">3.9.</span> <span class="toc-text">短信轰炸</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#学习文章"><span class="toc-number">4.</span> <span class="toc-text">学习文章</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题记录"><span class="toc-number">5.</span> <span class="toc-text">问题记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#token未及时失效问题记录"><span class="toc-number">5.1.</span> <span class="toc-text">token未及时失效问题记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS漏洞的修复"><span class="toc-number">5.2.</span> <span class="toc-text">XSS漏洞的修复</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Others"><span class="toc-number">6.</span> <span class="toc-text">Others</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#业务安全测试"><span class="toc-number">1.</span> <span class="toc-text">业务安全测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞功能点"><span class="toc-number">2.</span> <span class="toc-text">漏洞功能点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#登录认证处"><span class="toc-number">2.1.</span> <span class="toc-text">登录认证处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索处"><span class="toc-number">2.2.</span> <span class="toc-text">搜索处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#留言处"><span class="toc-number">2.3.</span> <span class="toc-text">留言处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除处"><span class="toc-number">2.4.</span> <span class="toc-text">删除处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码处"><span class="toc-number">2.5.</span> <span class="toc-text">修改密码处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改信息处"><span class="toc-number">2.6.</span> <span class="toc-text">修改信息处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#订单处"><span class="toc-number">2.7.</span> <span class="toc-text">订单处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传处"><span class="toc-number">2.8.</span> <span class="toc-text">文件上传处</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞类型"><span class="toc-number">3.</span> <span class="toc-text">漏洞类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL注入"><span class="toc-number">3.1.</span> <span class="toc-text">SQL注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS"><span class="toc-number">3.2.</span> <span class="toc-text">XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSRF"><span class="toc-number">3.3.</span> <span class="toc-text">CSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSRF"><span class="toc-number">3.4.</span> <span class="toc-text">SSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#越权漏洞"><span class="toc-number">3.5.</span> <span class="toc-text">越权漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#水平越权"><span class="toc-number">3.5.1.</span> <span class="toc-text">水平越权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垂直越权"><span class="toc-number">3.5.2.</span> <span class="toc-text">垂直越权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传漏洞"><span class="toc-number">3.6.</span> <span class="toc-text">文件上传漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CORS跨域资源共享漏洞"><span class="toc-number">3.7.</span> <span class="toc-text">CORS跨域资源共享漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弱口令漏洞"><span class="toc-number">3.8.</span> <span class="toc-text">弱口令漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL跳转漏洞"><span class="toc-number">3.9.</span> <span class="toc-text">URL跳转漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#短信轰炸"><span class="toc-number">3.10.</span> <span class="toc-text">短信轰炸</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#学习文章"><span class="toc-number">4.</span> <span class="toc-text">学习文章</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题记录"><span class="toc-number">5.</span> <span class="toc-text">问题记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#token未及时失效问题记录"><span class="toc-number">5.1.</span> <span class="toc-text">token未及时失效问题记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS漏洞的修复"><span class="toc-number">5.2.</span> <span class="toc-text">XSS漏洞的修复</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Others"><span class="toc-number">6.</span> <span class="toc-text">Others</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -3429,7 +3445,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2018/05/09/pythonlearn/" >pythonlearn</a>
+            <span class="archive-post-date">05/09</span><a class="archive-post-title" href= "/2018/05/09/pythonlearn/" >Pythonlearn</a>
         </li>
     
     
