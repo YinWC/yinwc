@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">915</span> / Reading time: <span class="post-count">3 min</span></span>
+                        <span>Word count: <span class="post-count">1k</span> / Reading time: <span class="post-count">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -398,7 +398,7 @@ height:50vh;
     <article class="article-entry">
         <h1 id="python知识树"><a href="#python知识树" class="headerlink" title="python知识树"></a>python知识树</h1><p><img src="/2018/05/09/pythonlearn/python.png" alt="pythonlearn"></p>
 <h1 id="知识记录"><a href="#知识记录" class="headerlink" title="知识记录"></a>知识记录</h1><h2 id="PythonGIL、原子操作、线程安全"><a href="#PythonGIL、原子操作、线程安全" class="headerlink" title="PythonGIL、原子操作、线程安全"></a>PythonGIL、原子操作、线程安全</h2><p>参考文章：<a href="https://www.cnblogs.com/ArsenalfanInECNU/p/9968621.html" target="_blank" rel="noopener">https://www.cnblogs.com/ArsenalfanInECNU/p/9968621.html</a></p>
-<h3 id="GIL"><a href="#GIL" class="headerlink" title="GIL"></a>GIL</h3><p>GIL： Global Interpreter Lock 全局解释器锁，Python的执行依赖于解释器<br>为了解决多线程之间数据完整性和状态同步的问题，设计为<strong>在任意时刻只有一个线程在解释器中运行</strong>。<br>这样做是<strong>为了Python解释器中原子操作的线程安全</strong><br>当执行多线程程序时，由GIL来控制同一时刻只有一个线程能够运行</p>
+<h3 id="GIL"><a href="#GIL" class="headerlink" title="GIL"></a>GIL</h3><p>GIL: 全局解释器锁（英语：Global Interpreter Lock，缩写GIL），是计算机程序设计语言解释器用于同步线程的一种机制，它使得<strong>任何时刻仅有一个线程在执行</strong>。即便在多核心处理器上，使用 GIL 的解释器也只允许同一时间执行一个线程。这样做是<strong>为了Python解释器中原子操作的线程安全</strong><br>当执行多线程程序时，由GIL来控制同一时刻只有一个线程能够运行。</p>
 <p>GIL的优点：GIL可以保证我们在多线程编程时，无需考虑多线程之间数据完整性和状态同步的问题。</p>
 <p>GIL的缺点：我们的多线程程序执行起来是“并发”，而不是“并行”。因此执行效率会很低，会不如单线程的执行效率。</p>
 <p>规避GIL带来的影响：</p>
@@ -417,7 +417,7 @@ height:50vh;
 <h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><p>进程是系统资源分配的最小单位，线程是程序执行的最小单位</p>
 <p>线程安全一般都涉及到synchronized，就是多线程环境中，共享数据同一时间只能有一个线程来操作，不然中间过程可能会产生不可预制的结果。</p>
 <h2 id="线程、进程、协程"><a href="#线程、进程、协程" class="headerlink" title="线程、进程、协程"></a>线程、进程、协程</h2><p>参考文章：<a href="https://www.cnblogs.com/Survivalist/p/11527949.html" target="_blank" rel="noopener">https://www.cnblogs.com/Survivalist/p/11527949.html</a></p>
-<p>线程是执行程序的最小单位<br>进程是系统资源分配的最小单位<br>协程是微线程</p>
+<p>线程是执行程序的最小单位<br>进程是系统资源分配的最小单位<br>协程，又称微线程，纤程，英文名Coroutine。协程的作用，是在执行函数A时，可以随时中断，去执行函数B，然后中断继续执行函数A（可以自由切换）。但这一过程并不是函数调用（没有调用语句），这一整个过程看似像多线程，然而协程只有一个线程执行.</p>
 <ul>
 <li>协程极高的执行效率：因为子程序切换不是线程切换，而是由程序自身控制，因此，没有线程切换的开销，和多线程比，线程数量越多，协程的性能优势就越明显。</li>
 <li>不需要多线程的锁机制：因为只有一个线程，也不存在同时写变量冲突，在协程中控制共享资源不加锁，只需要判断状态就好了，所以执行效率比多线程高很多</li>

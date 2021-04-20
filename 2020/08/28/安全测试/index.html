@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">6.6k</span> / Reading time: <span class="post-count">23 min</span></span>
+                        <span>Word count: <span class="post-count">7.1k</span> / Reading time: <span class="post-count">25 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -646,15 +646,27 @@ height:50vh;
 </ul>
 </li>
 </ul>
-<h2 id="CORS跨域资源共享漏洞"><a href="#CORS跨域资源共享漏洞" class="headerlink" title="CORS跨域资源共享漏洞"></a>CORS跨域资源共享漏洞</h2><ul>
-<li><p>漏洞原理</p>
+<h2 id="CORS跨域资源共享漏洞"><a href="#CORS跨域资源共享漏洞" class="headerlink" title="CORS跨域资源共享漏洞"></a>CORS跨域资源共享漏洞</h2><p><a href="https://xz.aliyun.com/t/2745" target="_blank" rel="noopener">cors安全完全指南</a></p>
 <ul>
-<li>CORS全称为Cross-Origin Resource Sharing即跨域资源共享，用于绕过SOP（同源策略）来实现跨域资源访问的一种技术。CORS漏洞则是利用CORS技术窃取用户敏感数据，CORS漏洞的成因是<code>服务端配置的规则不当所导致的</code>，服务器端没有配置<code>Access-Control-Allow-Origin</code>等字段</li>
-</ul>
+<li><p>漏洞原理<br>CORS全称为Cross-Origin Resource Sharing即跨域资源共享，用于绕过SOP（同源策略）来实现跨域资源访问的一种技术。CORS漏洞则是利用CORS技术窃取用户敏感数据，CORS漏洞的成因是<code>服务端配置的规则不当所导致的</code>，服务器端没有配置<code>Access-Control-Allow-Origin</code>等字段</p>
 </li>
 <li><p>漏洞危害</p>
+<ul>
+<li>获取用户数据</li>
+<li>客户端缓存中毒：这种配置允许攻击者利用其他的漏洞，更改没有验证的字段，看是否正常回显。比如，一个应用返回数据报文头部中包含“X-User”这个字段，这个字段的值没有经过验证就直接输出到返回页面上，此时就可以结合XSS漏洞来利用。</li>
+<li>服务端缓存中毒：利用CORS的错误配置注入HTTP头部，这可能会被服务器端缓存下来，比如制造存储型xss</li>
+</ul>
 </li>
-<li><p>测试方法<br>更改响应头</p>
+<li><p>测试方法<br>更改响应头<code>Access-Control-Allow-Origin</code>或<code>Origin</code>字段等，看是否能正常请求成功，若更改之后，还可以正常请求，则代表存在漏洞。</p>
+<ul>
+<li><strong>判断是否配置CORS</strong>：抓包看包中是否包含“Access-Control-*”这样的字段,如果没有，就进行修改“Origin”这个字段，如<code>Origin: https://target.domain</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;test HTTP&#x2F;1.1</span><br><span class="line">Host: target.domain</span><br><span class="line">Origin: https:&#x2F;&#x2F;target.domain</span><br><span class="line">Connection: close</span><br></pre></td></tr></table></figure>
+然后看服务器的返回报文中是否有<code>Access-Control-Allow-</code>字段<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">...</span><br><span class="line">Access-control-allow-credentials: true</span><br><span class="line">Access-control-allow-origin: https:&#x2F;&#x2F;target.domain</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+上面的返回报文表明，这个应用中的接口已经开启了CORS这个功能。现在有必要对配置进行测试，以确定是否存在安全缺陷。</li>
+<li><strong>漏洞验证</strong>：fuzzing请求报文头部中“Origin”这个字段然后观察服务器的返回报文，目的是看哪些域是被允许的。因此，发送发送头部字段“Origin”包含不同值的请求发送给服务器端，看看攻击者所控制的域名是否被允许。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GET &#x2F;test HTTP&#x2F;1.1</span><br><span class="line">Host: target.domain</span><br><span class="line">Origin: https:&#x2F;&#x2F;target.domain</span><br><span class="line">Connection: close</span><br></pre></td></tr></table></figure>
+然后看服务器的返回报文中是否有<code>Access-Control-Allow-</code>字段<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK</span><br><span class="line">...</span><br><span class="line">Access-control-allow-credentials: true</span><br><span class="line">Access-control-allow-origin: https:&#x2F;&#x2F;target.domain</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+在这次测试示例中，服务器返回的报文头部中已经表明完全信任“attacker.domain”这个域，并且可以向这个域中发送用户凭据。</li>
+<li><strong>漏洞利用</strong>：进一步就可以实施攻击，获取用户数据，构造恶意的脚本文件使客户端缓存中毒、服务端缓存中毒等</li>
+</ul>
 </li>
 <li><p>修复建议<br>1、仔细评估是否开启CORS，如果不必要就不要开启CORS。<br>2、如果是绝对必要的话，要定义“源”的白名单。尽量不使用正则表达式配置，不要配置“Access-Contol-Allow-Origin”为通配符“*”，同时严格校验来自请求的Origin值。<br>3、仅仅允许安全的协议，有必要验证协议以确保不允许来自不安全通道（HTTP）的交互，否则中间人(MitM)将绕过应用是所使用的HTTPS。<br>4、要尽可能的返回”Vary: Origin”这个头部，以避免攻击者利用浏览器缓存。<br>5、如果可能的话避免使用“Credentials”头，由于“Access-Control-Allow-Credentials”标头设置为“true”时允许跨域请求中带有凭证数据，因此只有在严格必要时才应配置它。此头部也增加了CSRF攻击的风险;因此，有必要对其进行保护。<br>6、限制使用的方法，通过“Access-Control-Allow-Methods”头部，还可以配置允许跨域请求的方法，这样可以最大限度地减少所涉及的方法。<br>7、限制缓存的时间，通过“Access-Control-Allow-Methods”和“Access-Control-Allow-Headers”头部，限制浏览器缓存信息的时间。可以通过使用“Access-Control-Max-Age”标题来完成，该头部接收时间数作为输入，该数字是浏览器保存缓存的时间。配置相对较低的值（例如大约30分钟），确保浏览器在短时间内可以更新策略（比如允许的源）。<br>8、仅配置所需要的头，仅在接收到跨域请求的时候才配置有关于跨域的头部，并且确保跨域请求是合法的（只允许来自合法的源）。</p>
 </li>
