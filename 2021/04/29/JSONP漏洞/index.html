@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1.6k</span> / Reading time: <span class="post-count">6 min</span></span>
+                        <span>Word count: <span class="post-count">1.8k</span> / Reading time: <span class="post-count">6 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -400,22 +400,24 @@ height:50vh;
 
 <ul>
 <li><a href="#漏洞原理">漏洞原理</a></li>
-<li><a href="#漏洞危害">漏洞危害</a></li>
-<li><a href="#漏洞利用">漏洞利用</a></li>
+<li><a href="#漏洞危害及利用方式">漏洞危害及利用方式</a><ul>
+<li><a href="#漏洞利用方式">漏洞利用方式</a></li>
+</ul>
+</li>
+<li><a href="#漏洞测试">漏洞测试</a></li>
 <li><a href="#修复方案">修复方案</a></li>
 <li><a href="#reference">Reference</a></li>
 </ul>
 <!-- /TOC -->
 
-<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>JSONP是JSON with padding（填充式JSON或参数式JSON）的简写。<br>JSONP就是为了解决跨域资源请求而产生的一种解决方案，动态创建<code>&lt;script&gt;</code>标签，然后利用<code>&lt;script&gt;</code>的<code>src</code>不受同源策略约束来跨域获取数据。</p>
+<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>JSONP是JSON with padding（填充式JSON或参数式JSON）的简写。<br>JSONP就是为了解决跨域资源请求而产生的一种解决方案，动态创建<code>&lt;script&gt;</code>标签，然后利用<code>&lt;script&gt;</code>的<code>src</code>不受同源策略约束来跨域获取数据。<br>JSONP由两部分组成：<code>回调函数</code>和<code>数据</code><br>回调函数是当响应到来时应该在页面中调用的函数。回调函数的名字一般是在请求中指定的。而数据就是传入回调函数中的 JSON 数据。</p>
 <p>对同源策略免疫的标签：<code>&lt;img&gt;</code> 的<code>src</code>、<code>&lt;link&gt;</code> 的 <code>href</code>、<code>&lt;script&gt;</code>的 <code>src</code><br>JSONP就是利用<code>script</code>标签的<code>src</code>属性实现跨区域请求的<br>JSONP的过程：幼稚园吃午饭，小明吧贴有自己名字的碗（回调函数）给了幼稚园阿姨（服务器）,阿姨给小明盛好饭（json参数）以后又把碗还给了小明。<br>动态创建<code>&lt;script&gt;</code>标签，设置其src，回调函数在src中设置：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> script = <span class="built_in">document</span>.createElement(<span class="string">"script"</span>);</span><br><span class="line">script.src = <span class="string">"https://api.douban.com/v2/book/search?q=javascript&amp;count=1&amp;callback=handleResponse"</span>;</span><br><span class="line"><span class="built_in">document</span>.body.insertBefore(script, <span class="built_in">document</span>.body.firstChild);</span><br></pre></td></tr></table></figure>
 <p>在页面中，返回的JSON作为response参数传入回调函数中，通过回调函数来来操作数据。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleResponse</span>(<span class="params">response</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 对response数据进行操作代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-<h2 id="漏洞危害"><a href="#漏洞危害" class="headerlink" title="漏洞危害"></a>漏洞危害</h2><p>获取用户的敏感信息<br><code>JSONP是一种敏感信息泄露的漏洞</code>，经过攻击者巧妙而持久地利用，会对企业和用户造成巨大的危害。攻击者通过巧妙设计一个网站，<code>网站中包含其他网站的JSONP漏洞利用代码</code>，将链接通过邮件等形式推送给受害人，<code>如果受害者点击了链接，则攻击者便可以获取受害者的个人的信息</code>，如邮箱、姓名、手机等信息，这些信息可以被违法犯罪分子用作“精准诈骗”。对方掌握的个人信息越多，越容易取得受害人的信任，诈骗活动越容易成功，给受害人带来的财产损失以及社会危害也就越大。</p>
-<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><p><strong>（一）利用过程如下：</strong><br>1、用户在网站B 注册并登录，网站B 包含了用户的id，name，email等信息；<br>2、用户通过浏览器向网站A发出URL请求；<br>3、网站A向用户返回响应页面，响应页面中注册了JavaScript的回调函数和向网站B请求的script标签，示例代码如下：</p>
+<h2 id="漏洞危害及利用方式"><a href="#漏洞危害及利用方式" class="headerlink" title="漏洞危害及利用方式"></a>漏洞危害及利用方式</h2><p>获取用户的敏感信息<br><code>JSONP是一种敏感信息泄露的漏洞</code>，经过攻击者巧妙而持久地利用，会对企业和用户造成巨大的危害。攻击者通过巧妙设计一个网站，<code>网站中包含其他网站的JSONP漏洞利用代码</code>，将链接通过邮件等形式推送给受害人，<code>如果受害者点击了链接，则攻击者便可以获取受害者的个人的信息</code>，如邮箱、姓名、手机等信息，这些信息可以被违法犯罪分子用作“精准诈骗”。对方掌握的个人信息越多，越容易取得受害人的信任，诈骗活动越容易成功，给受害人带来的财产损失以及社会危害也就越大。</p>
+<h3 id="漏洞利用方式"><a href="#漏洞利用方式" class="headerlink" title="漏洞利用方式"></a>漏洞利用方式</h3><p><strong>（一）利用过程</strong><br>1、用户在网站B 注册并登录，网站B 包含了用户的id，name，email等信息；<br>2、用户通过浏览器向网站A发出URL请求；<br>3、网站A向用户返回响应页面，响应页面中注册了JavaScript的回调函数和向网站B请求的script标签，示例代码如下：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=<span class="string">"text/javascript"</span>&gt;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Callback</span>(<span class="params">result</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    alert(result.name);</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;script type="text/</span>javascript<span class="string">" src="</span>http:<span class="comment">//B.com/user?jsonp=Callback"&gt;&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
 <p>3、用户收到响应，解析JS代码，将回调函数作为参数向网站B发出请求；<br>4、网站B接收到请求后，解析请求的URL，以JSON 格式生成请求需要的数据，将封装的包含用户信息的JSON数据作为回调函数的参数返回给浏览器，网站B返回的数据实例如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Callback(&#123;&quot;id&quot;:1,&quot;name&quot;:&quot;test&quot;,&quot;email&quot;:&quot;test@test.com&quot;&#125;)</span><br></pre></td></tr></table></figure>
@@ -429,8 +431,12 @@ height:50vh;
 <p>以下3个HTML标签允许我们使用data URI方案：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iframe (在src属性中) – Internet Explorer下不工作</span><br><span class="line">embed (在src属性中) – Internet Explorer及Microsoft Edge下不工作</span><br><span class="line">object (在data属性中) – Internet Explorer及Microsoft Edge下不工作</span><br></pre></td></tr></table></figure>
 <p>2、从HTTPS向HTTP发起请求<br>如果目标网站可以通过HTTP访问，也可以通过将我们的代码托管在一个HTTPS页面来避免发送HTTP Referer。如果我们从HTTPS页面发起一个HTTP请求，浏览器为了防止信息泄漏是不会发送Referer header。以上我们要将恶意代码托管在一个启用了HTTPS的站点。<br>注意：由于mixed-content安全机制，在浏览器默认设置下是不会工作的。需要受害者手动允许浏览器发出的安全警告。</p>
-<h2 id="修复方案"><a href="#修复方案" class="headerlink" title="修复方案"></a>修复方案</h2><p>1、严格安全的实现 CSRF 方式调用 JSON 文件：限制 Referer 、部署一次性 Token 等。<br>2、严格安装 JSON 格式标准输出 Content-Type 及编码（ Content-Type : application/json; charset=utf-8 ）。<br>3、严格过滤 callback 函数名及 JSON 里数据的输出。<br>4、严格限制对 JSONP 输出 callback 函数名的长度(如防御上面 flash 输出的方法)。<br>5、其他一些比较“猥琐”的方法：如在 Callback 输出之前加入其他字符(如：/**/、回车换行)这样不影响 JSON 文件加载，又能一定程度预防其他文件格式的输出。还比如 Gmail 早起使用 AJAX 的方式获取 JSON ，听过在输出 JSON 之前加入 while(1) ;这样的代码来防止 JS 远程调用。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://www.k0rz3n.com/2019/03/07/JSONP%20%E5%8A%AB%E6%8C%81%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8C%96%E6%8E%98%E6%96%B9%E6%B3%95/" target="_blank" rel="noopener">k0rz3n师傅的博客</a></p>
+<h2 id="漏洞测试"><a href="#漏洞测试" class="headerlink" title="漏洞测试"></a>漏洞测试</h2><p>人工测试：<br>在浏览器中查找一些关键词，如： <code>callback json jsonp email</code><br>常见的关键词如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cb</span><br><span class="line">callback</span><br><span class="line">jsoncb</span><br><span class="line">jsonp</span><br><span class="line">jQuery</span><br><span class="line">jsoncallback</span><br><span class="line">jsonpcallback</span><br><span class="line">jsoncall</span><br><span class="line">jsonpcall</span><br></pre></td></tr></table></figure>
+<p>注：<br>浏览器中，首先把Preserve log选项勾上，防止页面刷新跳转的时候访问记录被重置，也方便进行下一步的筛选。</p>
+<h2 id="修复方案"><a href="#修复方案" class="headerlink" title="修复方案"></a>修复方案</h2><p>防御策略就是检查referer头是否在白名单内。</p>
+<p>1、严格安全的实现 CSRF 方式调用 JSON 文件：限制 Referer 、部署一次性 Token 等。<br>2、严格安装 JSON 格式标准输出 Content-Type 及编码（ Content-Type : application/json; charset=utf-8 ）。<br>3、严格过滤 callback 函数名及 JSON 里数据的输出。<br>4、严格限制对 JSONP 输出 callback 函数名的长度(如防御上面 flash 输出的方法)。<br>5、其他一些比较“猥琐”的方法：如在 Callback 输出之前加入其他字符(如：/**/、回车换行)这样不影响 JSON 文件加载，又能一定程度预防其他文件格式的输出。还比如 Gmail 早起使用 AJAX 的方式获取 JSON ，听过在输出 JSON 之前加入 while(1) ;这样的代码来防止 JS 远程调用。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://www.k0rz3n.com/2019/03/07/JSONP%20%E5%8A%AB%E6%8C%81%E5%8E%9F%E7%90%86%E4%B8%8E%E6%8C%96%E6%8E%98%E6%96%B9%E6%B3%95/" target="_blank" rel="noopener">k0rz3n师傅的博客</a><br><a href="https://zhuanlan.zhihu.com/p/149187997" target="_blank" rel="noopener">Jsonp漏洞简析及自动化漏洞挖掘脚本编写</a></p>
 
     </article>
     <!-- license  -->
@@ -563,7 +569,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞原理"><span class="toc-number">1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞危害"><span class="toc-number">2.</span> <span class="toc-text">漏洞危害</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞利用"><span class="toc-number">3.</span> <span class="toc-text">漏洞利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修复方案"><span class="toc-number">4.</span> <span class="toc-text">修复方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞原理"><span class="toc-number">1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞危害及利用方式"><span class="toc-number">2.</span> <span class="toc-text">漏洞危害及利用方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#漏洞利用方式"><span class="toc-number">2.1.</span> <span class="toc-text">漏洞利用方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞测试"><span class="toc-number">3.</span> <span class="toc-text">漏洞测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修复方案"><span class="toc-number">4.</span> <span class="toc-text">修复方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
