@@ -412,10 +412,10 @@ height:50vh;
 </ul>
 </li>
 <li><a href="#漏洞类型">漏洞类型</a><ul>
-<li><a href="#java相关漏洞">JAVA相关漏洞</a><ul>
-<li><a href="#shiro">Shiro</a><ul>
-<li><a href="#shiro-rememberme反序列化漏洞shiro-550">Shiro rememberMe反序列化漏洞（Shiro-550）</a></li>
-<li><a href="#shiro-padding-oracle-attackshiro-721">Shiro Padding Oracle Attack（Shiro-721）</a></li>
+<li><a href="#java">java</a><ul>
+<li><a href="#shiro">shiro</a><ul>
+<li><a href="#shiro-rememberme反序列化漏洞shiro-550">shiro rememberMe反序列化漏洞（Shiro-550）</a></li>
+<li><a href="#shiro-padding-oracle-attackshiro-721">shiro Padding Oracle Attack（Shiro-721）</a></li>
 </ul>
 </li>
 </ul>
@@ -426,17 +426,17 @@ height:50vh;
 <li><a href="#短信类验证码绕过">短信类验证码绕过</a></li>
 </ul>
 </li>
-<li><a href="#sql注入">SQL注入</a></li>
-<li><a href="#xss">XSS</a></li>
-<li><a href="#csrf">CSRF</a></li>
-<li><a href="#ssrf">SSRF</a></li>
+<li><a href="#sql注入">sql注入</a></li>
+<li><a href="#xss跨站脚本攻击">xss跨站脚本攻击</a></li>
+<li><a href="#csrf跨站请求伪造">csrf跨站请求伪造</a></li>
+<li><a href="#ssrf服务器端请求伪造">ssrf服务器端请求伪造</a></li>
 <li><a href="#越权漏洞">越权漏洞</a><ul>
 <li><a href="#水平越权">水平越权</a></li>
 <li><a href="#垂直越权">垂直越权</a></li>
 </ul>
 </li>
 <li><a href="#文件上传漏洞">文件上传漏洞</a></li>
-<li><a href="#cors跨域资源共享漏洞">CORS跨域资源共享漏洞</a></li>
+<li><a href="#cors跨域资源共享漏洞">cors跨域资源共享漏洞</a></li>
 <li><a href="#弱口令漏洞">弱口令漏洞</a></li>
 <li><a href="#url跳转漏洞">URL跳转漏洞</a></li>
 <li><a href="#短信轰炸">短信轰炸</a></li>
@@ -484,10 +484,11 @@ height:50vh;
 </ul>
 <p>2、CSRF</p>
 <h2 id="文件上传处"><a href="#文件上传处" class="headerlink" title="文件上传处"></a>文件上传处</h2><p>1、文件上传XSS<br>2、普通上传</p>
-<h1 id="漏洞类型"><a href="#漏洞类型" class="headerlink" title="漏洞类型"></a>漏洞类型</h1><h2 id="JAVA相关漏洞"><a href="#JAVA相关漏洞" class="headerlink" title="JAVA相关漏洞"></a>JAVA相关漏洞</h2><h3 id="Shiro"><a href="#Shiro" class="headerlink" title="Shiro"></a>Shiro</h3><h4 id="Shiro-rememberMe反序列化漏洞（Shiro-550）"><a href="#Shiro-rememberMe反序列化漏洞（Shiro-550）" class="headerlink" title="Shiro rememberMe反序列化漏洞（Shiro-550）"></a>Shiro rememberMe反序列化漏洞（Shiro-550）</h4><p>Apache Shiro框架提供了记住密码的功能（RememberMe），用户登录成功后会生成经过加密并编码的cookie。<br>在服务端对rememberMe的cookie值，先base64解码然后AES解密再反序列化，就导致了反序列化RCE漏洞。<br><strong>影响版本</strong><br>Apache Shiro &lt; 1.2.4</p>
+<h1 id="漏洞类型"><a href="#漏洞类型" class="headerlink" title="漏洞类型"></a>漏洞类型</h1><h2 id="java"><a href="#java" class="headerlink" title="java"></a>java</h2><p>相关漏洞</p>
+<h3 id="shiro"><a href="#shiro" class="headerlink" title="shiro"></a>shiro</h3><h4 id="shiro-rememberMe反序列化漏洞（Shiro-550）"><a href="#shiro-rememberMe反序列化漏洞（Shiro-550）" class="headerlink" title="shiro rememberMe反序列化漏洞（Shiro-550）"></a>shiro rememberMe反序列化漏洞（Shiro-550）</h4><p>Apache Shiro框架提供了记住密码的功能（RememberMe），用户登录成功后会生成经过加密并编码的cookie。<br>在服务端对rememberMe的cookie值，先base64解码然后AES解密再反序列化，就导致了反序列化RCE漏洞。<br><strong>影响版本</strong><br>Apache Shiro &lt; 1.2.4</p>
 <p><strong>特征判断</strong><br>返回包中包含rememberMe=deleteMe字段</p>
 <p><strong>漏洞利用</strong><br>检查是否存在默认的key。<br>这里我们使用一个 Shiro_exploit，获取key<br>Github项目地址：<a href="https://github.com/insightglacier/Shiro_exploit" target="_blank" rel="noopener">https://github.com/insightglacier/Shiro_exploit</a></p>
-<h4 id="Shiro-Padding-Oracle-Attack（Shiro-721）"><a href="#Shiro-Padding-Oracle-Attack（Shiro-721）" class="headerlink" title="Shiro Padding Oracle Attack（Shiro-721）"></a>Shiro Padding Oracle Attack（Shiro-721）</h4><p>由于Apache Shiro cookie中通过 AES-128-CBC 模式加密的rememberMe字段存在问题，用户可通过Padding Oracle 加密生成的攻击代码来构造恶意的rememberMe字段，并重新请求网站，进行反序列化攻击，最终导致任意代码执行。</p>
+<h4 id="shiro-Padding-Oracle-Attack（Shiro-721）"><a href="#shiro-Padding-Oracle-Attack（Shiro-721）" class="headerlink" title="shiro Padding Oracle Attack（Shiro-721）"></a>shiro Padding Oracle Attack（Shiro-721）</h4><p>由于Apache Shiro cookie中通过 AES-128-CBC 模式加密的rememberMe字段存在问题，用户可通过Padding Oracle 加密生成的攻击代码来构造恶意的rememberMe字段，并重新请求网站，进行反序列化攻击，最终导致任意代码执行。</p>
 <p><strong>影响版本</strong><br>Apache Shiro &lt; 1.4.2版本</p>
 <h2 id="逻辑漏洞"><a href="#逻辑漏洞" class="headerlink" title="逻辑漏洞"></a>逻辑漏洞</h2><h3 id="登录界面"><a href="#登录界面" class="headerlink" title="登录界面"></a>登录界面</h3><p><img src="/2020/08/28/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/%E7%99%BB%E5%BD%95%E7%95%8C%E9%9D%A2%E6%80%9D%E8%B7%AF.png" alt="安全测试"></p>
 <h3 id="图形验证码绕过"><a href="#图形验证码绕过" class="headerlink" title="图形验证码绕过"></a>图形验证码绕过</h3><ol>
@@ -500,7 +501,7 @@ height:50vh;
 <li>验证码发送复用&amp;时效性过长&amp;接口未限制：位数验证码时效性为5分钟，但是在这里同一手机号发送的验证码都是一样的，所以可以在4分钟的时候重新发送一次验证码这样验证码就又有效了，因为验证码一直在被复用，所以可以爆破</li>
 <li>万能验证码：这是很多大企业的诟病，在未上线前为了方便测试加了888888、000000这样的万能验证码但是上线后没去删除测试的3内容导致被恶意利用</li>
 </ol>
-<h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h2><ul>
+<h2 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h2><ul>
 <li><p>漏洞原理<br>原理：开发者在编写操作数据库代码时，直接将外部可控的参数拼接到SQL语句中，没有经过任何过滤就直接放入数据库引擎执行。<br>把SQL命令插入到Web表单提交或输入域名或页面请求的查询字符串，最终达到欺骗服务器执行恶意的SQL命令。</p>
 </li>
 <li><p>漏洞危害<br>（1）攻击者未经授权可以访问数据库中的数据，盗取用户的隐私以及个人信息，造成用户的信息泄露。<br>（2）可以对数据库的数据进行增加或删除操作，例如私自添加或删除管理员账号。<br>（3）如果网站目录存在写入权限，可以写入网页木马。攻击者进而可以对网页进行篡改，发布一些违法信息等。<br>（4）经过提权等步骤，服务器最高权限被攻击者获取。攻击者可以远程控制服务器，安装后门，得以修改或控制操作系统。</p>
@@ -514,7 +515,7 @@ height:50vh;
 </ul>
 </li>
 </ul>
-<h2 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h2><ul>
+<h2 id="xss跨站脚本攻击"><a href="#xss跨站脚本攻击" class="headerlink" title="xss跨站脚本攻击"></a>xss跨站脚本攻击</h2><ul>
 <li><p>漏洞原理<br>XSS的漏洞主要成因是后端接收参数时未经过滤，导致参数改变了HTML的结构，从而被浏览器或后端代码执行</p>
 </li>
 <li><p>漏洞危害<br>1、网络钓鱼，包括盗取各类用户账号；<br>2、窃取用户cookies资料，从而获取用户隐私信息，或利用用户身份进一步对网站执行操作；<br>3、劫持用户(浏览器)会话，从而执行任意操作，例如进行非法转账、强制发表日志、发送电子邮件等；<br>4、强制弹出广告页面、刷流量等；<br>5、网页挂马，进行恶意操作，例如任意篡改页面信息、删除文章等；<br>6、进行大量的客户端攻击，如DDoS攻击；<br>7、获取客户端信息，例如用户的浏览历史、真实IP、开放端口等；<br>8、控制受害者机器向其他网站发起攻击；<br>9、结合其他漏洞，如CSRF漏洞，实施进一步作恶；<br>10、提升用户权限，包括进一步渗透网站；<br>11、传播跨站脚本蠕虫等；</p>
@@ -528,7 +529,7 @@ height:50vh;
 <li><p>修复建议<br>a、在服务器端检查敏感的HTML代码，对敏感字符进行转义<br>b、接入xss过滤平台，做统一的XSS关键字的过滤及管控</p>
 </li>
 </ul>
-<h2 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h2><ul>
+<h2 id="csrf跨站请求伪造"><a href="#csrf跨站请求伪造" class="headerlink" title="csrf跨站请求伪造"></a>csrf跨站请求伪造</h2><ul>
 <li><p>漏洞原理<br>CSRF：跨站请求伪造，在一个用户登录一个网站后会产生一个cookie，在没有登出的情况下，访问另外的页面，这个页面向该网站进行请求，网站仅用cookie做验证，没有做其他的校验，从而认为这个请求是合法的，就带来了CSRF跨站请求伪造漏洞。</p>
 </li>
 <li><p>漏洞危害<br>修改任何允许修改的数据，执行任何用户允许的操作，例如修改密码，登录注销等</p>
@@ -552,7 +553,7 @@ height:50vh;
 <li>CSRF：需要用户先登录网站A，获取 cookie<br>XSS：不需要登录</li>
 <li>CSRF：是利用网站A本身的漏洞，去请求网站A的api<br>XSS：是向网站 A 注入 JS代码，然后执行 JS 里的代码，篡改网站A的内容。</li>
 </ol>
-<h2 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h2><p><strong>漏洞原理</strong></p>
+<h2 id="ssrf服务器端请求伪造"><a href="#ssrf服务器端请求伪造" class="headerlink" title="ssrf服务器端请求伪造"></a>ssrf服务器端请求伪造</h2><p><strong>漏洞原理</strong></p>
 <p>  SSRF漏洞就是通过篡改获取资源的请求发送给服务器，但是服务器并没有发现在这个请求是合法的，然后服务器以他的身份来访问其他服务器的资源</p>
 <p><strong>漏洞危害</strong></p>
 <ol>
@@ -673,7 +674,7 @@ height:50vh;
 </ul>
 </li>
 </ul>
-<h2 id="CORS跨域资源共享漏洞"><a href="#CORS跨域资源共享漏洞" class="headerlink" title="CORS跨域资源共享漏洞"></a>CORS跨域资源共享漏洞</h2><p><a href="https://cloud.tencent.com/developer/article/1516490" target="_blank" rel="noopener">CORS配置不当—挖掘技巧及实战案例全汇总</a><br><a href="https://xz.aliyun.com/t/2745" target="_blank" rel="noopener">cors安全完全指南</a></p>
+<h2 id="cors跨域资源共享漏洞"><a href="#cors跨域资源共享漏洞" class="headerlink" title="cors跨域资源共享漏洞"></a>cors跨域资源共享漏洞</h2><p><a href="https://cloud.tencent.com/developer/article/1516490" target="_blank" rel="noopener">CORS配置不当—挖掘技巧及实战案例全汇总</a><br><a href="https://xz.aliyun.com/t/2745" target="_blank" rel="noopener">cors安全完全指南</a></p>
 <ul>
 <li><p><strong>漏洞原理</strong><br>CORS，即跨源资源共享（Cross-Origin Resource Sharing）。同源策略（Same OriginPolicy）要求不同源之间是无法通信的，而CORS则是放宽同源策略以通过浏览器实现网站之间通信的机制<br>CORS全称为Cross-Origin Resource Sharing即跨域资源共享，用于绕过SOP（同源策略）来实现跨域资源访问的一种技术。<br>CORS漏洞则是利用CORS技术窃取用户敏感数据，CORS漏洞的成因是<code>服务端配置的规则不当所导致的</code>，服务器端没有配置<code>Access-Control-Allow-Origin</code>等字段</p>
 </li>
@@ -879,7 +880,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#业务安全测试"><span class="toc-number">1.</span> <span class="toc-text">业务安全测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞功能点"><span class="toc-number">2.</span> <span class="toc-text">漏洞功能点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#登录认证处"><span class="toc-number">2.1.</span> <span class="toc-text">登录认证处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索处"><span class="toc-number">2.2.</span> <span class="toc-text">搜索处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#留言处"><span class="toc-number">2.3.</span> <span class="toc-text">留言处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除处"><span class="toc-number">2.4.</span> <span class="toc-text">删除处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码处"><span class="toc-number">2.5.</span> <span class="toc-text">修改密码处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改信息处"><span class="toc-number">2.6.</span> <span class="toc-text">修改信息处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#订单处"><span class="toc-number">2.7.</span> <span class="toc-text">订单处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传处"><span class="toc-number">2.8.</span> <span class="toc-text">文件上传处</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞类型"><span class="toc-number">3.</span> <span class="toc-text">漏洞类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JAVA相关漏洞"><span class="toc-number">3.1.</span> <span class="toc-text">JAVA相关漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Shiro"><span class="toc-number">3.1.1.</span> <span class="toc-text">Shiro</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Shiro-rememberMe反序列化漏洞（Shiro-550）"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">Shiro rememberMe反序列化漏洞（Shiro-550）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shiro-Padding-Oracle-Attack（Shiro-721）"><span class="toc-number">3.1.1.2.</span> <span class="toc-text">Shiro Padding Oracle Attack（Shiro-721）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逻辑漏洞"><span class="toc-number">3.2.</span> <span class="toc-text">逻辑漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#登录界面"><span class="toc-number">3.2.1.</span> <span class="toc-text">登录界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图形验证码绕过"><span class="toc-number">3.2.2.</span> <span class="toc-text">图形验证码绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#短信类验证码绕过"><span class="toc-number">3.2.3.</span> <span class="toc-text">短信类验证码绕过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL注入"><span class="toc-number">3.3.</span> <span class="toc-text">SQL注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS"><span class="toc-number">3.4.</span> <span class="toc-text">XSS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSRF"><span class="toc-number">3.5.</span> <span class="toc-text">CSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSRF"><span class="toc-number">3.6.</span> <span class="toc-text">SSRF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#越权漏洞"><span class="toc-number">3.7.</span> <span class="toc-text">越权漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#水平越权"><span class="toc-number">3.7.1.</span> <span class="toc-text">水平越权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垂直越权"><span class="toc-number">3.7.2.</span> <span class="toc-text">垂直越权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传漏洞"><span class="toc-number">3.8.</span> <span class="toc-text">文件上传漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CORS跨域资源共享漏洞"><span class="toc-number">3.9.</span> <span class="toc-text">CORS跨域资源共享漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弱口令漏洞"><span class="toc-number">3.10.</span> <span class="toc-text">弱口令漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL跳转漏洞"><span class="toc-number">3.11.</span> <span class="toc-text">URL跳转漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#短信轰炸"><span class="toc-number">3.12.</span> <span class="toc-text">短信轰炸</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#学习文章"><span class="toc-number">4.</span> <span class="toc-text">学习文章</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题记录"><span class="toc-number">5.</span> <span class="toc-text">问题记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#token未及时失效问题记录"><span class="toc-number">5.1.</span> <span class="toc-text">token未及时失效问题记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS漏洞的修复"><span class="toc-number">5.2.</span> <span class="toc-text">XSS漏洞的修复</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Others"><span class="toc-number">6.</span> <span class="toc-text">Others</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#业务安全测试"><span class="toc-number">1.</span> <span class="toc-text">业务安全测试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞功能点"><span class="toc-number">2.</span> <span class="toc-text">漏洞功能点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#登录认证处"><span class="toc-number">2.1.</span> <span class="toc-text">登录认证处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索处"><span class="toc-number">2.2.</span> <span class="toc-text">搜索处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#留言处"><span class="toc-number">2.3.</span> <span class="toc-text">留言处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除处"><span class="toc-number">2.4.</span> <span class="toc-text">删除处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改密码处"><span class="toc-number">2.5.</span> <span class="toc-text">修改密码处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改信息处"><span class="toc-number">2.6.</span> <span class="toc-text">修改信息处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#订单处"><span class="toc-number">2.7.</span> <span class="toc-text">订单处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传处"><span class="toc-number">2.8.</span> <span class="toc-text">文件上传处</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#漏洞类型"><span class="toc-number">3.</span> <span class="toc-text">漏洞类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#java"><span class="toc-number">3.1.</span> <span class="toc-text">java</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#shiro"><span class="toc-number">3.1.1.</span> <span class="toc-text">shiro</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#shiro-rememberMe反序列化漏洞（Shiro-550）"><span class="toc-number">3.1.1.1.</span> <span class="toc-text">shiro rememberMe反序列化漏洞（Shiro-550）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#shiro-Padding-Oracle-Attack（Shiro-721）"><span class="toc-number">3.1.1.2.</span> <span class="toc-text">shiro Padding Oracle Attack（Shiro-721）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#逻辑漏洞"><span class="toc-number">3.2.</span> <span class="toc-text">逻辑漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#登录界面"><span class="toc-number">3.2.1.</span> <span class="toc-text">登录界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#图形验证码绕过"><span class="toc-number">3.2.2.</span> <span class="toc-text">图形验证码绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#短信类验证码绕过"><span class="toc-number">3.2.3.</span> <span class="toc-text">短信类验证码绕过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sql注入"><span class="toc-number">3.3.</span> <span class="toc-text">sql注入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#xss跨站脚本攻击"><span class="toc-number">3.4.</span> <span class="toc-text">xss跨站脚本攻击</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#csrf跨站请求伪造"><span class="toc-number">3.5.</span> <span class="toc-text">csrf跨站请求伪造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ssrf服务器端请求伪造"><span class="toc-number">3.6.</span> <span class="toc-text">ssrf服务器端请求伪造</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#越权漏洞"><span class="toc-number">3.7.</span> <span class="toc-text">越权漏洞</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#水平越权"><span class="toc-number">3.7.1.</span> <span class="toc-text">水平越权</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垂直越权"><span class="toc-number">3.7.2.</span> <span class="toc-text">垂直越权</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件上传漏洞"><span class="toc-number">3.8.</span> <span class="toc-text">文件上传漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cors跨域资源共享漏洞"><span class="toc-number">3.9.</span> <span class="toc-text">cors跨域资源共享漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#弱口令漏洞"><span class="toc-number">3.10.</span> <span class="toc-text">弱口令漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#URL跳转漏洞"><span class="toc-number">3.11.</span> <span class="toc-text">URL跳转漏洞</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#短信轰炸"><span class="toc-number">3.12.</span> <span class="toc-text">短信轰炸</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#学习文章"><span class="toc-number">4.</span> <span class="toc-text">学习文章</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#问题记录"><span class="toc-number">5.</span> <span class="toc-text">问题记录</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#token未及时失效问题记录"><span class="toc-number">5.1.</span> <span class="toc-text">token未及时失效问题记录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS漏洞的修复"><span class="toc-number">5.2.</span> <span class="toc-text">XSS漏洞的修复</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Others"><span class="toc-number">6.</span> <span class="toc-text">Others</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
