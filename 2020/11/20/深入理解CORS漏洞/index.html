@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Ywc&#39;s blog</title>
+    <title>深入理解CORS漏洞 · Ywc&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,6 +70,8 @@
 
     <link rel="preload" href= /css/style.css?v=201807017_1502 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /css/mobile.css?v=20180709 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -194,14 +196,23 @@
 <meta name="generator" content="Hexo 4.2.0"></head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Ywc&#39;s blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">深入理解CORS漏洞</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>Ywc's blog</a>
 </header>
@@ -222,7 +233,7 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-img" style="background-image: url(/intro/blog.jpg)"></div>
@@ -231,8 +242,8 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Ywc's blog
-            <!-- 文章页  -->
+            深入理解CORS漏洞
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -240,12 +251,49 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                生活就像一座围城，城外的人想进去,城里的人想出来。
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞">漏洞</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">986</span> / Reading time: <span class="post-count">3 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/11/20</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -346,393 +394,77 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/07/04/mozhe/" >
-            
-                <span>墨者学院平台修炼</span>
-        </a>
-        <div class="abstract-content">
-            暑假了，利用此平台进行深度学习并总结提升。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/04</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "learn">learn</a>
-    
-</div>
-            
-        </div>
+            <main class="main post-page">
+    <article class="article-entry">
+        <!-- TOC -->
+
+<ul>
+<li><a href="#漏洞原理">漏洞原理</a></li>
+<li><a href="#漏洞危害">漏洞危害</a></li>
+<li><a href="#测试方法">测试方法</a></li>
+<li><a href="#修复建议">修复建议</a></li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+<!-- /TOC -->
+
+<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><ul>
+<li>CORS，即跨源资源共享（Cross-Origin Resource Sharing）。同源策略（Same OriginPolicy）要求不同源之间是无法通信的，而CORS则是放宽同源策略以通过浏览器实现网站之间通信的机制。</li>
+<li>CORS全称为Cross-Origin Resource Sharing即跨域资源共享，用于绕过SOP（同源策略）来实现跨域资源访问的一种技术。<br>CORS漏洞则是利用CORS技术窃取用户敏感数据，CORS漏洞的成因是服务端配置的规则不当所导致的，服务器端没有配置Access-Control-Allow-Origin等字段</li>
+</ul>
+<h2 id="漏洞危害"><a href="#漏洞危害" class="headerlink" title="漏洞危害"></a>漏洞危害</h2><p>1、获取用户数据<br>2、客户端缓存中毒：这种配置允许攻击者利用其他的漏洞，更改没有验证的字段，看是否正常回显。比如，一个应用返回数据报文头部中包含“X-User”这个字段，这个字段的值没有经过验证就直接输出到返回页面上，此时就可以结合XSS漏洞来利用。<br>3、服务端缓存中毒：利用CORS的错误配置注入HTTP头部，这可能会被服务器端缓存下来，比如制造存储型xss</p>
+<h2 id="测试方法"><a href="#测试方法" class="headerlink" title="测试方法"></a>测试方法</h2><ul>
+<li>查看是否存在get请求的json形式敏感信息，在请求头中添加任意Origin值，如<a href="https://evil.com，查看返回头是否返回：Access-Control-Allow-Origin:https://evil.com和Access-Control-Allow-Credentials：true，若返回，则构造poc.html进行跨域读取数据。">https://evil.com，查看返回头是否返回：Access-Control-Allow-Origin:https://evil.com和Access-Control-Allow-Credentials：true，若返回，则构造poc.html进行跨域读取数据。</a></li>
+<li>CORS配置不当通常会导致的危害是用户敏感信息泄露，场景大多数是get请求方式返回的json形式的敏感信息（密钥、token，key等）。CORS配置不当属于响应头中的一种，其他还有X-Frame-Options、Content-Security-Policy等。漏洞利用成功的前提是，两个返回头必须为：Access-Control-Allow-Origin:<a href="https://evil.com" target="_blank" rel="noopener">https://evil.com</a><br>更改响应头Access-Control-Allow-Origin或Origin字段等，看返回头是否返回CORS配置字段</li>
+</ul>
+<h2 id="修复建议"><a href="#修复建议" class="headerlink" title="修复建议"></a>修复建议</h2><p>1、仔细评估是否开启CORS，如果不必要就不要开启CORS。<br>2、如果是绝对必要的话，要定义“源”的白名单。尽量不使用正则表达式配置，不要配置“Access-Contol-Allow-Origin”为通配符“*”，同时严格校验来自请求的Origin值。<br>3、仅仅允许安全的协议，有必要验证协议以确保不允许来自不安全通道（HTTP）的交互，否则中间人(MitM)将绕过应用是所使用的HTTPS。<br>4、要尽可能的返回”Vary: Origin”这个头部，以避免攻击者利用浏览器缓存。<br>5、如果可能的话避免使用“Credentials”头，由于“Access-Control-Allow-Credentials”标头设置为“true”时允许跨域请求中带有凭证数据，因此只有在严格必要时才应配置它。此头部也增加了CSRF攻击的风险;因此，有必要对其进行保护。<br>6、限制使用的方法，通过“Access-Control-Allow-Methods”头部，还可以配置允许跨域请求的方法，这样可以最大限度地减少所涉及的方法。<br>7、限制缓存的时间，通过“Access-Control-Allow-Methods”和“Access-Control-Allow-Headers”头部，限制浏览器缓存信息的时间。可以通过使用“Access-Control-Max-Age”标题来完成，该头部接收时间数作为输入，该数字是浏览器保存缓存的时间。配置相对较低的值（例如大约30分钟），确保浏览器在短时间内可以更新策略（比如允许的源）。<br>8、仅配置所需要的头，仅在接收到跨域请求的时候才配置有关于跨域的头部，并且确保跨域请求是合法的（只允许来自合法的源）。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://cloud.tencent.com/developer/article/1516490" target="_blank" rel="noopener">CORS配置不当—挖掘技巧及实战案例全汇总</a><br><a href="https://xz.aliyun.com/t/2745" target="_blank" rel="noopener">cors安全完全指南</a></p>
+
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/07/02/iis%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E/" >
-            
-                <span>iis文件解析漏洞</span>
-        </a>
-        <div class="abstract-content">
-            iis文件解析漏洞总结
+        <div class="license-wrapper">
+            <p>原文作者: <a href="https://yinwc.github.io">Ywc</a>
+            <p>原文链接: <a href="https://yinwc.github.io/2020/11/20/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3CORS%E6%BC%8F%E6%B4%9E/">https://yinwc.github.io/2020/11/20/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3CORS%E6%BC%8F%E6%B4%9E/</a>
+            <p>发表日期: <a href="https://yinwc.github.io/2020/11/20/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3CORS%E6%BC%8F%E6%B4%9E/">November 20th 2020, 1:51:54 pm</a>
+            <p>版权声明: </p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/07/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞">漏洞</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/06/14/mimikatz/" >
-            
-                <span>mimikatz内网渗透</span>
-        </a>
-        <div class="abstract-content">
-            内网渗透中常用的密码抓取神器。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "learn">learn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/06/06/wireshark/" >
-            
-                <span>Wireshark-流量分析</span>
-        </a>
-        <div class="abstract-content">
-            CTF Wireshark流量分析常用指令总结
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/06</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "learn">learn</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/06/03/phpmagic/" >
-            
-                <span>反序列化漏洞</span>
-        </a>
-        <div class="abstract-content">
-            CTF 反序列化漏洞总结。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/03</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞">漏洞</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/06/01/git/" >
-            
-                <span>git learn</span>
-        </a>
-        <div class="abstract-content">
-            总结CTF中git常见操作。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/06/01</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/05/30/markdown%E8%AF%AD%E6%B3%95%E6%80%BB%E7%BB%93/" >
-            
-                <span>Markdown语法总结</span>
-        </a>
-        <div class="abstract-content">
-            记录下，以防忘记。
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Record,Problem">Record,Problem</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/05/29/yuanmaxielou/" >
-            
-                <span>Web源码泄露总结</span>
-        </a>
-        <div class="abstract-content">
-            web源码泄露总结..
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/29</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/05/18/rsa/" >
-            
-                <span>Crypto_RSA算法总结</span>
-        </a>
-        <div class="abstract-content">
-            RSA算法总结.
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/18</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Crypto">Crypto</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/05/09/pythonlearn/" >
-            
-                <span>Pythonlearn</span>
-        </a>
-        <div class="abstract-content">
-            知识梳理与记录
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/09</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "python">python</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/page/11/">&amp;#60; PREV</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/13/">NEXT &amp;#62;</a>
-    </nav>
-    
-</main>
-            <!-- profile -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="profile">
-    <img class="profile-avatar" src= /avatar/ywc.jpg >
-    <div class="profile-name">V1ZkRA</div>
-    
-    <div class="profile-signature">
-        Security learning...
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/11/28/leetcodepractice/" title= LeetCode的一些记录 >
+                    <div class="nextTitle">LeetCode的一些记录</div>
+                </a>
             
-                <a href="mailto:V1ZkRA@126.com" class="iconfont-archer email" title=email ></a>
+        </li>
+        <li class="previous">
             
-        
-    
-        
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/10/28/layui/" title= layui >
+                    <div class="prevTitle">layui</div>
+                </a>
             
-                <a href="//github.com/YinWC" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/example_qr.png" />
-                </span>
-            
-        
     
-        
+    <!--PC和WAP自适应版-->
+
+    <!--PC版-->
+
+
     
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
     
 
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href= //driverxdw.github.io/ target="_black">Xdw</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //chensem.github.io/ target="_black">sunny</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.51xkx.cn/ target="_black">温酒送诗人</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.cnblogs.com/bmjoker/ target="_black">bmjoker</a>
-                    </span>
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
             
         </div>
         <footer class="footer footer-unloaded">
@@ -807,6 +539,24 @@ height:50vh;
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞原理"><span class="toc-number">1.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞危害"><span class="toc-number">2.</span> <span class="toc-text">漏洞危害</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试方法"><span class="toc-number">3.</span> <span class="toc-text">测试方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修复建议"><span class="toc-number">4.</span> <span class="toc-text">修复建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -3563,6 +3313,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
