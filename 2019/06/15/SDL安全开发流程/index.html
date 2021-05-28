@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">4.1k</span> / Reading time: <span class="post-count">14 min</span></span>
+                        <span>Word count: <span class="post-count">4.2k</span> / Reading time: <span class="post-count">14 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -396,50 +396,56 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <ul>
-<li><a href="#sdl%e7%ae%80%e4%bb%8b">SDL简介</a><ul>
-<li><a href="#sdl%e6%98%af%e4%bb%80%e4%b9%88">SDL是什么</a></li>
-<li><a href="#sdl%e8%83%bd%e8%a7%a3%e5%86%b3%e4%bb%80%e4%b9%88%e9%97%ae%e9%a2%98">SDL能解决什么问题</a></li>
+        <!-- TOC -->
+
+<ul>
+<li><a href="#sdl简介">SDL简介</a><ul>
+<li><a href="#sdl是什么">SDL是什么</a></li>
+<li><a href="#sdl能解决什么问题">SDL能解决什么问题</a></li>
 </ul>
 </li>
-<li><a href="#%e9%a1%b9%e7%9b%ae%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f%e4%b8%ad%e5%ad%98%e5%9c%a8%e7%9a%84%e9%97%ae%e9%a2%98">项目生命周期中存在的问题</a></li>
-<li><a href="#sdl%e7%9a%84%e4%b8%83%e4%b8%aa%e6%ad%a5%e9%aa%a4">SDL的七个步骤</a><ul>
-<li><a href="#1%e5%9f%b9%e8%ae%ad">1、培训</a></li>
-<li><a href="#2%e5%ae%89%e5%85%a8%e8%a6%81%e6%b1%82">2、安全要求</a></li>
-<li><a href="#3%e8%ae%be%e8%ae%a1%e9%98%b6%e6%ae%b5">3、设计阶段</a></li>
-<li><a href="#4%e5%ae%9e%e6%96%bd%e9%98%b6%e6%ae%b5">4.实施阶段</a></li>
-<li><a href="#5%e9%aa%8c%e8%af%81%e9%98%b6%e6%ae%b5">5.验证阶段</a></li>
-<li><a href="#6%e5%8f%91%e5%b8%83%e9%98%b6%e6%ae%b5">6.发布阶段</a></li>
-<li><a href="#7%e5%93%8d%e5%ba%94">7．响应</a></li>
+<li><a href="#项目生命周期中存在的问题">项目生命周期中存在的问题</a></li>
+<li><a href="#sdl的七个步骤">SDL的七个步骤</a><ul>
+<li><a href="#1培训">1、培训</a></li>
+<li><a href="#2安全要求">2、安全要求</a></li>
+<li><a href="#3设计阶段">3、设计阶段</a></li>
+<li><a href="#4实施阶段">4、实施阶段</a></li>
+<li><a href="#5验证阶段">5、验证阶段</a></li>
+<li><a href="#6发布阶段">6、发布阶段</a></li>
+<li><a href="#7响应">7、响应</a></li>
 </ul>
 </li>
-<li><a href="#sdl%e7%9a%84%e6%ad%a5%e9%aa%a4">SDL的步骤</a><ul>
-<li><a href="#%e5%ae%89%e5%85%a8%e5%9f%b9%e8%ae%ad">安全培训</a></li>
-<li><a href="#%e5%ae%89%e5%85%a8%e8%a6%81%e6%b1%82">安全要求</a></li>
-<li><a href="#%e8%b4%a8%e9%87%8f%e9%97%a8bug%e6%a0%8f">质量门/bug栏</a></li>
-<li><a href="#%e5%ae%89%e5%85%a8%e5%92%8c%e9%9a%90%e7%a7%81%e9%a3%8e%e9%99%a9%e8%af%84%e4%bc%b0">安全和隐私风险评估</a></li>
-<li><a href="#%e8%ae%be%e8%ae%a1%e8%a6%81%e6%b1%82">设计要求</a></li>
-<li><a href="#%e5%87%8f%e5%b0%8f%e6%94%bb%e5%87%bb%e9%9d%a2">减小攻击面</a></li>
-<li><a href="#%e5%a8%81%e8%83%81%e5%bb%ba%e6%a8%a1">威胁建模</a></li>
-<li><a href="#%e4%bd%bf%e7%94%a8%e6%8c%87%e5%ae%9a%e7%9a%84%e5%b7%a5%e5%85%b7">使用指定的工具</a></li>
-<li><a href="#%e5%bc%83%e7%94%a8%e4%b8%8d%e5%ae%89%e5%85%a8%e5%87%bd%e6%95%b0">弃用不安全函数</a></li>
-<li><a href="#%e9%9d%99%e6%80%81%e5%88%86%e6%9e%90">静态分析</a></li>
-<li><a href="#%e5%8a%a8%e6%80%81%e7%a8%8b%e5%ba%8f%e5%88%86%e6%9e%90">动态程序分析</a></li>
-<li><a href="#%e6%a8%a1%e7%b3%8a%e6%b5%8b%e8%af%95fuzzing-test">模糊测试（Fuzzing Test）</a></li>
-<li><a href="#%e5%a8%81%e8%83%81%e6%a8%a1%e5%9e%8b%e5%92%8c%e6%94%bb%e5%87%bb%e9%9d%a2%e8%af%84%e6%9e%90">威胁模型和攻击面评析</a></li>
-<li><a href="#%e4%ba%8b%e4%bb%b6%e5%93%8d%e5%ba%94%e8%ae%a1%e5%88%92">事件响应计划</a></li>
-<li><a href="#%e6%9c%80%e7%bb%88%e5%ae%89%e5%85%a8%e8%af%84%e6%9e%90">最终安全评析</a></li>
-<li><a href="#%e5%8f%91%e5%b8%83%e5%ad%98%e6%a1%a3">发布/存档</a></li>
+<li><a href="#sdl的步骤">SDL的步骤</a><ul>
+<li><a href="#安全培训">安全培训</a></li>
+<li><a href="#安全要求">安全要求</a></li>
+<li><a href="#质量门bug栏">质量门/bug栏</a></li>
+<li><a href="#安全和隐私风险评估">安全和隐私风险评估</a></li>
+<li><a href="#设计要求">设计要求</a></li>
+<li><a href="#减小攻击面">减小攻击面</a></li>
+<li><a href="#威胁建模">威胁建模</a></li>
+<li><a href="#使用指定的工具">使用指定的工具</a></li>
+<li><a href="#弃用不安全函数">弃用不安全函数</a></li>
+<li><a href="#静态分析">静态分析</a></li>
+<li><a href="#动态程序分析">动态程序分析</a></li>
+<li><a href="#模糊测试fuzzing-test">模糊测试（Fuzzing Test）</a></li>
+<li><a href="#威胁模型和攻击面评析">威胁模型和攻击面评析</a></li>
+<li><a href="#事件响应计划">事件响应计划</a></li>
+<li><a href="#最终安全评析">最终安全评析</a></li>
+<li><a href="#发布存档">发布/存档</a></li>
 </ul>
 </li>
-<li><a href="#sdl%e5%ae%9e%e6%88%98%e7%bb%8f%e9%aa%8c%e5%87%86%e5%88%99">SDL实战经验准则</a></li>
-<li><a href="#%e5%ad%a6%e4%b9%a0%e6%96%87%e7%ab%a0">学习文章</a></li>
+<li><a href="#sdl实战经验准则">SDL实战经验准则</a></li>
+<li><a href="#学习文章">学习文章</a></li>
 </ul>
+<!-- /TOC -->
+
+
 <h2 id="SDL简介"><a href="#SDL简介" class="headerlink" title="SDL简介"></a>SDL简介</h2><h3 id="SDL是什么"><a href="#SDL是什么" class="headerlink" title="SDL是什么"></a>SDL是什么</h3><p>安全开发生命周期（SDL）即Security Development Lifecycle，是一个帮助开发人员构建更安全的软件和解决安全合规要求的同时降低开发成本的软件开发过程。自2004年起，微软将SDL作为全公司的计划和强制政策，<u>SDL的<strong>核心理念</strong>就是将安全考虑集成在软件开发的每一个阶段:需求分析、设计、编码、测试和维护。从需求、设计到发布产品的每一个阶段每都增加了相应的安全活动，以减少软件中漏洞的数量并将安全缺陷降低到最小程度</u>。安全开发生命周期 (SDL)是侧重于软件开发的安全保证过程，旨在开发出安全的软件应用。</p>
 <h3 id="SDL能解决什么问题"><a href="#SDL能解决什么问题" class="headerlink" title="SDL能解决什么问题"></a>SDL能解决什么问题</h3><p>SDL将设计、代码和文档等与安全相关漏洞减到最少，在软件开发的生命周期中尽可能的早地发现解决相关漏洞建立的流程框架;为了实现保证最终的用户安全，在软件开发各阶段中引入针对项目安全和用户隐私问题的解决方案。</p>
 <h2 id="项目生命周期中存在的问题"><a href="#项目生命周期中存在的问题" class="headerlink" title="项目生命周期中存在的问题"></a>项目生命周期中存在的问题</h2><p>项目研发生命周期：需求分析-&gt;设计-&gt;研发-&gt;测试-&gt;部署<br>项目研发生命周期中安全危险暴露模型：<br><img src="/2019/06/15/SDL%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/1.png" alt="SDL安全开发流程"></p>
 <p>SDL中的方法，试图从安全漏洞产生的根源上解决问题，通过对软件工程的控制，保证产品的安全性。<br>美国国家标准与技术研究所（NIST）估计，如果是在项目发布后在执行漏洞修复计划，其修复成本相当于在设计阶段执行修复的30倍</p>
-<h2 id="SDL的七个步骤"><a href="#SDL的七个步骤" class="headerlink" title="SDL的七个步骤"></a>SDL的七个步骤</h2><h3 id="1、培训"><a href="#1、培训" class="headerlink" title="1、培训"></a>1、培训</h3><p>开发团队的所有成员都必须接受适当的安全培训，了解相关的安全知识。培训对象：开发人员、测试人员、项目经理、产品经理；培训内容：安全设计、威胁建模、安全编码、安全测试、隐私等。</p>
+<h2 id="SDL的七个步骤"><a href="#SDL的七个步骤" class="headerlink" title="SDL的七个步骤"></a>SDL的七个步骤</h2><p><img src="/2019/06/15/SDL%E5%AE%89%E5%85%A8%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/2.png" alt="SDL安全开发流程"></p>
+<h3 id="1、培训"><a href="#1、培训" class="headerlink" title="1、培训"></a>1、培训</h3><p>开发团队的所有成员都必须接受适当的安全培训，了解相关的安全知识。培训对象：开发人员、测试人员、项目经理、产品经理；培训内容：安全设计、威胁建模、安全编码、安全测试、隐私等。</p>
 <h3 id="2、安全要求"><a href="#2、安全要求" class="headerlink" title="2、安全要求"></a>2、安全要求</h3><p><strong>2.1确定安全计划</strong></p>
 <p>在项目确立之前，需要提前与项目经理进行沟通，确定安全的要求和需要做的事情。确认项目计划和里程碑，尽量避免因为安全问题而导致项目延期发布。</p>
 <p><strong>2.2 设立安全基线和安全分级</strong></p>
@@ -460,19 +466,19 @@ height:50vh;
 <p>减小攻击面与威胁建模紧密相关。它通过减少攻击者利用潜在弱点或漏洞的机会来降低风险，包括关闭或限制对系统服务的访问，应用“最小权限原则”，尽可能分层防御。</p>
 <p><strong>3.3威胁建模</strong></p>
 <p>微软的 STRIDE 模型。所谓STRIDE为Spoofing（假冒），Tampering（篡改），Repudiation（否认），Information Disclosure（信息泄漏），Denial of Service（拒绝服务），Elevation of Privilege（提升权限）。此乃微软的安全建模的模型，微软的产品就是基于它考虑安全问题的哦。STRIDE模型几乎是可以涵盖现在世界上绝大部分的安全问题。下面给上STRIDE模型对于安全属性的图</p>
-<h3 id="4-实施阶段"><a href="#4-实施阶段" class="headerlink" title="4.实施阶段"></a>4.实施阶段</h3><p><strong>4.1使用指定的工具</strong></p>
+<h3 id="4、实施阶段"><a href="#4、实施阶段" class="headerlink" title="4、实施阶段"></a>4、实施阶段</h3><p><strong>4.1使用指定的工具</strong></p>
 <p>开发团队使用的编辑器、链接器等相关工具，可能会涉及一些安全相关的环节，因此在使用工具的版本上，需要提前与安全团队进行沟通。</p>
 <p><strong>4.2弃用不安全的函数</strong></p>
 <p>许多常用函数可能存在安全隐患，应当禁用不安全的函数和API，使用安全团队推荐的函数。</p>
 <p><strong>4.3静态分析</strong></p>
 <p>静态分析可以帮助软件开发人员、质量保证人员查找代码中存在的结构性错误、安全漏洞等问题，从而保证软件的整体质量。</p>
-<h3 id="5-验证阶段"><a href="#5-验证阶段" class="headerlink" title="5.验证阶段"></a>5.验证阶段</h3><p><strong>5.1动态分析</strong></p>
+<h3 id="5、验证阶段"><a href="#5、验证阶段" class="headerlink" title="5、验证阶段"></a>5、验证阶段</h3><p><strong>5.1动态分析</strong></p>
 <p>动态分析是静态分析的补充，用在程序运行时，测试验证程序的安全性，也称作“黑箱测试”。通过模拟黑客行为对系统进行动态攻击，分析系统的反应，从而确定该系统是否易受攻击。</p>
 <p><strong>5.2 模糊测试</strong></p>
 <p>模糊测试是一种特定的动态分析方法，通过故意向应用程序引入不良格式或随机数据诱发程序故障。测试策略的制定以应用程序的预期用途、功能、设计规范为基础。</p>
 <p><strong>5.3 威胁模型和攻击面评析</strong></p>
 <p>项目因需求变更等因素导致最终产出偏离原定目标，为此项目后期有必要对威胁模型和攻击面进行重新评析。</p>
-<h3 id="6-发布阶段"><a href="#6-发布阶段" class="headerlink" title="6.发布阶段"></a>6.发布阶段</h3><p><strong>6.1事件响应计划</strong></p>
+<h3 id="6、发布阶段"><a href="#6、发布阶段" class="headerlink" title="6、发布阶段"></a>6、发布阶段</h3><p><strong>6.1事件响应计划</strong></p>
 <p>SDL要求约束的每个软件在发布时都必须包含事件响应计划。即使在发布时不包含任何已知漏洞的产品，也可能在日后面临新出现的威胁。需要注意的是，如果产品中包含第三方的代码，也需要留下第三方的联系方式并加入事件响应计划，以便在发生问题时能够找到对应的人。</p>
 <p><strong>6.2最终安全评析(FSR)</strong></p>
 <p>最终安全评析指在产品发布之前对软件执行的安全活动，对比安全基准确定产品不符合安全基准、缺少功能和其他要求的区域，然后进行以下三种决策：</p>
@@ -481,7 +487,7 @@ height:50vh;
 <p>3) 需上报问题的FSR。如果团队未满足所有SDL要求，并且安全顾问和产品团队无法达成可接受的折中，则安全顾问不能批准项目，项目不能发布。团队必须在发布之前解决所有可解决的问题，或者上报高级管理层进行抉择。</p>
 <p><strong>6.3 发布/存档</strong></p>
 <p>在通过FSR或者虽有问题但达成一致后，可以完成产品的发布。但发布的同时仍需对各种问题和文档进行存档，为紧急响应和产品升级提供帮助。</p>
-<h3 id="7．响应"><a href="#7．响应" class="headerlink" title="7．响应"></a>7．响应</h3><p>当软件发布后遭受攻击时，根据制定的应急响应计划快速采取措施，把事件造成的损失降到最小。这里还可以加入应急响应演练，以加强公司对抗信息安全攻击的能力。</p>
+<h3 id="7、响应"><a href="#7、响应" class="headerlink" title="7、响应"></a>7、响应</h3><p>当软件发布后遭受攻击时，根据制定的应急响应计划快速采取措施，把事件造成的损失降到最小。这里还可以加入应急响应演练，以加强公司对抗信息安全攻击的能力。</p>
 <h2 id="SDL的步骤"><a href="#SDL的步骤" class="headerlink" title="SDL的步骤"></a>SDL的步骤</h2><h3 id="安全培训"><a href="#安全培训" class="headerlink" title="安全培训"></a>安全培训</h3><p>开发团队的所有成员都必须接受适当的安全培训，了解相关的安全知识，培训对象包括开发人员、测试人员、项目经理、产品经理等。</p>
 <h3 id="安全要求"><a href="#安全要求" class="headerlink" title="安全要求"></a>安全要求</h3><p>在项目确立之前，需要提前与项目经理或者产品owner进行沟通，确定安全的要求和需要做的事情。确认项目计划和里程碑，尽量避免因为安全问题而导致项目延期发布。</p>
 <h3 id="质量门-bug栏"><a href="#质量门-bug栏" class="headerlink" title="质量门/bug栏"></a>质量门/bug栏</h3><p>质量门和bug栏用于确定安全和隐私质量的最低可接受级别。<br>Bug栏是应用于整个开发项目的质量门，用于定义安全漏洞的严重性阈值。例如，应用程序在发布时不得包含具有“关键”或“重要”评级的已知漏洞。Bug栏一经设定，便绝不能放松。</p>
@@ -505,7 +511,7 @@ height:50vh;
 <p>准则四：将技术方案写入开发、测试的工作手册中</p>
 <p>准则五：给工程师培训安全方案</p>
 <p>准则六：记录所有的安全bug，激励程序员编写安全的代码</p>
-<h2 id="学习文章"><a href="#学习文章" class="headerlink" title="学习文章"></a>学习文章</h2><p><a href="https://www.jianshu.com/p/dd147e84931b" target="_blank" rel="noopener">SDL的各个阶段</a><br><a href="https://pek3a.qingstor.com/community/resource/QCon2016-Beijing/SDL%E7%9A%84%E6%B7%B1%E5%85%A5%E6%8E%A2%E7%A9%B6%E5%8F%8A%E5%AE%9E%E8%B7%B5.pdf" target="_blank" rel="noopener">SDL的深入探究及实践</a><br><a href="https://xz.aliyun.com/t/6625#toc-7" target="_blank" rel="noopener">SDL探索之路</a><br><a href="https://xz.aliyun.com/t/5656" target="_blank" rel="noopener">精简版SDL落地实践</a><br><a href="https://www.securitypaper.org/1.sdl%E4%BB%8B%E7%BB%8D/1-%E4%BB%80%E4%B9%88%E6%98%AFsdl/" target="_blank" rel="noopener">值得读的书籍securitypaper关于SDL</a><br><a href="https://www.secpulse.com/archives/73373.html" target="_blank" rel="noopener">SDL建设-三方依赖库扫描系统</a></p>
+<h2 id="学习文章"><a href="#学习文章" class="headerlink" title="学习文章"></a>学习文章</h2><p><a href="https://www.fooying.com/from_sdl_to_devsecops_security_in_dev/" target="_blank" rel="noopener">从SDL到DevSecOps：始终贯穿开发生命周期的安全</a><br><a href="https://www.jianshu.com/p/dd147e84931b" target="_blank" rel="noopener">SDL的各个阶段</a><br><a href="https://pek3a.qingstor.com/community/resource/QCon2016-Beijing/SDL%E7%9A%84%E6%B7%B1%E5%85%A5%E6%8E%A2%E7%A9%B6%E5%8F%8A%E5%AE%9E%E8%B7%B5.pdf" target="_blank" rel="noopener">SDL的深入探究及实践</a><br><a href="https://xz.aliyun.com/t/6625#toc-7" target="_blank" rel="noopener">SDL探索之路</a><br><a href="https://xz.aliyun.com/t/5656" target="_blank" rel="noopener">精简版SDL落地实践</a><br><a href="https://www.securitypaper.org/1.sdl%E4%BB%8B%E7%BB%8D/1-%E4%BB%80%E4%B9%88%E6%98%AFsdl/" target="_blank" rel="noopener">值得读的书籍securitypaper关于SDL</a><br><a href="https://www.secpulse.com/archives/73373.html" target="_blank" rel="noopener">SDL建设-三方依赖库扫描系统</a></p>
 
     </article>
     <!-- license  -->
@@ -643,7 +649,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SDL简介"><span class="toc-number">1.</span> <span class="toc-text">SDL简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SDL是什么"><span class="toc-number">1.1.</span> <span class="toc-text">SDL是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SDL能解决什么问题"><span class="toc-number">1.2.</span> <span class="toc-text">SDL能解决什么问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目生命周期中存在的问题"><span class="toc-number">2.</span> <span class="toc-text">项目生命周期中存在的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SDL的七个步骤"><span class="toc-number">3.</span> <span class="toc-text">SDL的七个步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、培训"><span class="toc-number">3.1.</span> <span class="toc-text">1、培训</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、安全要求"><span class="toc-number">3.2.</span> <span class="toc-text">2、安全要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、设计阶段"><span class="toc-number">3.3.</span> <span class="toc-text">3、设计阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-实施阶段"><span class="toc-number">3.4.</span> <span class="toc-text">4.实施阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-验证阶段"><span class="toc-number">3.5.</span> <span class="toc-text">5.验证阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-发布阶段"><span class="toc-number">3.6.</span> <span class="toc-text">6.发布阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7．响应"><span class="toc-number">3.7.</span> <span class="toc-text">7．响应</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SDL的步骤"><span class="toc-number">4.</span> <span class="toc-text">SDL的步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安全培训"><span class="toc-number">4.1.</span> <span class="toc-text">安全培训</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全要求"><span class="toc-number">4.2.</span> <span class="toc-text">安全要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#质量门-bug栏"><span class="toc-number">4.3.</span> <span class="toc-text">质量门&#x2F;bug栏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全和隐私风险评估"><span class="toc-number">4.4.</span> <span class="toc-text">安全和隐私风险评估</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设计要求"><span class="toc-number">4.5.</span> <span class="toc-text">设计要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减小攻击面"><span class="toc-number">4.6.</span> <span class="toc-text">减小攻击面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁建模"><span class="toc-number">4.7.</span> <span class="toc-text">威胁建模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用指定的工具"><span class="toc-number">4.8.</span> <span class="toc-text">使用指定的工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#弃用不安全函数"><span class="toc-number">4.9.</span> <span class="toc-text">弃用不安全函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#静态分析"><span class="toc-number">4.10.</span> <span class="toc-text">静态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态程序分析"><span class="toc-number">4.11.</span> <span class="toc-text">动态程序分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模糊测试（Fuzzing-Test）"><span class="toc-number">4.12.</span> <span class="toc-text">模糊测试（Fuzzing Test）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁模型和攻击面评析"><span class="toc-number">4.13.</span> <span class="toc-text">威胁模型和攻击面评析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件响应计划"><span class="toc-number">4.14.</span> <span class="toc-text">事件响应计划</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最终安全评析"><span class="toc-number">4.15.</span> <span class="toc-text">最终安全评析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发布-存档"><span class="toc-number">4.16.</span> <span class="toc-text">发布&#x2F;存档</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SDL实战经验准则"><span class="toc-number">5.</span> <span class="toc-text">SDL实战经验准则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#学习文章"><span class="toc-number">6.</span> <span class="toc-text">学习文章</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SDL简介"><span class="toc-number">1.</span> <span class="toc-text">SDL简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SDL是什么"><span class="toc-number">1.1.</span> <span class="toc-text">SDL是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SDL能解决什么问题"><span class="toc-number">1.2.</span> <span class="toc-text">SDL能解决什么问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#项目生命周期中存在的问题"><span class="toc-number">2.</span> <span class="toc-text">项目生命周期中存在的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SDL的七个步骤"><span class="toc-number">3.</span> <span class="toc-text">SDL的七个步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、培训"><span class="toc-number">3.1.</span> <span class="toc-text">1、培训</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、安全要求"><span class="toc-number">3.2.</span> <span class="toc-text">2、安全要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、设计阶段"><span class="toc-number">3.3.</span> <span class="toc-text">3、设计阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、实施阶段"><span class="toc-number">3.4.</span> <span class="toc-text">4、实施阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、验证阶段"><span class="toc-number">3.5.</span> <span class="toc-text">5、验证阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6、发布阶段"><span class="toc-number">3.6.</span> <span class="toc-text">6、发布阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7、响应"><span class="toc-number">3.7.</span> <span class="toc-text">7、响应</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SDL的步骤"><span class="toc-number">4.</span> <span class="toc-text">SDL的步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安全培训"><span class="toc-number">4.1.</span> <span class="toc-text">安全培训</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全要求"><span class="toc-number">4.2.</span> <span class="toc-text">安全要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#质量门-bug栏"><span class="toc-number">4.3.</span> <span class="toc-text">质量门&#x2F;bug栏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安全和隐私风险评估"><span class="toc-number">4.4.</span> <span class="toc-text">安全和隐私风险评估</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设计要求"><span class="toc-number">4.5.</span> <span class="toc-text">设计要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#减小攻击面"><span class="toc-number">4.6.</span> <span class="toc-text">减小攻击面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁建模"><span class="toc-number">4.7.</span> <span class="toc-text">威胁建模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用指定的工具"><span class="toc-number">4.8.</span> <span class="toc-text">使用指定的工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#弃用不安全函数"><span class="toc-number">4.9.</span> <span class="toc-text">弃用不安全函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#静态分析"><span class="toc-number">4.10.</span> <span class="toc-text">静态分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#动态程序分析"><span class="toc-number">4.11.</span> <span class="toc-text">动态程序分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模糊测试（Fuzzing-Test）"><span class="toc-number">4.12.</span> <span class="toc-text">模糊测试（Fuzzing Test）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#威胁模型和攻击面评析"><span class="toc-number">4.13.</span> <span class="toc-text">威胁模型和攻击面评析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件响应计划"><span class="toc-number">4.14.</span> <span class="toc-text">事件响应计划</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#最终安全评析"><span class="toc-number">4.15.</span> <span class="toc-text">最终安全评析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发布-存档"><span class="toc-number">4.16.</span> <span class="toc-text">发布&#x2F;存档</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SDL实战经验准则"><span class="toc-number">5.</span> <span class="toc-text">SDL实战经验准则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#学习文章"><span class="toc-number">6.</span> <span class="toc-text">学习文章</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2637,10 +2643,9 @@ top:50vh;
     
     
     
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 122
+        Total : 123
         </div>
         <!-- search  -->
         
@@ -2653,6 +2658,11 @@ top:50vh;
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2021/05/26/RASP-learn/" >理解RASP技术</a>
+        </li>
     
     
         <li class="archive-post-item">

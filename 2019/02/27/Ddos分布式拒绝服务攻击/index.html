@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1k</span> / Reading time: <span class="post-count">3 min</span></span>
+                        <span>Word count: <span class="post-count">1.1k</span> / Reading time: <span class="post-count">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -411,6 +411,7 @@ height:50vh;
 <p><img src="/2019/02/27/Ddos%E5%88%86%E5%B8%83%E5%BC%8F%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1%E6%94%BB%E5%87%BB/2.png" alt="Ddos分布式拒绝服务攻击"></p>
 <p><font color="blue">3.Udp 反射 Flood</font></p>
 <p>攻击原理：有时被保护服务器也有同外部服务器进行udp交互的需求，攻击者就会利用此交互对被保护服务器进行udp反射放大攻击。此攻击在短时间那冒充被攻击地址向外部公用的服务器发送大量的udp请求包，外部服务器收到虚假的udp请求就会回复大量的回应包给被攻击服务器地址，造成目标主机被保护服务器不能处理其他正常的交互流。</p>
+<p>DNS 反射放大攻击主要是利用 DNS 回复包比请求包大的特点，放大流量，伪造请求包的源 IP 地址为受害者 IP，将应答包的流量引入受害的服务器。</p>
 <p><img src="/2019/02/27/Ddos%E5%88%86%E5%B8%83%E5%BC%8F%E6%8B%92%E7%BB%9D%E6%9C%8D%E5%8A%A1%E6%94%BB%E5%87%BB/3.png" alt="Ddos分布式拒绝服务攻击"></p>
 <p><font color="blue">4.Dns Query Flood</font></p>
 <p>攻击原理：通过发起大量的DNS请求，导致DNS服务器无法响应正常用户的请求，正常用户不能解析DNS，从而不能获取服务。</p>
@@ -2552,10 +2553,9 @@ top:50vh;
     
     
     
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 122
+        Total : 123
         </div>
         <!-- search  -->
         
@@ -2568,6 +2568,11 @@ top:50vh;
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2021/05/26/RASP-learn/" >理解RASP技术</a>
+        </li>
     
     
         <li class="archive-post-item">

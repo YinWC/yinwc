@@ -406,8 +406,8 @@ height:50vh;
 </li>
 <li><a href="#sql预编译">SQL预编译</a><ul>
 <li><a href="#原理及方法">原理及方法</a></li>
-<li><a href="#无法使用sql预编译的情况">无法使用SQL预编译的情况</a></li>
-<li><a href="#mybatis预编译">Mybatis预编译</a></li>
+<li><a href="#无法使用sql预编译的情况">无法使用sql预编译的情况</a></li>
+<li><a href="#mybatis预编译">mybatis预编译</a></li>
 </ul>
 </li>
 <li><a href="#reference">Reference</a></li>
@@ -482,9 +482,9 @@ height:50vh;
 <p>示例代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String username = <span class="string">"ye"</span>;</span><br><span class="line">String password = <span class="string">"ye"</span>;</span><br><span class="line">String sql = <span class="string">"select * from user where username = ? and password = ?;"</span>;</span><br><span class="line"></span><br><span class="line">db.stmt = db.conn.prepareStatement(sql);</span><br><span class="line">db.stmt.setString(<span class="number">1</span>, username);</span><br><span class="line">db.stmt.setString(<span class="number">2</span>, password);</span><br><span class="line">ResultSet rs = db.stmt.executeQuery();</span><br></pre></td></tr></table></figure>
 
-<h3 id="无法使用SQL预编译的情况"><a href="#无法使用SQL预编译的情况" class="headerlink" title="无法使用SQL预编译的情况"></a>无法使用SQL预编译的情况</h3><p>1、对于关键词order by来说，如果使用预编译处理，参数绑定为String类型，order by 的参数会被单引号包裹，导致无法排序<br>2、对于拼接列名、表名的sql语句来说，参数绑定后也会用单引号包裹，故也无法使用预编译处理<br>3、在prepare绑定参数阶段也能够报错注入<br>4、某些数据库不支持预编译(如sqllite与低版本mysql)，可以使用<a href="https://xz.aliyun.com/t/7132#toc-0" target="_blank" rel="noopener">模拟预编译</a></p>
+<h3 id="无法使用sql预编译的情况"><a href="#无法使用sql预编译的情况" class="headerlink" title="无法使用sql预编译的情况"></a>无法使用sql预编译的情况</h3><p>1、对于关键词order by来说，如果使用预编译处理，参数绑定为String类型，order by 的参数会被单引号包裹，导致无法排序<br>2、对于拼接列名、表名的sql语句来说，参数绑定后也会用单引号包裹，故也无法使用预编译处理<br>3、在prepare绑定参数阶段也能够报错注入<br>4、某些数据库不支持预编译(如sqllite与低版本mysql)，可以使用<a href="https://xz.aliyun.com/t/7132#toc-0" target="_blank" rel="noopener">模拟预编译</a></p>
 <p><a href="https://xz.aliyun.com/t/7132#toc-0" target="_blank" rel="noopener">Sql预编译于模拟预编译研究</a></p>
-<h3 id="Mybatis预编译"><a href="#Mybatis预编译" class="headerlink" title="Mybatis预编译"></a>Mybatis预编译</h3><p>mybatis 中使用 sqlMap 进行 sql 查询时，经常需要动态传递参数,使用<code>#{ }</code>和 <code>${ }</code>来进行动态传参</p>
+<h3 id="mybatis预编译"><a href="#mybatis预编译" class="headerlink" title="mybatis预编译"></a>mybatis预编译</h3><p>mybatis 中使用 sqlMap 进行 sql 查询时，经常需要动态传递参数,使用<code>#{ }</code>和 <code>${ }</code>来进行动态传参</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="keyword">name</span> = <span class="string">"test"</span>;</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="keyword">name</span> = <span class="comment">#&#123;name&#125;;</span></span><br><span class="line">或</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">user</span> <span class="keyword">where</span> <span class="keyword">name</span> = <span class="string">'$&#123;name&#125;'</span>;</span><br></pre></td></tr></table></figure>
 
 <p>但是在动态 SQL 解析阶段，<code>#{ }</code>和 <code>${ }</code> 会有不同的表现：</p>
@@ -632,7 +632,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL盲注"><span class="toc-number">1.</span> <span class="toc-text">SQL盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#布尔盲注"><span class="toc-number">1.1.</span> <span class="toc-text">布尔盲注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时间盲注"><span class="toc-number">1.2.</span> <span class="toc-text">时间盲注</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL预编译"><span class="toc-number">2.</span> <span class="toc-text">SQL预编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原理及方法"><span class="toc-number">2.1.</span> <span class="toc-text">原理及方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无法使用SQL预编译的情况"><span class="toc-number">2.2.</span> <span class="toc-text">无法使用SQL预编译的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mybatis预编译"><span class="toc-number">2.3.</span> <span class="toc-text">Mybatis预编译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL盲注"><span class="toc-number">1.</span> <span class="toc-text">SQL盲注</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#布尔盲注"><span class="toc-number">1.1.</span> <span class="toc-text">布尔盲注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#时间盲注"><span class="toc-number">1.2.</span> <span class="toc-text">时间盲注</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL预编译"><span class="toc-number">2.</span> <span class="toc-text">SQL预编译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原理及方法"><span class="toc-number">2.1.</span> <span class="toc-text">原理及方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#无法使用sql预编译的情况"><span class="toc-number">2.2.</span> <span class="toc-text">无法使用sql预编译的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mybatis预编译"><span class="toc-number">2.3.</span> <span class="toc-text">mybatis预编译</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -2626,10 +2626,9 @@ top:50vh;
     
     
     
-    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 122
+        Total : 123
         </div>
         <!-- search  -->
         
@@ -2642,6 +2641,11 @@ top:50vh;
     
     <div class="archive-year"> 2021 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2021/05/26/RASP-learn/" >理解RASP技术</a>
+        </li>
     
     
         <li class="archive-post-item">
