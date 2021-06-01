@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">17.7k</span> / Reading time: <span class="post-count">64 min</span></span>
+                        <span>Word count: <span class="post-count">17.8k</span> / Reading time: <span class="post-count">65 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -807,6 +807,9 @@ height:50vh;
 </ul>
 <h4 id="dns-rebinding-dns重绑定攻击"><a href="#dns-rebinding-dns重绑定攻击" class="headerlink" title="dns rebinding dns重绑定攻击"></a>dns rebinding dns重绑定攻击</h4><ul>
 <li>原理：利用服务器解析同一域名的短暂间隙，更换域名背后的ip达到突破同源策略或过waf进行ssrf的目的。</li>
+<li>修复方式：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1、限制JavaScript的运行（让攻击者没办法再次请求，noscript可以实现）</span><br><span class="line">2、将域名与ip固定（这样它们就不能重复更改）</span><br><span class="line">3、不接受小于特定大小的TTL（因此它们无法更改）</span><br><span class="line">4、不接受DNS是私有地址的请求（对于外部请求来说）（这样​​它们就不会扩展到内网）</span><br><span class="line">5、在本地运行的端口服务校验来源域名</span><br></pre></td></tr></table></figure>
+
+</li>
 </ul>
 <p>两次解析统一域名：check_ssrf与do_url的两次解析</p>
 <p>PS：DNS是怎么做域名解析的？怎样两次解析同一域名？<br>解析流程是<strong>分级查询</strong></p>
@@ -3430,9 +3433,54 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 123
+        Total : 124
         </div>
         <!-- search  -->
         
@@ -3518,6 +3566,11 @@ top:50vh;
     
         <li class="archive-post-item">
             <span class="archive-post-date">07/22</span><a class="archive-post-title" href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" >CSRF漏洞挖掘</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/21</span><a class="archive-post-title" href= "/2020/07/21/fastjsonlearn/" >Fastjson漏洞攻击思路</a>
         </li>
     
     

