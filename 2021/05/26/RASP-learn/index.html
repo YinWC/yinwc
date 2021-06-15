@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">928</span> / Reading time: <span class="post-count">3 min</span></span>
+                        <span>Word count: <span class="post-count">1k</span> / Reading time: <span class="post-count">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -396,7 +396,24 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <h2 id="什么是RASP？"><a href="#什么是RASP？" class="headerlink" title="什么是RASP？"></a>什么是RASP？</h2><p>RASP：Runtime application self-protection（运行时自我保护）<br>RASP是一种应用安全保护技术，在运行时检测攻击并且进行自我保护。它将保护程序像疫苗一样注入到应用程序中，应用程序融为一体，能实时检测和阻断安全攻击，使应用程序具备自我保护能力，当应用程序遭受到实际攻击伤害，就可以自动对其进行防御，而不需要进行人工干预。</p>
+        <!-- TOC -->
+
+<ul>
+<li><a href="#什么是rasp">什么是RASP？</a><ul>
+<li><a href="#rasp-vs-waf">RASP vs WAF</a></li>
+</ul>
+</li>
+<li><a href="#php-rasp实现">PHP-RASP实现</a><ul>
+<li><a href="#php扩展">php扩展</a></li>
+<li><a href="#php中的rasp实现">php中的rasp实现</a></li>
+</ul>
+</li>
+<li><a href="#java-rasp实现">JAVA-RASP实现</a></li>
+<li><a href="#reference">Reference</a></li>
+</ul>
+<!-- /TOC -->
+
+<h2 id="什么是RASP？"><a href="#什么是RASP？" class="headerlink" title="什么是RASP？"></a>什么是RASP？</h2><p>RASP：Runtime application self-protection（运行时自我保护）<br>RASP是一种应用安全保护技术，在运行时检测攻击并且进行自我保护。它将保护程序像疫苗一样注入到应用程序中，应用程序融为一体，能实时检测和阻断安全攻击，使应用程序具备自我保护能力，当应用程序遭受到实际攻击伤害，就可以自动对其进行防御，而不需要进行人工干预。</p>
 <p>RASP在后端代码运行时做安全监测，但又不侵入后端代码，就得切入Web后端解释器。<br>以Java为例，Java支持以JavaAgent的方式，在class文件加载时修改字节码，在关键位置插入安全检查代码，实现RASP功能。<br>同样，PHP也支持对PHP内核做类似的操作，PHP支持PHP扩展，实现这方面的需求。</p>
 <h3 id="RASP-vs-WAF"><a href="#RASP-vs-WAF" class="headerlink" title="RASP vs WAF"></a>RASP vs WAF</h3><ul>
 <li>WAF主要通过分析流量中的特征过滤攻击请求，并拦截携带有攻击特征的请求。WAF虽可有效过滤出绝大多数恶意请求，但是不知道应用运行时的上下文，必然会造成一定程度的误报。并且WAF严重依赖于特征库，各种花式绕过，导致特征编写很难以不变应万变。</li>
@@ -409,7 +426,9 @@ height:50vh;
 <p>三个步骤来实现PHP RASP扩展模块：<br>1、预加载<br>任何一个PHP实例都会经过Module init、Request init、Request shutdown和Module shutdown四个过程。</p>
 <p>2、Hook Opcode 或 Hook 内部函数<br>RASP需要监控各个敏感函数的调用，在PHP中比较好的方式便是 Hook Opcode 和 Hook内部函数。</p>
 <p>3、参数获取与分析<br>在完成对敏感函数调用行为的监控后，通过ZEND_CALL_NUM_ARGS和ZEND_CALL_ARG可以获取到函数的参数个数和内容，便可根据函数的参数制定相应的策略。如文件类可以关注是否读取了敏感文件, 数据库操作类是否语法结构发生了变化等等。</p>
-<h2 id="JAVA-RASP实现"><a href="#JAVA-RASP实现" class="headerlink" title="JAVA-RASP实现"></a>JAVA-RASP实现</h2><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://security.tencent.com/index.php/blog/msg/166" target="_blank" rel="noopener">腾讯：RASP攻防 —— RASP安全应用与局限性浅析</a><br><a href="https://xz.aliyun.com/t/7316" target="_blank" rel="noopener">从0开始的PHP RASP的学习</a><br><a href="https://c0d3p1ut0s.github.io/%E4%B8%80%E7%B1%BBPHP-RASP%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_blank" rel="noopener">一类PHP RASP的实现</a><br><a href="https://github.com/laruence/taint" target="_blank" rel="noopener">鸟哥：taint</a></p>
+<h2 id="JAVA-RASP实现"><a href="#JAVA-RASP实现" class="headerlink" title="JAVA-RASP实现"></a>JAVA-RASP实现</h2><p>Java RASP 实现的基本思路类似于 Java 中的 AOP 技术（AOP：面向切面编程），将 RASP 的 Hook 代码注入到需要进行检测的地方，根据上下文和关键函数的参数等信息判断请求是否为恶意请求，并终止或继续执行流。</p>
+<p><a href="https://blog.didiyun.com/index.php/2019/01/10/java-rasp/" target="_blank" rel="noopener">浅析基于 Java 的 RASP 实现</a></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://security.tencent.com/index.php/blog/msg/166" target="_blank" rel="noopener">腾讯：RASP攻防 —— RASP安全应用与局限性浅析</a><br><a href="https://xz.aliyun.com/t/7316" target="_blank" rel="noopener">从0开始的PHP RASP的学习</a><br><a href="https://c0d3p1ut0s.github.io/%E4%B8%80%E7%B1%BBPHP-RASP%E7%9A%84%E5%AE%9E%E7%8E%B0/" target="_blank" rel="noopener">一类PHP RASP的实现</a><br><a href="https://github.com/laruence/taint" target="_blank" rel="noopener">鸟哥：taint</a></p>
 
     </article>
     <!-- license  -->
